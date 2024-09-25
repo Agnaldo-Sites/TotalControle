@@ -4,19 +4,12 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TfrmViewBase = class(TForm)
     pnl1: TPanel;
-    pnl3: TPanel;
-    pnl21: TPanel;
-    pnl2: TPanel;
-    pnl4: TPanel;
-    nbMenu_Notebook: TNotebook;
-    btn4: TSpeedButton;
-    bvl: TBevel;
-    Base: TADOConnection;
+    lbl1: TLabel;
   private
     { Private declarations }
   public

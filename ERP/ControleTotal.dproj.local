@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2024/09/25 15:20:14.175,=C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2024/09/25 15:51:00.814,C:\ControleTotal\Comuns\base\ViewBase.pas=C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2024/09/25 15:51:00.814,C:\ControleTotal\Comuns\base\ViewBase.dfm=C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2024/09/25 15:52:17.466,C:\ControleTotal\ERP\ControleTotal.dproj=C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>2024/09/25 15:53:21.794,=C:\ControleTotal\ERP\Unit1.pas</Transaction>
+	<Transactions>
+    <Transaction>2024/09/25 15:20:14.000.175,=C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 15:51:00.000.814,C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas=C:\ControleTotal\Comuns\base\ViewBase.pas</Transaction>
+    <Transaction>2024/09/25 15:51:00.000.814,C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.dfm=C:\ControleTotal\Comuns\base\ViewBase.dfm</Transaction>
+    <Transaction>2024/09/25 15:52:17.000.466,C:\Users\teste\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\ControleTotal\ERP\ControleTotal.dproj</Transaction>
+    <Transaction>2024/09/25 15:53:21.000.794,=C:\ControleTotal\ERP\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 16:15:39.556,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 16:16:48.278,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\Main.pas=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 16:16:48.278,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\Main.dfm=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.dfm</Transaction>
+    <Transaction>2024/09/25 16:36:51.797,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\Main.pas=</Transaction>
+    <Transaction>2024/09/25 16:57:33.313,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 16:57:44.453,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
+    <Transaction>2024/09/25 16:58:18.271,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\Clientes.dfm=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.dfm</Transaction>
+    <Transaction>2024/09/25 16:58:18.271,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\Clientes.pas=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
