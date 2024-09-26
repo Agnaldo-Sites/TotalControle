@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB,
-  Grids, DBGrids, Vcl.Themes, Vcl.Menus;
+  Grids, DBGrids, Vcl.Themes;
 
 type
   TfrmViewBase = class(TForm)
@@ -20,15 +20,9 @@ type
     Base: TADOConnection;
     btnSBAparencia: TSpeedButton;
     QueryConsulta: TADOQuery;
-    mm1: TMainMenu;
-    Clientes1: TMenuItem;
-    clietnes1: TMenuItem;
     procedure btn4Click(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure Cliente1Click(Sender: TObject);
-    procedure Clientes1Click(Sender: TObject);
-    procedure clietnes1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,37 +44,14 @@ procedure TfrmViewBase.btn4Click(Sender: TObject);
 var
   i: Integer;
 begin
-  FormClientes:= TFormClientes.Create(Self);
+  Application.CreateForm(TFormClientes, FormClientes);
   FormClientes.Show;
 end;
 
 procedure TfrmViewBase.btnSBAparenciaClick(Sender: TObject);
 begin
-  if (FormClientes = nil) then
-    FormClientes := TFormClientes.create(self);
-  FormClientes.Show;
-
-end;
-
-procedure TfrmViewBase.Cliente1Click(Sender: TObject);
-begin
-    if (FormClientes = nil) then
-    FormClientes := TFormClientes.create(self);
-  FormClientes.Show;
-end;
-
-procedure TfrmViewBase.Clientes1Click(Sender: TObject);
-begin
-      if (FormClientes = nil) then
-    FormClientes := TFormClientes.create(self);
-  FormClientes.Show;
-end;
-
-procedure TfrmViewBase.clietnes1Click(Sender: TObject);
-begin
-        if (FormClientes = nil) then
-    FormClientes := TFormClientes.create(self);
-  FormClientes.Show;
+  Application.CreateForm(TFormAparencia, FormAparencia);
+  FormAparencia.Show;
 end;
 
 procedure TfrmViewBase.FormActivate(Sender: TObject);

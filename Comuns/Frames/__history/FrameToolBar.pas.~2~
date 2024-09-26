@@ -17,7 +17,7 @@ type
     Gravar: TDataSetPost;
     Cancelar: TDataSetCancel;
     TollBar: TToolBar;
-    DatasetRefresh1: TDataSetRefresh;
+    btnAnterior: TToolButton;
     btnCancelar: TToolButton;
   private
     { Private declarations }

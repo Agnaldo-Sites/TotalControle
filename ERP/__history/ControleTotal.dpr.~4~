@@ -16,5 +16,7 @@ begin
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Amakrits');
   Application.CreateForm(TfrmViewBase, frmViewBase);
+  Application.CreateForm(TFormClientes, FormClientes);
+  Application.CreateForm(TFormAparencia, FormAparencia);
   Application.Run;
 end.

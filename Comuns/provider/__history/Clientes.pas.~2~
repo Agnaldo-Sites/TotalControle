@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.ExtCtrls, Data.Win.ADODB, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, JvExMask, JvToolEdit, Vcl.DBCtrls, JvDBControls, FrameToolBar;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.ExtCtrls, Data.Win.ADODB, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, JvExMask, JvToolEdit, Vcl.DBCtrls, JvDBControls;
 
 type
   TFormClientes = class(TForm)
@@ -20,6 +20,7 @@ type
     TimerCli: TTimer;
     Todos: TCheckBox;
     DateEdit1: TJvDateEdit;
+    pnl2: TPanel;
     QueryCliente: TADOQuery;
     DSQueryCliente: TDataSource;
     lbl1: TLabel;
@@ -54,14 +55,6 @@ type
     jvdbdtdtCliNascimento: TJvDBDateEdit;
     lbl6: TLabel;
     Label1: TLabel;
-    dbedtTelefone: TDBEdit;
-    dbedtCEP: TDBEdit;
-    lbl7: TLabel;
-    lbl8: TLabel;
-    dbedtCEP1: TDBEdit;
-    lbl81: TLabel;
-    lbl82: TLabel;
-    DbEstado: TDBText;
     procedure TimerCliTimer(Sender: TObject);
     procedure dbgrd1TitleClick(Column: TColumn);
     procedure TodosClick(Sender: TObject);
@@ -69,8 +62,6 @@ type
     procedure DateEdit1Change(Sender: TObject);
     procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure dbgrd1CellClick(Column: TColumn);
-    procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -114,6 +105,7 @@ begin
     dbgrd1.Canvas.Brush.Color := clWindow;
     dbgrd1.Canvas.Font.Color := clBlack;
   end;
+
   // Desenha a célula normalmente
   dbgrd1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
@@ -141,27 +133,20 @@ begin
 
   if Assigned(ColunaFiltrada) then
     ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+
   ColunaFiltrada := Column;
+
   ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
   lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+
   lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+
   Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
   Pesquisa.Width := 540;
+
   dbgrd1.Invalidate;
 
 
-end;
-
-procedure TFormClientes.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  Action := CaFree;
-  Release;
-  FormClientes := nil;
-end;
-
-procedure TFormClientes.FormShow(Sender: TObject);
-begin
-    PagListagem.ActivePageIndex := 0;
 end;
 
 procedure TFormClientes.PesquisaChange(Sender: TObject);

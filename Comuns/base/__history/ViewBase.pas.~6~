@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB,
+  Grids, DBGrids, Vcl.Themes;
 
 type
   TfrmViewBase = class(TForm)
@@ -17,7 +18,9 @@ type
     btn4: TSpeedButton;
     bvl: TBevel;
     Base: TADOConnection;
+    btnSBAparencia: TSpeedButton;
     procedure btn4Click(Sender: TObject);
+    procedure btnSBAparenciaClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,13 +33,19 @@ var
 implementation
 
 uses
-  Clientes;
+  Clientes, Aparencia;
 
 {$R *.dfm}
 
 procedure TfrmViewBase.btn4Click(Sender: TObject);
 begin
   Application.CreateForm(TFormClientes, FormClientes);
+  FormClientes.Show;
+end;
+
+procedure TfrmViewBase.btnSBAparenciaClick(Sender: TObject);
+begin
+  Application.CreateForm(TformAparencia, formAparencia);
   FormClientes.Show;
 end;
 
