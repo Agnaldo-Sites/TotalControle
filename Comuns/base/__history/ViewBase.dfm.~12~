@@ -11,7 +11,6 @@ object frmViewBase: TfrmViewBase
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIForm
-  PopupMenu = PopMenu1
   Position = poDesktopCenter
   Visible = True
   WindowState = wsMaximized
@@ -25,6 +24,9 @@ object frmViewBase: TfrmViewBase
     Height = 64
     Align = alTop
     TabOrder = 0
+    ExplicitLeft = 1
+    ExplicitTop = 1
+    ExplicitWidth = 974
     object btnSBAparencia: TSpeedButton
       Left = 1059
       Top = 1
@@ -128,6 +130,8 @@ object frmViewBase: TfrmViewBase
       Color = clBtnFace
       ParentColor = False
       TabOrder = 0
+      ExplicitLeft = 233
+      ExplicitTop = 25
       object TPage
         Left = 0
         Top = 0
@@ -235,19 +239,5 @@ object frmViewBase: TfrmViewBase
     Parameters = <>
     Left = 1009
     Top = 185
-  end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
-    Left = 520
-    Top = 216
-  end
-  object PopMenu1: TPopupMenu
-    Left = 624
-    Top = 344
-    object CarregaLogin1: TMenuItem
-      Caption = 'Carrega Login'
-      ShortCut = 116
-      OnClick = CarregaLogin1Click
-    end
   end
 end

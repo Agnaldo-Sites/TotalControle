@@ -17,13 +17,11 @@ type
     btn4: TSpeedButton;
     bvl: TBevel;
     Timer1: TTimer;
-    PopMenu1: TPopupMenu;
-    CarregaLogin1: TMenuItem;
     procedure btn4Click(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure CarregaLogin1Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -76,35 +74,6 @@ begin
 
 end;
 
-procedure TfrmViewBase.CarregaLogin1Click(Sender: TObject);
-var
-  I, QtdeTelasAtivas: Integer;
-  Resultado : Integer;
-begin
-    QtdeTelasAtivas := 0;
-    for I := 0 to Screen.FormCount - 1 do
-    if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) then begin
-      QtdeTelasAtivas := QtdeTelasAtivas + 1;
-    end;
-
-    if (QtdeTelasAtivas > 1) then begin
-      Resultado := MessageDlg('Para alterar a aparência do sistema é necessário fechar todas as tela do Sistema Deseja Fechar tudo altomaticamente?',mtConfirmation,[mbYes, mbNo],0);
-    end;
-      if Resultado = mrYes
-        then begin
-          Try
-            for I := 0 to Screen.FormCount - 1 do
-              if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) and (Screen.Forms[I] <> frmViewBase)
-                then Screen.Forms[I].Close;
-          Except
-            exit;
-          End;
-        end;
-
-  Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
-  FormLoginUsuarios.ShowModal;
-end;
-
 procedure TfrmViewBase.FormActivate(Sender: TObject);
 begin
   QueryConsulta.Close;
@@ -115,6 +84,29 @@ begin
   Timer1.Enabled := true;
 
 
+end;
+
+procedure TfrmViewBase.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var I, QtdeTelasAtivas: Integer;
+begin
+  QtdeTelasAtivas := 0;
+  for I := 0 to Screen.FormCount - 1 do
+  if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) then begin
+    QtdeTelasAtivas := QtdeTelasAtivas + 1;
+  end;
+
+  if (QtdeTelasAtivas > 1) then begin
+    if ShowModal('Para alterar a aparência do sistema é necessário fechar todas as tela do Sistema !!')
+      then begin
+        Try
+          for I := 0 to Screen.FormCount - 1 do
+            if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) and (Screen.Forms[I] <> frmViewBase)
+              then Screen.Forms[I].Close;
+        Except
+          exit;
+        End;
+      end
+      else exit;
 end;
 
 procedure TfrmViewBase.Timer1Timer(Sender: TObject);

@@ -13,7 +13,6 @@ object FormClientes: TFormClientes
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -53,14 +52,17 @@ object FormClientes: TFormClientes
     Height = 386
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 357
     object PagListagem: TPageControl
       Left = 1
       Top = 1
       Width = 798
       Height = 384
-      ActivePage = PagClientesExcel
+      ActivePage = ts1
       Align = alClient
       TabOrder = 0
+      ExplicitLeft = 2
+      ExplicitTop = 2
       object ts1: TTabSheet
         Caption = 'Listagem'
         Font.Charset = DEFAULT_CHARSET
@@ -401,7 +403,7 @@ object FormClientes: TFormClientes
           Height = 29
           Align = alBottom
           TabOrder = 6
-          ExplicitTop = 325
+          ExplicitTop = 296
           ExplicitWidth = 790
           ExplicitHeight = 29
           inherited TollBar: TToolBar
@@ -549,6 +551,8 @@ object FormClientes: TFormClientes
           Height = 61
           Align = alBottom
           TabOrder = 0
+          ExplicitLeft = -3
+          ExplicitTop = 270
           object pnl3: TPanel
             Left = 125
             Top = 8
@@ -889,6 +893,7 @@ object FormClientes: TFormClientes
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goFixedRowDefAlign]
           PopupMenu = PopMenu1
           TabOrder = 2
+          ExplicitTop = 67
         end
       end
     end

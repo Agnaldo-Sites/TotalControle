@@ -1,0 +1,57 @@
+unit LoginUsuarios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, Main, Data.DB, Data.Win.ADODB;
+
+type
+  TFormLoginUsuarios = class(TForm)
+    pnl1: TPanel;
+    EditNome: TEdit;
+    EditSenha: TEdit;
+    lblNome: TLabel;
+    lblSenha: TLabel;
+    lblTitulo: TLabel;
+    lblNome1: TLabel;
+    pnl31: TPanel;
+    btn11: TSpeedButton;
+    Panel1: TPanel;
+    SpeedButton1: TSpeedButton;
+    ConsultaUsuario: TADOQuery;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure btn11Click(Sender: TObject);
+  private
+    { Private declarations }
+    xButtonClose : integer;
+  public
+    { Public declarations }
+  end;
+
+var
+  FormLoginUsuarios: TFormLoginUsuarios;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormLoginUsuarios.btn11Click(Sender: TObject);
+begin
+  xButtonClose := 1;
+  self.close;
+end;
+
+procedure TFormLoginUsuarios.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if xButtonClose <> 1 then
+    Application.Terminate;
+end;
+
+procedure TFormLoginUsuarios.SpeedButton1Click(Sender: TObject);
+begin
+   Application.Terminate;
+end;
+
+end.

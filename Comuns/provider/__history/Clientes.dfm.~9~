@@ -13,7 +13,6 @@ object FormClientes: TFormClientes
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose

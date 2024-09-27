@@ -171,6 +171,7 @@ var
   Row, Col: Integer;
   Valores: string;
 begin
+
     Row := 1;
     while Row < GridExcel.RowCount do
     begin
@@ -179,11 +180,15 @@ begin
       begin
         if Col > 1 then
           Valores := Valores + ', ';
+
         Valores := Valores + QuotedStr(GridExcel.Cells[Col, Row]);
       end;
+
       QueryExcel.SQL.Text := 'insert into Clientes (Nome,Email,Telefone,Endereco,Cidade,Estado,CEP,DataCadastro) ' +
                            'VALUES (' + Valores + ','+DateToStr(Now)+')';
+
       QueryExcel.ExecSQL;
+
       Inc(Row);
     end;
     LimpaGrid;
@@ -218,21 +223,27 @@ try
     if OpenDialog.Execute then
     begin
       FilePath := OpenDialog.FileName;
+
       // Mostra o nome do arquivo no TEdit
       edt1.Text := ExtractFileName(FilePath); // Exibe apenas o nome do arquivo
+
       // Cria a instância do Excel
       ExcelApp := CreateOleObject('Excel.Application');
       try
         ExcelApp.Visible := False; // Não mostrar a aplicação
+
         // Abre o arquivo Excel
         Workbook := ExcelApp.Workbooks.Open(FilePath);
         Worksheet := Workbook.Worksheets[1];
+
         QuntLinha := Worksheet.UsedRange.Rows.Count;
         QuantColuna := Worksheet.UsedRange.Columns.Count;
+
 
         // Configurar o número de linhas e colunas no StringGrid
         GridExcel.RowCount := QuntLinha;
         GridExcel.ColCount := QuantColuna;
+
         // Loop para preencher a grid com os dados da planilha
         for Row := 1 to QuntLinha do
         begin
@@ -242,18 +253,22 @@ try
             GridExcel.Cells[Col - 1, Row - 1] := VarToStr(Worksheet.Cells[Row, Col].Value);
           end;
         end;
+
         AjustaTamanhoGrid(GridExcel);
+
           finally
             // Fecha o Workbook e o Excel
             Workbook.Close(False);
             ExcelApp.Quit;
             ExcelApp := Unassigned; // Libera a instância do Excel
 
+
       end;
     end;
   finally
     OpenDialog.Free;
   end;
+
 
 end;
 
@@ -306,6 +321,7 @@ begin
   if GridExcel.RowCount > 1 then
   begin
     LinhaSelecionado := GridExcel.Row; // Obtém a linha selecionada
+
     // Desloca todas as linhas abaixo da linha selecionada para cima
     for AjudaLinhaGrid := 0 to GridExcel.ColCount - 1 do
     begin
@@ -314,6 +330,7 @@ begin
         GridExcel.Cells[AjudaLinhaGrid, LinhaSelecionado] := GridExcel.Cells[AjudaLinhaGrid, LinhaSelecionado + 1];
       end;
     end;
+
     // Remove a última linha, que agora está duplicada
     GridExcel.RowCount := GridExcel.RowCount - 1;
   end
@@ -338,17 +355,22 @@ begin
   // Limpa o conteúdo do grid
   GridExcel.RowCount := 2;
   GridExcel.ColCount := 2;
+
   // Limpa todas as células do StringGrid
   GridExcel.Cols[0].Clear;
   GridExcel.Cols[1].Clear;
+
   // Restaura as configurações padrão
   GridExcel.FixedCols := 1;
   GridExcel.FixedRows := 1;
+
   // Habilita a edição das células
   GridExcel.Options := GridExcel.Options + [goEditing];
+
   // Redefinindo as cores e configurações do grid
   GridExcel.Color := clWindow;
   GridExcel.DefaultRowHeight := 24;
+
   // Forçar o redesenho do grid
   GridExcel.Invalidate;
 

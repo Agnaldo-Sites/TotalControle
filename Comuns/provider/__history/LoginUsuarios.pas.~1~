@@ -1,14 +1,13 @@
-unit ViewBase;
+unit LoginUsuarios;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
 
 type
-  TfrmViewBase = class(TForm)
-    pnl1: TPanel;
+  TFormLoginUsuarios = class(TForm)
   private
     { Private declarations }
   public
@@ -16,7 +15,7 @@ type
   end;
 
 var
-  frmViewBase: TfrmViewBase;
+  FormLoginUsuarios: TFormLoginUsuarios;
 
 implementation
 

@@ -14,6 +14,7 @@ object FrmFrameToolBar: TFrmFrameToolBar
     ButtonWidth = 121
     Caption = 'TollBar'
     TabOrder = 0
+    ExplicitWidth = 640
     object btnEditar1: TSpeedButton
       Left = 0
       Top = 0

@@ -11,7 +11,6 @@ object frmViewBase: TfrmViewBase
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIForm
-  PopupMenu = PopMenu1
   Position = poDesktopCenter
   Visible = True
   WindowState = wsMaximized
@@ -240,14 +239,5 @@ object frmViewBase: TfrmViewBase
     OnTimer = Timer1Timer
     Left = 520
     Top = 216
-  end
-  object PopMenu1: TPopupMenu
-    Left = 624
-    Top = 344
-    object CarregaLogin1: TMenuItem
-      Caption = 'Carrega Login'
-      ShortCut = 116
-      OnClick = CarregaLogin1Click
-    end
   end
 end
