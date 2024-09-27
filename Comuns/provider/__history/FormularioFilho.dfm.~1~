@@ -1,7 +1,7 @@
-object frmViewBase: TfrmViewBase
+object FormFormularioFilho: TFormFormularioFilho
   Left = 0
   Top = 0
-  Caption = 'frmViewBase'
+  Caption = 'FormFormularioFilho'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace

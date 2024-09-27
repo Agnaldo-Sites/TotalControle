@@ -9,16 +9,25 @@ uses
 
 type
   TfrmViewBase = class(TForm)
-    Base: TADOConnection;
-    QueryConsulta: TADOQuery;
+    pnl1: TPanel;
+    pnl3: TPanel;
+    pnl21: TPanel;
+    pnl2: TPanel;
     pnl4: TPanel;
-    btnSBAparencia: TSpeedButton;
     nbMenu_Notebook: TNotebook;
     btn4: TSpeedButton;
     bvl: TBevel;
+    Base: TADOConnection;
+    btnSBAparencia: TSpeedButton;
+    QueryConsulta: TADOQuery;
+    btn1: TButton;
     procedure btn4Click(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure Cliente1Click(Sender: TObject);
+    procedure Clientes1Click(Sender: TObject);
+    procedure clietnes1Click(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,7 +45,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfrmViewBase.btn4Click(Sender: TObject);
+procedure TfrmViewBase.btn1Click(Sender: TObject);
 var
  i : integer;
 begin
@@ -49,26 +58,46 @@ begin
       Exit;
     end;
   end;
+
   // Se não estiver aberto, cria uma nova instância
   Application.CreateForm(TFormClientes, FormClientes);
 end;
 
-procedure TfrmViewBase.btnSBAparenciaClick(Sender: TObject);
+procedure TfrmViewBase.btn4Click(Sender: TObject);
 var
- i : integer;
+  i: Integer;
 begin
-// Verifica se o formulário já está aberto
-  for i := 0 to MDIChildCount - 1 do
-  begin
-    if MDIChildren[i] is TFormClientes then
-    begin
-      MDIChildren[i].BringToFront;
-      Exit;
-    end;
-  end;
-  // Se não estiver aberto, cria uma nova instância
-  Application.CreateForm(TFormAparencia, FormAparencia);
+  FormClientes:= TFormClientes.Create(Self);
+  FormClientes.Show;
+end;
 
+procedure TfrmViewBase.btnSBAparenciaClick(Sender: TObject);
+begin
+  if (FormClientes = nil) then
+    FormClientes := TFormClientes.create(self);
+  FormClientes.Show;
+
+end;
+
+procedure TfrmViewBase.Cliente1Click(Sender: TObject);
+begin
+    if (FormClientes = nil) then
+    FormClientes := TFormClientes.create(self);
+  FormClientes.Show;
+end;
+
+procedure TfrmViewBase.Clientes1Click(Sender: TObject);
+begin
+      if (FormClientes = nil) then
+    FormClientes := TFormClientes.create(self);
+  FormClientes.Show;
+end;
+
+procedure TfrmViewBase.clietnes1Click(Sender: TObject);
+begin
+        if (FormClientes = nil) then
+    FormClientes := TFormClientes.create(self);
+  FormClientes.Show;
 end;
 
 procedure TfrmViewBase.FormActivate(Sender: TObject);
@@ -79,7 +108,7 @@ begin
   QueryConsulta.SQL.Add('select EstiloDeSistema from Usuarios where CodUsuario = '+ IntToStr(vCodUsuario));
   QueryConsulta.Open;
 
-  TStyleManager.TrySetStyle(QueryConsulta.FieldByName('EstiloDeSistema').AsString);
+  //TStyleManager.TrySetStyle(QueryConsulta.FieldByName('EstiloDeSistema').AsString);
 end;
 
 end.

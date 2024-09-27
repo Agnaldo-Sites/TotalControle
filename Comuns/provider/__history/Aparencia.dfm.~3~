@@ -13,7 +13,6 @@ object FormAparencia: TFormAparencia
   FormStyle = fsMDIChild
   Position = poDesktopCenter
   Visible = True
-  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 15

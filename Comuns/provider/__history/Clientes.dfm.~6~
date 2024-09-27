@@ -1,7 +1,6 @@
 object FormClientes: TFormClientes
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Clientes'
   ClientHeight = 357
   ClientWidth = 800
@@ -56,7 +55,7 @@ object FormClientes: TFormClientes
       Top = 1
       Width = 798
       Height = 355
-      ActivePage = PagManutencao
+      ActivePage = ts1
       Align = alClient
       TabOrder = 0
       object ts1: TTabSheet
@@ -439,41 +438,6 @@ object FormClientes: TFormClientes
           DataSource = DSQueryCliente
           ReadOnly = True
           TabOrder = 6
-        end
-        inline frmfrmtlbr1: TFrmFrameToolBar
-          Left = 0
-          Top = 296
-          Width = 790
-          Height = 29
-          Align = alBottom
-          TabOrder = 7
-          ExplicitTop = 296
-          ExplicitWidth = 790
-          ExplicitHeight = 29
-          inherited TollBar: TToolBar
-            Width = 790
-            ExplicitWidth = 417
-          end
-          inherited DataSet: TActionList
-            inherited Anterior: TDataSetFirst
-              DataSource = DSQueryCliente
-            end
-            inherited Proximo: TDataSetLast
-              DataSource = DSQueryCliente
-            end
-            inherited Inserir: TDataSetInsert
-              DataSource = DSQueryCliente
-            end
-            inherited Editar: TDataSetDelete
-              DataSource = DSQueryCliente
-            end
-            inherited Gravar: TDataSetPost
-              DataSource = DSQueryCliente
-            end
-            inherited Cancelar: TDataSetCancel
-              DataSource = DSQueryCliente
-            end
-          end
         end
       end
     end

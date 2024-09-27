@@ -62,7 +62,6 @@ type
     lbl81: TLabel;
     lbl82: TLabel;
     DbEstado: TDBText;
-    frmfrmtlbr1: TFrmFrameToolBar;
     procedure TimerCliTimer(Sender: TObject);
     procedure dbgrd1TitleClick(Column: TColumn);
     procedure TodosClick(Sender: TObject);

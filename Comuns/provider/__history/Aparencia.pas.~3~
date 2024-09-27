@@ -24,7 +24,6 @@ type
     btn2: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure ComboBox2Change(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure CarregaEstiloUsuario;
@@ -44,6 +43,7 @@ uses
 
 procedure TFormAparencia.CarregaEstiloUsuario;
 begin
+
 end;
 
 
@@ -63,13 +63,6 @@ begin
   self.Show;
 end;
 
-
-procedure TFormAparencia.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  Action := CaFree;
-  Release;
-  FormAparencia := nil;
-end;
 
 procedure TFormAparencia.FormShow(Sender: TObject);
 var

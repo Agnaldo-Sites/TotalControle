@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.ComCtrls, Vcl.ToolWin, Vcl.DBActns, Vcl.Buttons;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.ComCtrls, Vcl.ToolWin, Vcl.DBActns;
 
 type
   TFrmFrameToolBar = class(TFrame)
@@ -18,9 +18,7 @@ type
     Cancelar: TDataSetCancel;
     TollBar: TToolBar;
     DatasetRefresh1: TDataSetRefresh;
-    btnAnterior: TSpeedButton;
-    btnEditar: TSpeedButton;
-    btnEditar1: TSpeedButton;
+    btnCancelar: TToolButton;
   private
     { Private declarations }
   public

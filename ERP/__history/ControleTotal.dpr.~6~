@@ -7,13 +7,14 @@ uses
   FrameToolBar in '..\Comuns\Frames\FrameToolBar.pas' {FrmFrameToolBar: TFrame},
   Vcl.Themes,
   Vcl.Styles,
-  Aparencia in '..\Comuns\provider\Aparencia.pas' {FormAparencia};
+  Aparencia in '..\Comuns\provider\Aparencia.pas' {FormAparencia},
+  FormularioFilho in '..\Comuns\provider\FormularioFilho.pas' {FormFormularioFilho};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
+  //Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmViewBase, frmViewBase);
   Application.Run;
 end.

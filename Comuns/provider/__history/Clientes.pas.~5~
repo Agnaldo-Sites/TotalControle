@@ -62,7 +62,6 @@ type
     lbl81: TLabel;
     lbl82: TLabel;
     DbEstado: TDBText;
-    frmfrmtlbr1: TFrmFrameToolBar;
     procedure TimerCliTimer(Sender: TObject);
     procedure dbgrd1TitleClick(Column: TColumn);
     procedure TodosClick(Sender: TObject);
@@ -155,14 +154,14 @@ end;
 
 procedure TFormClientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action := CaFree;
+{  Action := CaFree;
   Release;
-  FormClientes := nil;
+  FormClientes := nil; }
 end;
 
 procedure TFormClientes.FormShow(Sender: TObject);
 begin
-    PagListagem.ActivePageIndex := 0;
+   // PagListagem.ActivePageIndex := 0;
 end;
 
 procedure TFormClientes.PesquisaChange(Sender: TObject);
