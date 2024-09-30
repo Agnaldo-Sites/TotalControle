@@ -4,8 +4,8 @@ object FormLoginUsuarios: TFormLoginUsuarios
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Login de Usuarios'
-  ClientHeight = 380
-  ClientWidth = 391
+  ClientHeight = 367
+  ClientWidth = 413
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object FormLoginUsuarios: TFormLoginUsuarios
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 391
-    Height = 380
+    Width = 413
+    Height = 367
     Align = alClient
     TabOrder = 0
     object lblNome: TLabel
@@ -53,7 +53,7 @@ object FormLoginUsuarios: TFormLoginUsuarios
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 383
+      Width = 405
       Height = 37
       Align = alTop
       Alignment = taCenter
@@ -70,7 +70,7 @@ object FormLoginUsuarios: TFormLoginUsuarios
       AlignWithMargins = True
       Left = 4
       Top = 52
-      Width = 383
+      Width = 405
       Height = 75
       Margins.Top = 8
       Align = alTop
@@ -96,6 +96,8 @@ object FormLoginUsuarios: TFormLoginUsuarios
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 0
+      OnExit = EditNomeExit
+      OnKeyPress = EditNomeKeyPress
     end
     object Panel1: TPanel
       Left = 199
@@ -263,6 +265,7 @@ object FormLoginUsuarios: TFormLoginUsuarios
     Height = 23
     PasswordChar = '*'
     TabOrder = 1
+    OnKeyDown = EditSenhaKeyDown
   end
   object pnl31: TPanel
     Left = 34
@@ -270,7 +273,7 @@ object FormLoginUsuarios: TFormLoginUsuarios
     Width = 133
     Height = 41
     TabOrder = 2
-    object btn11: TSpeedButton
+    object BtnConcluir: TSpeedButton
       Left = 1
       Top = 1
       Width = 131
@@ -417,7 +420,7 @@ object FormLoginUsuarios: TFormLoginUsuarios
         0000000000000000000000000000000000000000000000000000000000000000
         000000000000}
       ParentFont = False
-      OnClick = btn11Click
+      OnClick = BtnConcluirClick
       ExplicitTop = 288
       ExplicitWidth = 183
     end

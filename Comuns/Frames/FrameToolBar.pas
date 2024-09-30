@@ -10,17 +10,17 @@ type
   TFrmFrameToolBar = class(TFrame)
     ImagemLIst: TImageList;
     DataSet: TActionList;
-    Anterior: TDataSetFirst;
-    Proximo: TDataSetLast;
-    Inserir: TDataSetInsert;
-    Editar: TDataSetDelete;
-    Gravar: TDataSetPost;
-    Cancelar: TDataSetCancel;
     TollBar: TToolBar;
-    DatasetRefresh1: TDataSetRefresh;
-    btnAnterior: TSpeedButton;
-    btnEditar: TSpeedButton;
-    btnEditar1: TSpeedButton;
+    dtstnsrt: TDataSetInsert;
+    dtstdlt: TDataSetDelete;
+    dtstdt: TDataSetEdit;
+    dtstpst: TDataSetPost;
+    dtstcncl: TDataSetCancel;
+    BtnInserir: TSpeedButton;
+    BtnEditar: TSpeedButton;
+    BtnGravar: TSpeedButton;
+    BtnExcluir: TSpeedButton;
+    BtnCancelar: TSpeedButton;
   private
     { Private declarations }
   public

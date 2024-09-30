@@ -1,0 +1,239 @@
+﻿unit Usuarios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, FrameToolBar, Vcl.Mask, Vcl.DBCtrls, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Data.Win.ADODB, JvExMask, JvToolEdit;
+
+type
+  TFormUsuarios = class(TForm)
+    pnl1: TPanel;
+    pgcPagListagem: TPageControl;
+    ts1: TTabSheet;
+    lblTitulo: TLabel;
+    dbgrd1: TDBGrid;
+    Pesquisa: TEdit;
+    chkTodos: TCheckBox;
+    tsPagManutencao: TTabSheet;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    dbtxtCodCliente: TDBText;
+    lbl4: TLabel;
+    lbl6: TLabel;
+    lbl3: TLabel;
+    lbl8: TLabel;
+    lbl81: TLabel;
+    lbl82: TLabel;
+    dbtxtEstado: TDBText;
+    dbedtCliNome: TDBEdit;
+    dbedtEmail: TDBEdit;
+    dbedtTelefone1: TDBEdit;
+    dbedtTelefone: TDBEdit;
+    dbedtCEP: TDBEdit;
+    dbedtCEP1: TDBEdit;
+    frmfrmtlbr1: TFrmFrameToolBar;
+    Todos: TCheckBox;
+    Timer: TTimer;
+    qryQueryCliente: TADOQuery;
+    atncfldQueryClienteCodCliente: TAutoIncField;
+    wdstrngfldQueryClienteNome: TWideStringField;
+    wdstrngfldQueryClienteEmail: TWideStringField;
+    wdstrngfldQueryClienteTelefone: TWideStringField;
+    wdstrngfldQueryClienteEndereco: TWideStringField;
+    wdstrngfldQueryClienteCidade: TWideStringField;
+    wdstrngfldQueryClienteEstado: TWideStringField;
+    wdstrngfldQueryClienteCEP: TWideStringField;
+    dtmfldQueryClienteDataCadastro: TDateTimeField;
+    qryQueryExcel: TADOQuery;
+    atncfldQueryClienteCodCliente1: TAutoIncField;
+    wdstrngfld: TWideStringField;
+    wdstrngfld1: TWideStringField;
+    wdstrngfld2: TWideStringField;
+    dtfldQueryClienteDataNascimento1: TDateField;
+    wdstrngfld3: TWideStringField;
+    wdstrngfld4: TWideStringField;
+    wdstrngfld5: TWideStringField;
+    wdstrngfld6: TWideStringField;
+    dtmfldQueryClienteDataCadastro1: TDateTimeField;
+    dsDSQueryCliente: TDataSource;
+    QueryListagem: TADOQuery;
+    DSQueryListagem: TDataSource;
+    intgrfldQueryListagemCodUsuario: TIntegerField;
+    wdstrngfldQueryListagemNome: TWideStringField;
+    wdstrngfldQueryListagemEmail: TWideStringField;
+    wdstrngfldQueryListagemSenha: TWideStringField;
+    wdstrngfldQueryListagemTelefone: TWideStringField;
+    dtfldQueryListagemDataNascimento: TDateField;
+    wdstrngfldQueryListagemEndereco: TWideStringField;
+    wdstrngfldQueryListagemCidade: TWideStringField;
+    wdstrngfldQueryListagemEstado: TWideStringField;
+    wdstrngfldQueryListagemCEP: TWideStringField;
+    blnfldQueryListagemAtivo: TBooleanField;
+    dtmfldQueryListagemDataCriacao: TDateTimeField;
+    dtmfldQueryListagemUltimoLogin: TDateTimeField;
+    strngfldQueryListagemEstiloDeSistema: TStringField;
+    DateEdit1: TJvDateEdit;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerTimer(Sender: TObject);
+    procedure dbgrd1TitleClick(Column: TColumn);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure PesquisaChange(Sender: TObject);
+    procedure DateEdit1Change(Sender: TObject);
+    procedure TodosClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    CampoFiltrado : string;
+    ColunaFiltrada: TColumn;
+     procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
+  end;
+
+var
+  FormUsuarios: TFormUsuarios;
+
+implementation
+
+{$R *.dfm}
+
+uses Clientes;
+
+procedure TFormUsuarios.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
+begin
+      // padroniza zebrado nas colunas
+  if(datacol mod 2 = 0)
+    then Grid.Columns[datacol].Color := clInfoBk
+    else Grid.Columns[datacol].Color := clWindow;
+
+  // padroniza dor de fundo da linha selecionada
+  if gDSelected in State
+    then Grid.Canvas.Brush.Color := clActiveCaption;
+
+  // aplica
+  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
+end;
+
+procedure TFormUsuarios.DateEdit1Change(Sender: TObject);
+begin
+    Timer.Enabled  := false;
+    Timer.Enabled  := True;
+end;
+
+procedure TFormUsuarios.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+end;
+
+procedure TFormUsuarios.dbgrd1TitleClick(Column: TColumn);
+begin
+  ColunaFiltrada := Column;
+  if Column.Field.FieldName <> CampoFiltrado then
+    begin
+      CampoFiltrado := Column.Field.FieldName;
+    end;
+
+
+  if Assigned(ColunaFiltrada) then
+    ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+
+  if (CampoFiltrado = 'DataNascimento') or (CampoFiltrado = 'DataCriacao') then
+    begin
+      ColunaFiltrada := Column;
+      ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
+      lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+      lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+      DateEdit1.Left := lblTitulo.Left + lblTitulo.Width + 10;
+      DateEdit1.Width := 122;
+      Pesquisa.Visible := false;
+      DateEdit1.Visible := true;
+      dbgrd1.Invalidate;
+    end
+  else
+    begin
+      ColunaFiltrada := Column;
+      ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
+      lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+      lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+      Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
+      Pesquisa.Width := 469;
+      DateEdit1.Visible := false;
+      Pesquisa.Visible := true;
+      dbgrd1.Invalidate;
+    end;
+end;
+
+procedure TFormUsuarios.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  FormUsuarios := nil;
+end;
+
+procedure TFormUsuarios.PesquisaChange(Sender: TObject);
+begin
+  Timer.Enabled  := false;
+  Timer.Enabled  := True;
+end;
+
+procedure TFormUsuarios.TimerTimer(Sender: TObject);
+begin
+   Timer.Enabled := false;
+
+  if Todos.Checked then
+    begin
+      QueryListagem.Close;
+      QueryListagem.SQL.Clear;
+      QueryListagem.SQL.Add('select * from Usuarios');
+      QueryListagem.Open;
+    end
+  else
+    begin
+      if (Pesquisa.Text <> '') or (DateEdit1.Text <>  ' / / ')   then
+        begin
+          QueryListagem.Close;
+          QueryListagem.SQL.Clear;
+          QueryListagem.SQL.Add('select * from Usuarios where (1=1)');
+
+        if CampoFiltrado = 'Nome' then
+            QueryListagem.SQL.Add(' and Nome like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Email' then
+          QueryListagem.SQL.Add(' and Email like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Telefone' then
+          QueryListagem.SQL.Add(' and Telefone like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'DataNascimento' then
+          QueryListagem.SQL.Add(' and DataNascimento >= '''+ DateToStr(DateEdit1.Date) +'''')
+
+        else if CampoFiltrado = 'Cidade' then
+          QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Estado' then
+          QueryListagem.SQL.Add(' and Estado like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CEP' then
+          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Ativo' then
+          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'DataCriacao' then
+          QueryListagem.SQL.Add(' and DataCriacao >= '''+ DateToStr(DateEdit1.Date) +'''');
+
+        QueryListagem.Open;
+        end;
+
+
+    end;
+
+end;
+
+procedure TFormUsuarios.TodosClick(Sender: TObject);
+begin
+  Timer.Enabled  := false;
+  Timer.Enabled  := True;
+end;
+
+end.

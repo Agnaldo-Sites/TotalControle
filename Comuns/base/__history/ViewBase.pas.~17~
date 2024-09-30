@@ -1,0 +1,151 @@
+unit ViewBase;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB,
+  Grids, DBGrids, Vcl.Themes, Vcl.Menus, ACBr_BCrypt;
+
+type
+  TfrmViewBase = class(TForm)
+    Base: TADOConnection;
+    QueryConsulta: TADOQuery;
+    pnl4: TPanel;
+    btnSBAparencia: TSpeedButton;
+    nbMenu_Notebook: TNotebook;
+    BtnUsuarios: TSpeedButton;
+    bvl: TBevel;
+    Timer1: TTimer;
+    PopMenu1: TPopupMenu;
+    CarregaLogin1: TMenuItem;
+    btn5: TSpeedButton;
+    procedure BtnUsuariosClick(Sender: TObject);
+    procedure btnSBAparenciaClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure CarregaLogin1Click(Sender: TObject);
+    procedure btn5Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    vCodUsuario: Integer;
+  end;
+
+var
+  frmViewBase: TfrmViewBase;
+
+implementation
+
+uses
+  Clientes, Aparencia, LoginUsuarios, Usuarios;
+
+{$R *.dfm}
+
+procedure TfrmViewBase.BtnUsuariosClick(Sender: TObject);
+var
+ i : integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormUsuarios, FormUsuarios);
+end;
+
+procedure TfrmViewBase.btn5Click(Sender: TObject);
+var
+  i: integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormClientes, FormClientes);
+end;
+
+procedure TfrmViewBase.btnSBAparenciaClick(Sender: TObject);
+var
+ i : integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormAparencia, FormAparencia);
+
+end;
+
+procedure TfrmViewBase.CarregaLogin1Click(Sender: TObject);
+var
+  I, QtdeTelasAtivas: Integer;
+  Resultado : Integer;
+begin
+    QtdeTelasAtivas := 0;
+    for I := 0 to Screen.FormCount - 1 do
+    if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) then begin
+      QtdeTelasAtivas := QtdeTelasAtivas + 1;
+    end;
+
+    if (QtdeTelasAtivas > 1) then begin
+      Resultado := MessageDlg('Para alterar a aparência do sistema é necessário fechar todas as tela do Sistema Deseja Fechar tudo altomaticamente?',mtConfirmation,[mbYes, mbNo],0);
+    end;
+      if Resultado = mrYes
+        then begin
+          Try
+            for I := 0 to Screen.FormCount - 1 do
+              if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) and (Screen.Forms[I] <> frmViewBase)
+                then Screen.Forms[I].Close;
+          Except
+            exit;
+          End;
+        end;
+
+    try
+      Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
+      FormLoginUsuarios.ShowModal;
+    finally
+      FormLoginUsuarios.Free;
+    end;
+
+end;
+
+procedure TfrmViewBase.FormActivate(Sender: TObject);
+begin
+  QueryConsulta.Close;
+  QueryConsulta.SQL.Clear;
+  QueryConsulta.SQL.Add('select EstiloDeSistema from Usuarios where CodUsuario = 1');
+  QueryConsulta.Open;
+  TStyleManager.TrySetStyle(QueryConsulta.FieldByName('EstiloDeSistema').AsString);
+  Timer1.Enabled := true;
+
+
+end;
+
+procedure TfrmViewBase.Timer1Timer(Sender: TObject);
+begin
+  Timer1.Enabled := false;
+  Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
+  FormLoginUsuarios.ShowModal;
+end;
+
+end.

@@ -1,0 +1,32 @@
+unit Criptografia;
+
+interface
+
+uses
+  ACBr_BCrypt,TBCrypt;
+
+type
+  TCriptografia = class
+    public
+      function GenerateHash(Const Password: string): string;
+      function CompareHash(const password, HashPassword: string): Boolean;
+  end;
+
+implementation
+
+{ TCriptografia }
+
+function TCriptografia.CompareHash(const password, HashPassword: string): Boolean;
+var
+  LHash: string;
+begin
+  LHash := TBCrypt.GenerateHash(password, cost, type);
+
+end;
+
+function TCriptografia.GenerateHash(const Password: string): string;
+begin
+
+end;
+
+end.

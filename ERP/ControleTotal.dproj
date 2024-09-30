@@ -128,6 +128,20 @@
             <Form>FormLoginUsuarios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\Comuns\Class\Criptografia.pas"/>
+        <DCCReference Include="..\modules\bcrypt\src\BCrypt.Consts.pas"/>
+        <DCCReference Include="..\modules\bcrypt\src\BCrypt.Core.pas"/>
+        <DCCReference Include="..\modules\bcrypt\src\BCrypt.Intf.pas"/>
+        <DCCReference Include="..\modules\bcrypt\src\BCrypt.pas"/>
+        <DCCReference Include="..\modules\bcrypt\src\BCrypt.Types.pas"/>
+        <DCCReference Include="..\Comuns\provider\Usuarios.pas">
+            <Form>FormUsuarios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Comuns\provider\Fornecedor.pas">
+            <Form>FormFornecedor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

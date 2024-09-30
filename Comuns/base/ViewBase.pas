@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB,
-  Grids, DBGrids, Vcl.Themes, Vcl.Menus;
+  Grids, DBGrids, Vcl.Themes, Vcl.Menus, ACBr_BCrypt;
 
 type
   TfrmViewBase = class(TForm)
@@ -14,16 +14,20 @@ type
     pnl4: TPanel;
     btnSBAparencia: TSpeedButton;
     nbMenu_Notebook: TNotebook;
-    btn4: TSpeedButton;
+    BtnFornecedor: TSpeedButton;
     bvl: TBevel;
     Timer1: TTimer;
     PopMenu1: TPopupMenu;
     CarregaLogin1: TMenuItem;
-    procedure btn4Click(Sender: TObject);
+    btn5: TSpeedButton;
+    BtnUsuarios: TSpeedButton;
+    procedure BtnFornecedorClick(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure CarregaLogin1Click(Sender: TObject);
+    procedure btn5Click(Sender: TObject);
+    procedure BtnUsuariosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,13 +41,31 @@ var
 implementation
 
 uses
-  Clientes, Aparencia, LoginUsuarios;
+  Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor;
 
 {$R *.dfm}
 
-procedure TfrmViewBase.btn4Click(Sender: TObject);
+procedure TfrmViewBase.BtnFornecedorClick(Sender: TObject);
 var
  i : integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormFornecedor, FormFornecedor);
+
+end;
+
+procedure TfrmViewBase.btn5Click(Sender: TObject);
+var
+  i: integer;
 begin
 // Verifica se o formulário já está aberto
   for i := 0 to MDIChildCount - 1 do
@@ -76,6 +98,23 @@ begin
 
 end;
 
+procedure TfrmViewBase.BtnUsuariosClick(Sender: TObject);
+var
+ i : integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormUsuarios, FormUsuarios);
+end;
+
 procedure TfrmViewBase.CarregaLogin1Click(Sender: TObject);
 var
   I, QtdeTelasAtivas: Integer;
@@ -101,8 +140,13 @@ begin
           End;
         end;
 
-  Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
-  FormLoginUsuarios.ShowModal;
+    try
+      Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
+      FormLoginUsuarios.ShowModal;
+    finally
+      FormLoginUsuarios.Free;
+    end;
+
 end;
 
 procedure TfrmViewBase.FormActivate(Sender: TObject);

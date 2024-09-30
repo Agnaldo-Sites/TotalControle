@@ -4,7 +4,7 @@ object FormClientes: TFormClientes
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Clientes'
-  ClientHeight = 386
+  ClientHeight = 254
   ClientWidth = 800
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -50,17 +50,19 @@ object FormClientes: TFormClientes
     Left = 0
     Top = 0
     Width = 800
-    Height = 386
+    Height = 254
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 386
     object PagListagem: TPageControl
       Left = 1
       Top = 1
       Width = 798
-      Height = 384
-      ActivePage = PagClientesExcel
+      Height = 252
+      ActivePage = PagManutencao
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 384
       object ts1: TTabSheet
         Caption = 'Listagem'
         Font.Charset = DEFAULT_CHARSET
@@ -71,7 +73,7 @@ object FormClientes: TFormClientes
         ParentFont = False
         DesignSize = (
           790
-          354)
+          222)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -89,9 +91,9 @@ object FormClientes: TFormClientes
         end
         object dbgrd1: TDBGrid
           Left = 0
-          Top = 96
+          Top = 67
           Width = 790
-          Height = 258
+          Height = 155
           Align = alBottom
           DataSource = DSQueryListagem
           Font.Charset = DEFAULT_CHARSET
@@ -338,22 +340,37 @@ object FormClientes: TFormClientes
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object dbedtCliNome: TDBEdit
+        object lbl83: TLabel
+          Left = 276
+          Top = 126
+          Width = 15
+          Height = 15
+          Caption = 'UF'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object DBNomeCliente: TDBEdit
           Left = 160
           Top = 35
           Width = 281
           Height = 23
           DataField = 'Nome'
           DataSource = DSQueryCliente
+          Enabled = False
           TabOrder = 0
         end
-        object dbtEmail: TDBEdit
+        object DBEmail: TDBEdit
           Left = 476
           Top = 35
           Width = 281
           Height = 23
           DataField = 'Email'
           DataSource = DSQueryCliente
+          Enabled = False
           TabOrder = 1
         end
         object DBTelefone: TDBEdit
@@ -363,40 +380,42 @@ object FormClientes: TFormClientes
           Height = 23
           DataField = 'Telefone'
           DataSource = DSQueryCliente
+          Enabled = False
           TabOrder = 2
         end
-        object dbedtTelefone: TDBEdit
+        object DBCep: TDBEdit
           Left = 183
           Top = 91
           Width = 90
           Height = 23
           DataField = 'CEP'
           DataSource = DSQueryCliente
+          Enabled = False
           TabOrder = 3
         end
-        object dbedtCEP: TDBEdit
+        object DBEndereco: TDBEdit
           Left = 299
           Top = 91
           Width = 246
           Height = 23
           DataField = 'Endereco'
           DataSource = DSQueryCliente
-          ReadOnly = True
+          Enabled = False
           TabOrder = 4
         end
-        object dbedtCEP1: TDBEdit
+        object DBCidade: TDBEdit
           Left = 16
           Top = 147
           Width = 246
           Height = 23
           DataField = 'Cidade'
           DataSource = DSQueryCliente
-          ReadOnly = True
+          Enabled = False
           TabOrder = 5
         end
-        inline frmfrmtlbr1: TFrmFrameToolBar
+        inline FrameBtns: TFrmFrameToolBar
           Left = 0
-          Top = 325
+          Top = 193
           Width = 790
           Height = 29
           Align = alBottom
@@ -408,26 +427,6 @@ object FormClientes: TFormClientes
             Width = 790
             ExplicitWidth = 790
           end
-          inherited DataSet: TActionList
-            inherited Anterior: TDataSetFirst
-              DataSource = DSQueryCliente
-            end
-            inherited Proximo: TDataSetLast
-              DataSource = DSQueryCliente
-            end
-            inherited Inserir: TDataSetInsert
-              DataSource = DSQueryCliente
-            end
-            inherited Editar: TDataSetDelete
-              DataSource = DSQueryCliente
-            end
-            inherited Gravar: TDataSetPost
-              DataSource = DSQueryCliente
-            end
-            inherited Cancelar: TDataSetCancel
-              DataSource = DSQueryCliente
-            end
-          end
         end
       end
       object PagClientesExcel: TTabSheet
@@ -435,7 +434,7 @@ object FormClientes: TFormClientes
         ImageIndex = 2
         DesignSize = (
           790
-          354)
+          222)
         object Titulo1: TLabel
           Left = 3
           Top = 24
@@ -544,11 +543,12 @@ object FormClientes: TFormClientes
         end
         object pnl2: TPanel
           Left = 0
-          Top = 293
+          Top = 161
           Width = 790
           Height = 61
           Align = alBottom
           TabOrder = 0
+          ExplicitTop = 293
           object pnl3: TPanel
             Left = 125
             Top = 8
@@ -882,13 +882,14 @@ object FormClientes: TFormClientes
         end
         object GridExcel: TStringGrid
           Left = 0
-          Top = 72
+          Top = -60
           Width = 790
           Height = 221
           Align = alBottom
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goFixedRowDefAlign]
           PopupMenu = PopMenu1
           TabOrder = 2
+          ExplicitTop = 72
         end
       end
     end
@@ -951,7 +952,10 @@ object FormClientes: TFormClientes
   object QueryCliente: TADOQuery
     Connection = frmViewBase.Base
     CursorType = ctStatic
+    BeforeInsert = QueryClienteBeforeInsert
     BeforeEdit = QueryClienteBeforeEdit
+    AfterPost = QueryClienteAfterPost
+    AfterCancel = QueryClienteAfterCancel
     Parameters = <
       item
         Name = 'CodCliente'

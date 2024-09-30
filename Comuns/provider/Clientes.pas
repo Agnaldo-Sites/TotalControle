@@ -24,7 +24,7 @@ type
     DSQueryCliente: TDataSource;
     lbl1: TLabel;
     lbl2: TLabel;
-    dbedtCliNome: TDBEdit;
+    DBNomeCliente: TDBEdit;
     atncfldQueryListagemCodCliente: TAutoIncField;
     wdstrngfldQueryListagemNome: TWideStringField;
     wdstrngfldQueryListagemEmail: TWideStringField;
@@ -45,20 +45,20 @@ type
     dtmfldQueryClienteDataCadastro: TDateTimeField;
     lbl3: TLabel;
     CodCliente: TDBText;
-    dbtEmail: TDBEdit;
+    DBEmail: TDBEdit;
     DBTelefone: TDBEdit;
     lbl4: TLabel;
     lbl6: TLabel;
     Label1: TLabel;
-    dbedtTelefone: TDBEdit;
-    dbedtCEP: TDBEdit;
+    DBCep: TDBEdit;
+    DBEndereco: TDBEdit;
     lbl7: TLabel;
     lbl8: TLabel;
-    dbedtCEP1: TDBEdit;
+    DBCidade: TDBEdit;
     lbl81: TLabel;
     lbl82: TLabel;
     DbEstado: TDBText;
-    frmfrmtlbr1: TFrmFrameToolBar;
+    FrameBtns: TFrmFrameToolBar;
     PagClientesExcel: TTabSheet;
     pnl2: TPanel;
     edt1: TEdit;
@@ -82,6 +82,7 @@ type
     btn1: TSpeedButton;
     pnl31: TPanel;
     btn11: TSpeedButton;
+    lbl83: TLabel;
     procedure TimerCliTimer(Sender: TObject);
     procedure dbgrd1TitleClick(Column: TColumn);
     procedure TodosClick(Sender: TObject);
@@ -96,6 +97,12 @@ type
     procedure DeletaLinhaClick(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure btn11Click(Sender: TObject);
+    procedure QueryClienteAfterInsert(DataSet: TDataSet);
+    procedure QueryClienteBeforeInsert(DataSet: TDataSet);
+    procedure QueryClienteAfterEdit(DataSet: TDataSet);
+    procedure QueryClienteAfterOpen(DataSet: TDataSet);
+    procedure QueryClienteAfterPost(DataSet: TDataSet);
+    procedure QueryClienteAfterCancel(DataSet: TDataSet);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -172,7 +179,7 @@ var
   Valores: string;
 begin
     Row := 1;
-    while Row < GridExcel.RowCount do
+    while Row < GridExcel.RowCount do  //Loop para realizar a inclusão de cada linha da Grid
     begin
       Valores := '';
       for Col := 1 to GridExcel.ColCount - 1 do
@@ -219,11 +226,14 @@ try
     begin
       FilePath := OpenDialog.FileName;
       // Mostra o nome do arquivo no TEdit
-      edt1.Text := ExtractFileName(FilePath); // Exibe apenas o nome do arquivo
+      edt1.Text := ExtractFileName(FilePath);
+
       // Cria a instância do Excel
       ExcelApp := CreateOleObject('Excel.Application');
       try
-        ExcelApp.Visible := False; // Não mostrar a aplicação
+
+        ExcelApp.Visible := False;
+
         // Abre o arquivo Excel
         Workbook := ExcelApp.Workbooks.Open(FilePath);
         Worksheet := Workbook.Worksheets[1];
@@ -233,21 +243,23 @@ try
         // Configurar o número de linhas e colunas no StringGrid
         GridExcel.RowCount := QuntLinha;
         GridExcel.ColCount := QuantColuna;
+
         // Loop para preencher a grid com os dados da planilha
         for Row := 1 to QuntLinha do
         begin
           for Col := 1 to QuantColuna do
           begin
-            // Ler os dados da célula e colocar no StringGrid
+            // Ler os dados da célula e colocar na grid
             GridExcel.Cells[Col - 1, Row - 1] := VarToStr(Worksheet.Cells[Row, Col].Value);
           end;
         end;
         AjustaTamanhoGrid(GridExcel);
           finally
+
             // Fecha o Workbook e o Excel
             Workbook.Close(False);
             ExcelApp.Quit;
-            ExcelApp := Unassigned; // Libera a instância do Excel
+            ExcelApp := Unassigned;
 
       end;
     end;
@@ -360,6 +372,76 @@ begin
    TimerCli.Enabled  := True;
 end;
 
+procedure TFormClientes.QueryClienteAfterCancel(DataSet: TDataSet);
+var
+  i: integer;
+begin
+    for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Bloqueado os btns
+  FrameBtns.BtnInserir.Enabled := true;
+  FrameBtns.BtnExcluir.Enabled := true;
+  FrameBtns.BtnEditar.Enabled := true;
+
+  //Liberar os Enabled dos Campos
+  DBNomeCliente.Enabled := false;
+  DBEmail.Enabled := false;
+  DBTelefone.Enabled := false;
+  DBCep.Enabled := false;
+  DBEndereco.Enabled := false;
+  DBCidade.Enabled := false;
+
+end;
+
+procedure TFormClientes.QueryClienteAfterEdit(DataSet: TDataSet);
+var
+  i: integer;
+begin
+
+end;
+
+procedure TFormClientes.QueryClienteAfterInsert(DataSet: TDataSet);
+var
+  i : integer;
+begin
+
+end;
+
+
+procedure TFormClientes.QueryClienteAfterOpen(DataSet: TDataSet);
+var
+  i : integer;
+begin
+
+end;
+
+procedure TFormClientes.QueryClienteAfterPost(DataSet: TDataSet);
+var
+  i: integer;
+begin
+    for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Bloqueado os btns
+  FrameBtns.BtnInserir.Enabled := true;
+  FrameBtns.BtnExcluir.Enabled := true;
+  FrameBtns.BtnEditar.Enabled := true;
+
+  //Liberar os Enabled dos Campos
+  DBNomeCliente.Enabled := false;
+  DBEmail.Enabled := false;
+  DBTelefone.Enabled := false;
+  DBCep.Enabled := false;
+  DBEndereco.Enabled := false;
+  DBCidade.Enabled := false;
+
+end;
+
 procedure TFormClientes.QueryClienteBeforeEdit(DataSet: TDataSet);
 var
   i : integer;
@@ -369,8 +451,47 @@ for i := 0 to PagListagem.PageCount - 1 do
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+
+  //Bloqueado os btns
+  FrameBtns.BtnInserir.Enabled := false;
+  FrameBtns.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNomeCliente.Enabled := true;
+  DBEmail.Enabled := true;
+  DBTelefone.Enabled := true;
+  DBCep.Enabled := true;
+  DBEndereco.Enabled := true;
+  DBCidade.Enabled := true;
+
 end;
 
+
+procedure TFormClientes.QueryClienteBeforeInsert(DataSet: TDataSet);
+var
+  i : integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+
+  //Bloqueado os btns
+  FrameBtns.BtnEditar.Enabled := false;
+  FrameBtns.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNomeCliente.Enabled := true;
+  DBEmail.Enabled := true;
+  DBTelefone.Enabled := true;
+  DBCep.Enabled := true;
+  DBEndereco.Enabled := true;
+  DBCidade.Enabled := true;
+
+end;
 
 procedure TFormClientes.TimerCliTimer(Sender: TObject);
 begin
