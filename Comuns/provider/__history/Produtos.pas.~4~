@@ -1,0 +1,278 @@
+﻿unit Produtos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FrameToolBar, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask, Data.Win.ADODB;
+
+type
+  TFormProdutos = class(TForm)
+    pgcPagListagem: TPageControl;
+    ts1: TTabSheet;
+    lblTitulo: TLabel;
+    dbgrd1: TDBGrid;
+    Pesquisa: TEdit;
+    chkTodos: TCheckBox;
+    Todos: TCheckBox;
+    tsPagManutencao: TTabSheet;
+    frmfrmtlbrFrameBtn: TFrmFrameToolBar;
+    Fiscal: TTabSheet;
+    grp1: TGroupBox;
+    grp2: TGroupBox;
+    lbl1: TLabel;
+    CodProduto: TDBText;
+    lbl2: TLabel;
+    DBDescProduto: TDBEdit;
+    DBCodigoBarra: TDBEdit;
+    lbl21: TLabel;
+    lbl3: TLabel;
+    DBAtivo: TDBComboBox;
+    lbl4: TLabel;
+    lbl41: TLabel;
+    DBCodGrupo: TDBEdit;
+    DescGrupo: TPanel;
+    DBQuantEstoque: TDBEdit;
+    lbl411: TLabel;
+    DBPermiteMovEstoque: TDBComboBox;
+    lbl42: TLabel;
+    DBCustoVenda: TDBEdit;
+    lbl412: TLabel;
+    DBCustoCompra: TDBEdit;
+    lbl4121: TLabel;
+    grp21: TGroupBox;
+    lbl4122: TLabel;
+    lbl41211: TLabel;
+    DBNCM: TDBEdit;
+    DBCEST: TDBEdit;
+    DBCFOP: TDBEdit;
+    lbl412111: TLabel;
+    DescCFOP: TPanel;
+    DBAliquotaICMS: TDBEdit;
+    lbl41221: TLabel;
+    DBAliquotaIPI: TDBEdit;
+    lbl41222: TLabel;
+    pnl3: TPanel;
+    btn1: TBitBtn;
+    dbgrd2: TDBGrid;
+    lblTitulo1: TLabel;
+    edtPesquisa1: TEdit;
+    chkTodos11: TCheckBox;
+    ts2: TTabSheet;
+    lblTitulo11: TLabel;
+    edt1: TEdit;
+    btnSBAparencia: TSpeedButton;
+    pnl: TPanel;
+    pnl32: TPanel;
+    btn12: TSpeedButton;
+    pnl31: TPanel;
+    btn11: TSpeedButton;
+    strngrdGridExcel: TStringGrid;
+    Timer: TTimer;
+    QueryProdutos: TADOQuery;
+    DSQueryProdutos: TDataSource;
+    QueryListagem: TADOQuery;
+    DSQueryListagem: TDataSource;
+    qryQueryExcel: TADOQuery;
+    atncfldQueryListagemCodProduto: TAutoIncField;
+    strngfldQueryListagemDescProduto: TStringField;
+    strngfldQueryListagemCodigoBarra: TStringField;
+    bcdfldQueryListagemCustoCompra: TBCDField;
+    bcdfldQueryListagemCustoVenda: TBCDField;
+    intgrfldQueryListagemQuantEstoque: TIntegerField;
+    strngfldQueryListagemPermiteMovEstoque: TStringField;
+    strngfldQueryListagemNCM: TStringField;
+    strngfldQueryListagemCEST: TStringField;
+    strngfldQueryListagemCFOP: TStringField;
+    bcdfldQueryListagemAliquotaICMS: TBCDField;
+    bcdfldQueryListagemAliquotaIPI: TBCDField;
+    dtfldQueryListagemDataCadastro: TDateField;
+    strngfldQueryListagemAtivo: TStringField;
+    intgrfldQueryListagemCodGrupo: TIntegerField;
+    atncfldQueryProdutosCodProduto: TAutoIncField;
+    strngfldQueryProdutosDescProduto: TStringField;
+    strngfldQueryProdutosCodigoBarra: TStringField;
+    bcdfldQueryProdutosCustoCompra: TBCDField;
+    bcdfldQueryProdutosCustoVenda: TBCDField;
+    intgrfldQueryProdutosQuantEstoque: TIntegerField;
+    strngfldQueryProdutosPermiteMovEstoque: TStringField;
+    strngfldQueryProdutosNCM: TStringField;
+    strngfldQueryProdutosCEST: TStringField;
+    strngfldQueryProdutosCFOP: TStringField;
+    bcdfldQueryProdutosAliquotaICMS: TBCDField;
+    bcdfldQueryProdutosAliquotaIPI: TBCDField;
+    dtfldQueryProdutosDataCadastro: TDateField;
+    strngfldQueryProdutosAtivo: TStringField;
+    intgrfldQueryProdutosCodGrupo: TIntegerField;
+    atncfldQueryExcelCodProduto: TAutoIncField;
+    strngfldQueryExcelDescProduto: TStringField;
+    strngfldQueryExcelCodigoBarra: TStringField;
+    bcdfldQueryExcelCustoCompra: TBCDField;
+    bcdfldQueryExcelCustoVenda: TBCDField;
+    intgrfldQueryExcelQuantEstoque: TIntegerField;
+    strngfldQueryExcelPermiteMovEstoque: TStringField;
+    strngfldQueryExcelNCM: TStringField;
+    strngfldQueryExcelCEST: TStringField;
+    strngfldQueryExcelCFOP: TStringField;
+    bcdfldQueryExcelAliquotaICMS: TBCDField;
+    bcdfldQueryExcelAliquotaIPI: TBCDField;
+    dtfldQueryExcelDataCadastro: TDateField;
+    strngfldQueryExcelAtivo: TStringField;
+    intgrfldQueryExcelCodGrupo: TIntegerField;
+    TimerEstoque: TTimer;
+    qry1: TADOQuery;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerTimer(Sender: TObject);
+    procedure PesquisaChange(Sender: TObject);
+    procedure TodosClick(Sender: TObject);
+    procedure dbgrd1CellClick(Column: TColumn);
+    procedure dbgrd1TitleClick(Column: TColumn);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    { Private declarations }
+    CampoFiltrado : string;
+    ColunaFiltrada: TColumn;
+    procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProdutos: TFormProdutos;
+
+implementation
+
+uses
+  ViewBase;
+
+{$R *.dfm}
+
+procedure TFormProdutos.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
+begin
+  // padroniza zebrado nas colunas
+  if(datacol mod 2 = 0)
+    then Grid.Columns[datacol].Color := clInfoBk
+    else Grid.Columns[datacol].Color := clWindow;
+
+  // padroniza dor de fundo da linha selecionada
+  if gDSelected in State
+    then Grid.Canvas.Brush.Color := clActiveCaption;
+
+  // aplica
+  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
+end;
+
+procedure TFormProdutos.dbgrd1CellClick(Column: TColumn);
+begin
+  QueryProdutos.Close;
+  QueryProdutos.Parameters.ParamByName('CodProduto').Value := dbgrd1.DataSource.DataSet.FieldByName('CodProduto').AsInteger;
+  QueryProdutos.Open;
+end;
+
+procedure TFormProdutos.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+end;
+
+procedure TFormProdutos.dbgrd1TitleClick(Column: TColumn);
+begin
+  ColunaFiltrada := Column;
+  if Column.Field.FieldName <> CampoFiltrado then
+    begin
+      CampoFiltrado := Column.Field.FieldName;
+    end;
+
+
+  if Assigned(ColunaFiltrada) then
+    ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+  ColunaFiltrada := Column;
+  ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
+  lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+  lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+  Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
+  Pesquisa.Width := 483;
+  dbgrd1.Invalidate;
+end;
+
+procedure TFormProdutos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  FormProdutos := nil;
+end;
+
+procedure TFormProdutos.PesquisaChange(Sender: TObject);
+begin
+  Timer.Enabled := false;
+  Timer.Enabled := true;
+end;
+
+procedure TFormProdutos.TimerTimer(Sender: TObject);
+begin
+  Timer.Enabled := false;
+
+  if Todos.Checked then
+    begin
+      QueryListagem.Close;
+      QueryListagem.SQL.Clear;
+      QueryListagem.SQL.Add('select * from Produtos');
+      QueryListagem.Open;
+    end
+  else
+    begin
+      if (Pesquisa.Text <> '')   then
+        begin
+          QueryListagem.Close;
+          QueryListagem.SQL.Clear;
+          QueryListagem.SQL.Add('select * from Produtos where (1=1)');
+
+        if CampoFiltrado = 'DescProduto' then
+            QueryListagem.SQL.Add(' and DescProduto like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CodigoBarra' then
+          QueryListagem.SQL.Add(' and CodigoBarra like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CustoCompra' then
+          QueryListagem.SQL.Add(' and CustoCompra like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CustoVenda' then
+          QueryListagem.SQL.Add(' and CustoVenda like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'QuantEstoque' then
+          QueryListagem.SQL.Add(' and QuantEstoque like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'PermiteMovEstoque' then
+          QueryListagem.SQL.Add(' and PermiteMovEstoque like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'NCM' then
+          QueryListagem.SQL.Add(' and NCM like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'CEST' then
+          QueryListagem.SQL.Add(' and CEST like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'CFOP' then
+          QueryListagem.SQL.Add(' and CFOP like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'AliquotaICMS' then
+          QueryListagem.SQL.Add(' and AliquotaICMS like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'AliquotaIPI' then
+          QueryListagem.SQL.Add(' and AliquotaIPI like ''%'+Pesquisa.Text+'%''')
+
+          else if CampoFiltrado = 'Ativo' then
+          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''');
+
+        QueryListagem.Open;
+        end;
+
+
+    end;
+end;
+
+procedure TFormProdutos.TodosClick(Sender: TObject);
+begin
+  Timer.Enabled := false;
+  Timer.Enabled := true;
+end;
+
+end.

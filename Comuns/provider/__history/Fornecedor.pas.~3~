@@ -77,9 +77,6 @@ type
     procedure QueryFornecedorBeforeInsert(DataSet: TDataSet);
     procedure QueryFornecedorAfterPost(DataSet: TDataSet);
     procedure QueryFornecedorAfterCancel(DataSet: TDataSet);
-    procedure DBCEPChange(Sender: TObject);
-    procedure DBCNPJChange(Sender: TObject);
-    procedure DBTelefoneChange(Sender: TObject);
   private
     { Private declarations }
     ColunaFiltrada: TColumn;
@@ -225,49 +222,6 @@ begin
   Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
 end;
 
-procedure TFormFornecedor.DBCEPChange(Sender: TObject);
-var
-  Texto: string;
-begin
-  // Remover qualquer caractere que não seja número
-  Texto := DBCEP.Text;
-  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);
-  // Formatar para o padrão 12345-123
-  if Length(Texto) > 5 then
-    Texto := Copy(Texto, 1, 5) + '-' + Copy(Texto, 6, Length(Texto) - 5);
-  // Atualiza o texto do Edit sem mover o cursor
-  DBCEP.OnChange := nil;
-  DBCEP.Text := Texto;
-  DBCEP.SelStart := Length(DBCEP.Text);
-  DBCEP.OnChange := DBCEPChange;
-end;
-
-procedure TFormFornecedor.DBCNPJChange(Sender: TObject);
-var
-  Texto: string;
-begin
-  // Remove qualquer caractere que não seja número
-  Texto := DBCNPJ.Text;
-  Texto := StringReplace(Texto, '.', '', [rfReplaceAll]); // Remove pontos
-  Texto := StringReplace(Texto, '/', '', [rfReplaceAll]); // Remove barra
-  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]); // Remove hífen
-  // Formatar para o padrão XX.XXX.XXX/XXXX-XX
-  if Length(Texto) > 2 then
-    Texto := Copy(Texto, 1, 2) + '.' + Copy(Texto, 3, Length(Texto) - 2);
-  if Length(Texto) > 6 then
-    Texto := Copy(Texto, 1, 6) + '.' + Copy(Texto, 7, Length(Texto) - 6);
-  if Length(Texto) > 10 then
-    Texto := Copy(Texto, 1, 10) + '/' + Copy(Texto, 11, Length(Texto) - 10);
-  if Length(Texto) > 15 then
-    Texto := Copy(Texto, 1, 15) + '-' + Copy(Texto, 16, Length(Texto) - 15);
-  // Atualiza o texto do Edit sem mover o cursor
-  DBCNPJ.OnChange := nil;
-  DBCNPJ.Text := Texto;
-  DBCNPJ.SelStart := Length(DBCNPJ.Text);
-  DBCNPJ.OnChange := DBCNPJChange;
-
-end;
-
 procedure TFormFornecedor.dbgrd1CellClick(Column: TColumn);
 begin
   QueryFornecedor.Close;
@@ -299,29 +253,6 @@ begin
     Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
     Pesquisa.Width := 636;
     dbgrd1.Invalidate;
-end;
-
-procedure TFormFornecedor.DBTelefoneChange(Sender: TObject);
-var
-  Texto: string;
-begin
-  // Remove qualquer caractere que não seja número
-  Texto := DBTelefone.Text;
-  Texto := StringReplace(Texto, '(', '', [rfReplaceAll]);  // Remove parênteses
-  Texto := StringReplace(Texto, ')', '', [rfReplaceAll]);  // Remove parênteses
-  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);  // Remove hífen
-  Texto := StringReplace(Texto, ' ', '', [rfReplaceAll]);  // Remove espaços
-  // Formatar para o padrão (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
-  if Length(Texto) > 2 then
-    Texto := '(' + Copy(Texto, 1, 2) + ') ' + Copy(Texto, 3, Length(Texto) - 2);
-  if Length(Texto) > 9 then
-    Texto := Copy(Texto, 1, 9) + '-' + Copy(Texto, 10, Length(Texto) - 9);
-  // Atualiza o texto do Edit sem mover o cursor
-  DBTelefone.OnChange := nil;
-  DBTelefone.Text := Texto;
-  DBTelefone.SelStart := Length(DBTelefone.Text);
-  DBTelefone.OnChange :=DBTelefoneChange;
-
 end;
 
 procedure TFormFornecedor.FormClose(Sender: TObject; var Action: TCloseAction);

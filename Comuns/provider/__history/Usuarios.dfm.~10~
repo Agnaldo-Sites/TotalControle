@@ -198,7 +198,7 @@ object FormUsuarios: TFormUsuarios
           OnClick = TodosClick
         end
         object DateEdit1: TJvDateEdit
-          Left = 179
+          Left = 183
           Top = 22
           Width = 90
           Height = 21

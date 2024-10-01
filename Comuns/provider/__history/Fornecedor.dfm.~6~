@@ -27,6 +27,8 @@ object FormFornecedor: TFormFornecedor
     ActivePage = PagManutencao
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1006
+    ExplicitHeight = 441
     object Listagem: TTabSheet
       Caption = 'Listagem'
       DesignSize = (
@@ -343,12 +345,12 @@ object FormFornecedor: TFormFornecedor
         Height = 35
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 255
-        ExplicitWidth = 853
+        ExplicitTop = 376
+        ExplicitWidth = 998
         ExplicitHeight = 35
         inherited TollBar: TToolBar
           Width = 853
-          ExplicitWidth = 853
+          ExplicitWidth = 998
         end
         inherited DataSet: TActionList
           inherited dtstnsrt: TDataSetInsert

@@ -22,7 +22,6 @@ type
     btn5: TSpeedButton;
     BtnUsuarios: TSpeedButton;
     BtnProdutos: TSpeedButton;
-    BtnRelProdutos: TSpeedButton;
     procedure BtnFornecedorClick(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -31,7 +30,6 @@ type
     procedure btn5Click(Sender: TObject);
     procedure BtnUsuariosClick(Sender: TObject);
     procedure BtnProdutosClick(Sender: TObject);
-    procedure BtnRelProdutosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +43,7 @@ var
 implementation
 
 uses
-  Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor, Produtos, RelProduto;
+  Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor, Produtos;
 
 {$R *.dfm}
 
@@ -83,23 +81,6 @@ begin
   // Se não estiver aberto, cria uma nova instância
   Application.CreateForm(TFormProdutos, FormProdutos);
 
-end;
-
-procedure TfrmViewBase.BtnRelProdutosClick(Sender: TObject);
-var
-  i: integer;
-begin
-// Verifica se o formulário já está aberto
-  for i := 0 to MDIChildCount - 1 do
-  begin
-    if MDIChildren[i] is TFormClientes then
-    begin
-      MDIChildren[i].BringToFront;
-      Exit;
-    end;
-  end;
-  // Se não estiver aberto, cria uma nova instância
-  Application.CreateForm(TFormRelProduto, FormRelProduto);
 end;
 
 procedure TfrmViewBase.btn5Click(Sender: TObject);

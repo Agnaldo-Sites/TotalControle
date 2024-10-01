@@ -3,7 +3,7 @@ object FormFornecedor: TFormFornecedor
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Fornecedores '
+  Caption = 'FormFornecedor'
   ClientHeight = 320
   ClientWidth = 861
   Color = clBtnFace
@@ -27,6 +27,8 @@ object FormFornecedor: TFormFornecedor
     ActivePage = PagManutencao
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1006
+    ExplicitHeight = 441
     object Listagem: TTabSheet
       Caption = 'Listagem'
       DesignSize = (
@@ -343,12 +345,12 @@ object FormFornecedor: TFormFornecedor
         Height = 35
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 255
-        ExplicitWidth = 853
+        ExplicitTop = 376
+        ExplicitWidth = 998
         ExplicitHeight = 35
         inherited TollBar: TToolBar
           Width = 853
-          ExplicitWidth = 853
+          ExplicitWidth = 998
         end
         inherited DataSet: TActionList
           inherited dtstnsrt: TDataSetInsert
@@ -376,9 +378,7 @@ object FormFornecedor: TFormFornecedor
         DataField = 'CNPJ'
         DataSource = DSQueryFornecedor
         Enabled = False
-        MaxLength = 18
         TabOrder = 1
-        OnChange = DBCNPJChange
       end
       object DBNome: TDBEdit
         Left = 160
@@ -409,9 +409,7 @@ object FormFornecedor: TFormFornecedor
         DataField = 'Telefone'
         DataSource = DSQueryFornecedor
         Enabled = False
-        MaxLength = 11
         TabOrder = 4
-        OnChange = DBTelefoneChange
       end
       object DBComboBox: TDBComboBox
         Left = 321
@@ -434,16 +432,13 @@ object FormFornecedor: TFormFornecedor
         DataField = 'CEP'
         DataSource = DSQueryFornecedor
         Enabled = False
-        MaxLength = 9
         TabOrder = 6
-        OnChange = DBCEPChange
       end
       object DBEndereco: TDBEdit
         Left = 580
         Top = 106
         Width = 229
         Height = 23
-        CharCase = ecUpperCase
         DataField = 'Endereco'
         DataSource = DSQueryFornecedor
         Enabled = False
@@ -454,18 +449,16 @@ object FormFornecedor: TFormFornecedor
         Top = 178
         Width = 209
         Height = 23
-        CharCase = ecUpperCase
         DataField = 'Cidade'
         DataSource = DSQueryFornecedor
         Enabled = False
         TabOrder = 8
       end
       object DBEstado: TDBEdit
-        Left = 231
+        Left = 239
         Top = 178
         Width = 58
         Height = 23
-        CharCase = ecUpperCase
         DataField = 'Estado'
         DataSource = DSQueryFornecedor
         Enabled = False

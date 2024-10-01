@@ -53,14 +53,16 @@ object FormClientes: TFormClientes
     Height = 317
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 254
     object PagListagem: TPageControl
       Left = 1
       Top = 1
       Width = 798
       Height = 315
-      ActivePage = PagClientesExcel
+      ActivePage = ts1
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 252
       object ts1: TTabSheet
         Caption = 'Listagem'
         Font.Charset = DEFAULT_CHARSET
@@ -418,7 +420,7 @@ object FormClientes: TFormClientes
           Height = 29
           Align = alBottom
           TabOrder = 6
-          ExplicitTop = 256
+          ExplicitTop = 193
           ExplicitWidth = 790
           ExplicitHeight = 29
           inherited TollBar: TToolBar
@@ -546,6 +548,7 @@ object FormClientes: TFormClientes
           Height = 55
           Align = alBottom
           TabOrder = 0
+          ExplicitTop = 174
           object pnl3: TPanel
             Left = 125
             Top = 8
@@ -1069,7 +1072,7 @@ object FormClientes: TFormClientes
     end
   end
   object PopMenu1: TPopupMenu
-    Left = 525
+    Left = 517
     Top = 195
     object DeletaLinha: TMenuItem
       Caption = 'Deletar'

@@ -4,7 +4,7 @@ object FormClientes: TFormClientes
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Clientes'
-  ClientHeight = 317
+  ClientHeight = 254
   ClientWidth = 800
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -50,17 +50,19 @@ object FormClientes: TFormClientes
     Left = 0
     Top = 0
     Width = 800
-    Height = 317
+    Height = 254
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 386
     object PagListagem: TPageControl
       Left = 1
       Top = 1
       Width = 798
-      Height = 315
-      ActivePage = PagClientesExcel
+      Height = 252
+      ActivePage = PagManutencao
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 384
       object ts1: TTabSheet
         Caption = 'Listagem'
         Font.Charset = DEFAULT_CHARSET
@@ -71,7 +73,7 @@ object FormClientes: TFormClientes
         ParentFont = False
         DesignSize = (
           790
-          285)
+          222)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -91,7 +93,7 @@ object FormClientes: TFormClientes
           Left = 0
           Top = 67
           Width = 790
-          Height = 218
+          Height = 155
           Align = alBottom
           DataSource = DSQueryListagem
           Font.Charset = DEFAULT_CHARSET
@@ -413,12 +415,12 @@ object FormClientes: TFormClientes
         end
         inline FrameBtns: TFrmFrameToolBar
           Left = 0
-          Top = 256
+          Top = 193
           Width = 790
           Height = 29
           Align = alBottom
           TabOrder = 6
-          ExplicitTop = 256
+          ExplicitTop = 325
           ExplicitWidth = 790
           ExplicitHeight = 29
           inherited TollBar: TToolBar
@@ -432,7 +434,7 @@ object FormClientes: TFormClientes
         ImageIndex = 2
         DesignSize = (
           790
-          285)
+          222)
         object Titulo1: TLabel
           Left = 3
           Top = 24
@@ -541,11 +543,12 @@ object FormClientes: TFormClientes
         end
         object pnl2: TPanel
           Left = 0
-          Top = 230
+          Top = 161
           Width = 790
-          Height = 55
+          Height = 61
           Align = alBottom
           TabOrder = 0
+          ExplicitTop = 293
           object pnl3: TPanel
             Left = 125
             Top = 8
@@ -879,19 +882,14 @@ object FormClientes: TFormClientes
         end
         object GridExcel: TStringGrid
           Left = 0
-          Top = 56
+          Top = -60
           Width = 790
-          Height = 174
+          Height = 221
           Align = alBottom
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goFixedRowDefAlign]
           PopupMenu = PopMenu1
           TabOrder = 2
-          ColWidths = (
-            64
-            64
-            64
-            64
-            65)
+          ExplicitTop = 72
         end
       end
     end
@@ -1069,7 +1067,7 @@ object FormClientes: TFormClientes
     end
   end
   object PopMenu1: TPopupMenu
-    Left = 525
+    Left = 517
     Top = 195
     object DeletaLinha: TMenuItem
       Caption = 'Deletar'

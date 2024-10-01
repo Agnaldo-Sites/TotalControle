@@ -18,8 +18,7 @@ uses
   BCrypt.Types in '..\modules\bcrypt\src\BCrypt.Types.pas',
   Usuarios in '..\Comuns\provider\Usuarios.pas' {FormUsuarios},
   Fornecedor in '..\Comuns\provider\Fornecedor.pas' {FormFornecedor},
-  Produtos in '..\Comuns\provider\Produtos.pas' {FormProdutos},
-  RelProduto in '..\Comuns\provider\RelProduto.pas' {FormRelProduto};
+  Produtos in '..\Comuns\provider\Produtos.pas' {FormProdutos};
 
 {$R *.res}
 

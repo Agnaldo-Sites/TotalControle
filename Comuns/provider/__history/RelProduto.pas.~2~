@@ -1,0 +1,45 @@
+unit RelProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, JvExMask, JvToolEdit, QuickRpt, QRCtrls, Vcl.Buttons;
+
+type
+  TFormRelProduto = class(TForm)
+    pnl1: TPanel;
+    pnl2: TPanel;
+    lbl1: TLabel;
+    jvdtdtDateEdit1: TJvDateEdit;
+    lbl2: TLabel;
+    jvdtdtDateEdit2: TJvDateEdit;
+    lbl3: TLabel;
+    edt1: TEdit;
+    pnlDescGrupo: TPanel;
+    edt11: TEdit;
+    lbl31: TLabel;
+    pnlDescGrupo1: TPanel;
+    grp1: TGroupBox;
+    chk1: TCheckBox;
+    rg1: TRadioGroup;
+    btn1: TSpeedButton;
+    qckrp1: TQuickRep;
+    qrbndPageHeaderBand1: TQRBand;
+    qrlbl1: TQRLabel;
+    qrbnd1: TQRBand;
+    qrsbdtl1: TQRSubDetail;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormRelProduto: TFormRelProduto;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,95 @@
+unit Produtos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FrameToolBar, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask;
+
+type
+  TFormProdutos = class(TForm)
+    pgcPagListagem: TPageControl;
+    ts1: TTabSheet;
+    lblTitulo: TLabel;
+    dbgrd1: TDBGrid;
+    edtPesquisa: TEdit;
+    chkTodos: TCheckBox;
+    chkTodos1: TCheckBox;
+    tsPagManutencao: TTabSheet;
+    frmfrmtlbrFrameBtn: TFrmFrameToolBar;
+    Fiscal: TTabSheet;
+    grp1: TGroupBox;
+    grp2: TGroupBox;
+    lbl1: TLabel;
+    DBCodProduto: TDBText;
+    lbl2: TLabel;
+    DBDescProduto: TDBEdit;
+    dbedt1: TDBEdit;
+    lbl21: TLabel;
+    lbl3: TLabel;
+    dbcbb1: TDBComboBox;
+    lbl4: TLabel;
+    lbl41: TLabel;
+    dbedt2: TDBEdit;
+    pnl1: TPanel;
+    dbedt21: TDBEdit;
+    lbl411: TLabel;
+    dbcbb11: TDBComboBox;
+    lbl42: TLabel;
+    dbedt22: TDBEdit;
+    lbl412: TLabel;
+    dbedt221: TDBEdit;
+    lbl4121: TLabel;
+    grp21: TGroupBox;
+    lbl4122: TLabel;
+    lbl41211: TLabel;
+    dbedt222: TDBEdit;
+    dbedt2211: TDBEdit;
+    dbedt22111: TDBEdit;
+    lbl412111: TLabel;
+    pnl2: TPanel;
+    dbedt2221: TDBEdit;
+    lbl41221: TLabel;
+    dbedt2222: TDBEdit;
+    lbl41222: TLabel;
+    pnl3: TPanel;
+    btn1: TBitBtn;
+    dbgrd2: TDBGrid;
+    lblTitulo1: TLabel;
+    edtPesquisa1: TEdit;
+    chkTodos11: TCheckBox;
+    ts2: TTabSheet;
+    lblTitulo11: TLabel;
+    edt1: TEdit;
+    btnSBAparencia: TSpeedButton;
+    pnl: TPanel;
+    pnl32: TPanel;
+    btn12: TSpeedButton;
+    pnl31: TPanel;
+    btn11: TSpeedButton;
+    strngrdGridExcel: TStringGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProdutos: TFormProdutos;
+
+implementation
+
+uses
+  ViewBase;
+
+{$R *.dfm}
+
+procedure TFormProdutos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  FormProdutos := nil;
+end;
+
+end.

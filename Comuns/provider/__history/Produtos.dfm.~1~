@@ -1,7 +1,7 @@
-object FormUsuarios: TFormUsuarios
+object FormProdutos: TFormProdutos
   Left = 0
   Top = 0
-  Caption = 'FormUsuarios'
+  Caption = 'FormProdutos'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace
