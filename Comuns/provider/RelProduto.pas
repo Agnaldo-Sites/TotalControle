@@ -1,19 +1,14 @@
 unit RelProduto;
-
 interface
-
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, JvExMask, JvToolEdit, QuickRpt, QRCtrls, Vcl.Buttons, QRPrntr, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids;
-
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.Buttons, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids;
 type
   TFormRelProduto = class(TForm)
     pnl1: TPanel;
     pnl2: TPanel;
     lbl1: TLabel;
-    DataIni: TJvDateEdit;
     lbl2: TLabel;
-    DataFim: TJvDateEdit;
     lbl3: TLabel;
     CodGrupo: TEdit;
     pnlDescGrupo: TPanel;
@@ -23,19 +18,6 @@ type
     grp1: TGroupBox;
     RadioStatus: TRadioGroup;
     btn1: TSpeedButton;
-    QuickReport: TQuickRep;
-    qrbndPageHeaderBand1: TQRBand;
-    qrlbl1: TQRLabel;
-    qrbnd1: TQRBand;
-    qrbnd2: TQRBand;
-    lbl4: TLabel;
-    lbl5: TLabel;
-    lbl6: TLabel;
-    qrdbtxtCodGrupo: TQRDBText;
-    lbl7: TLabel;
-    lbl8: TLabel;
-    lbl41: TLabel;
-    lbl51: TLabel;
     RelProdutos: TADOQuery;
     DSRelProdutos: TDataSource;
     RadioEstoque: TRadioGroup;
@@ -50,30 +32,27 @@ type
     dtfldRelProdutosDataCadastro: TDateField;
     intgrfldRelProdutosCodGrupo: TIntegerField;
     strngfldRelProdutosDescGrupo: TStringField;
-    qrdbtxtCodGrupo1: TQRDBText;
-    qrdbtxtDescProduto: TQRDBText;
-    qrdbtxtCodGrupo2: TQRDBText;
-    qrdbtxtDescGrupo: TQRDBText;
-    qrdbtxtCodigoBarra: TQRDBText;
-    qrdbtxtCustoCompra: TQRDBText;
+    DBGrid1: TDBGrid;
+    QueryConsulta: TADOQuery;
     procedure btn1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CodGrupoExit(Sender: TObject);
+    procedure CodCFOPExit(Sender: TObject);
+    procedure CodGrupoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure CodCFOPKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-
 var
   FormRelProduto: TFormRelProduto;
-
 implementation
-
 uses
-  ViewBase;
-
+  ViewBase, NFuncao, Grupo, CFOP;
 {$R *.dfm}
-
 procedure TFormRelProduto.btn1Click(Sender: TObject);
 begin
   WITH RelProdutos do
@@ -84,37 +63,95 @@ begin
       ' isnull(Produtos.PermiteMovEstoque,''N'') PermiteMovEstoque,Produtos.DataCadastro,Produtos.CodGrupo,Grupo.DescGrupo'+
       ' from Produtos'+
       ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo where (1=1)');
-
-      if (DataIni.text <> ' / / ') and (DataFim.Text <> ' / / ') then
+      {if (DataIni.text <> ' / / ') and (DataFim.Text <> ' / / ') then
         begin
           SQL.Add(' and Produtos.DataCadastro between :DatIni and :DataFim');
           Parameters.ParamByName('DatIni').Value := DataIni.Date;
           Parameters.ParamByName('DataFim').Value := DataFim.Date;
-        end;
-
+        end;      }
       if CodGrupo.Text <> '' then
         SQL.Add(' and Produtos.CodGrupo = '+CodGrupo.Text);
-
       if CodCFOP.Text <> '' then
         SQL.Add(' and Produtos.CFOP = '+CodCFOP.Text);
-
       case RadioEstoque.ItemIndex of
         0:SQL.Add(' and Produtos.PermiteMovEstoque = ''S''');
         1:SQL.Add(' and Produtos.PermiteMovEstoque = ''N''');
       end;
 
-
       case RadioStatus.ItemIndex of
         0:SQL.Add(' and Produtos.Ativo = ''S''');
         1:SQL.Add(' and Produtos.Ativo = ''N''');
       end;
-
       Open;
+    end;
+end;
+procedure TFormRelProduto.CodCFOPExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescCFOP : string;
+begin
+  if CodCFOP.Text = '' then exit;
 
+  DescCFOP := Funcao.ConsultaQuery('CFOP','DescCFOP','CodCFOP',CodCFOP.Text,QueryConsulta);
+  if DescCFOP <> '' then
+    pnlDescGrupo.Caption :=  DescCFOP
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      CodCFOP.SetFocus;
+      Exit;
     end;
 
-     QuickReport.Preview;
+end;
 
+procedure TFormRelProduto.CodCFOPKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormCFOP := TFormCFOP.Create(Self);
+    try
+      FormCFOP.BtnSelecionar.Visible := true;
+      Application.CreateForm(TFormCFOP, FormCFOP);
+    finally
+      FormCFOP.BtnSelecionar.Visible := false;
+      FormCFOP.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.CodGrupoExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescGrupo: string;
+begin
+  if CodGrupo.Text = '' then exit;
+
+  DescGrupo := Funcao.ConsultaQuery('Grupo','DescGrupo','CodGrupo',CodGrupo.Text,QueryConsulta);
+  if DescGrupo <> '' then
+    pnlDescGrupo.Caption :=  DescGrupo
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      CodGrupo.SetFocus;
+      Exit;
+    end;
+end;
+
+procedure TFormRelProduto.CodGrupoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormGrupo := TFormGrupo.Create(Self);
+    try
+      FormGrupo.BtnSelecionar.Visible := true;
+      Application.CreateForm(TFormGrupo, FormGrupo);
+    finally
+      FormGrupo.BtnSelecionar.Visible := false;
+      FormGrupo.Free;
+    end;
+  end;
 end;
 
 procedure TFormRelProduto.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -125,3 +162,4 @@ begin
 end;
 
 end.
+

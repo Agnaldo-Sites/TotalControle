@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB,
-  Grids, DBGrids, Vcl.Themes, Vcl.Menus, ACBr_BCrypt;
+  Grids, DBGrids, Vcl.Themes, Vcl.Menus;
 
 type
   TfrmViewBase = class(TForm)
@@ -23,6 +23,8 @@ type
     BtnUsuarios: TSpeedButton;
     BtnProdutos: TSpeedButton;
     BtnRelProdutos: TSpeedButton;
+    BtnGrupo: TSpeedButton;
+    BtnCFOP: TSpeedButton;
     procedure BtnFornecedorClick(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -32,6 +34,8 @@ type
     procedure BtnUsuariosClick(Sender: TObject);
     procedure BtnProdutosClick(Sender: TObject);
     procedure BtnRelProdutosClick(Sender: TObject);
+    procedure BtnGrupoClick(Sender: TObject);
+    procedure BtnCFOPClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,9 +49,28 @@ var
 implementation
 
 uses
-  Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor, Produtos, RelProduto;
+  Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor, Produtos, RelProduto,
+  Grupo, CFOP;
 
 {$R *.dfm}
+
+procedure TfrmViewBase.BtnCFOPClick(Sender: TObject);
+var
+ i : integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormCFOP, FormCFOP);
+
+end;
 
 procedure TfrmViewBase.BtnFornecedorClick(Sender: TObject);
 var
@@ -64,6 +87,25 @@ begin
   end;
   // Se não estiver aberto, cria uma nova instância
   Application.CreateForm(TFormFornecedor, FormFornecedor);
+
+end;
+
+
+procedure TfrmViewBase.BtnGrupoClick(Sender: TObject);
+var
+  i: integer;
+begin
+  // Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormGrupo, FormGrupo);
 
 end;
 

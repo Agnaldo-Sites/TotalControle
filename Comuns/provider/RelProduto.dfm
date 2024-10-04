@@ -1,10 +1,11 @@
 object FormRelProduto: TFormRelProduto
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Relatorio de Produtos'
-  ClientHeight = 469
-  ClientWidth = 423
+  ClientHeight = 720
+  ClientWidth = 796
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,17 +17,14 @@ object FormRelProduto: TFormRelProduto
   Scaled = False
   Visible = True
   OnClose = FormClose
-  PixelsPerInch = 96
   TextHeight = 15
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 423
-    Height = 469
+    Width = 796
+    Height = 720
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1022
-    ExplicitHeight = 787
     object lbl1: TLabel
       Left = 168
       Top = 21
@@ -81,13 +79,13 @@ object FormRelProduto: TFormRelProduto
     end
     object pnl2: TPanel
       Left = 1
-      Top = 412
-      Width = 421
+      Top = 663
+      Width = 794
       Height = 56
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 730
-      ExplicitWidth = 1020
+      ExplicitTop = 659
+      ExplicitWidth = 792
       object btn1: TSpeedButton
         Left = 92
         Top = 14
@@ -173,49 +171,21 @@ object FormRelProduto: TFormRelProduto
         OnClick = btn1Click
       end
     end
-    object DataIni: TJvDateEdit
-      Left = 112
-      Top = 47
-      Width = 90
-      Height = 21
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      NumGlyphs = 2
-      ParentFont = False
-      ShowNullDate = False
-      TabOrder = 1
-    end
-    object DataFim: TJvDateEdit
-      Left = 240
-      Top = 47
-      Width = 90
-      Height = 21
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      NumGlyphs = 2
-      ParentFont = False
-      ShowNullDate = False
-      TabOrder = 2
-    end
     object CodGrupo: TEdit
       Left = 45
       Top = 108
       Width = 57
       Height = 23
-      TabOrder = 3
+      TabOrder = 1
+      OnExit = CodGrupoExit
+      OnKeyDown = CodGrupoKeyDown
     end
     object pnlDescGrupo: TPanel
       Left = 108
       Top = 108
       Width = 282
       Height = 23
-      TabOrder = 4
+      TabOrder = 3
     end
     object CodCFOP: TEdit
       Left = 45
@@ -223,13 +193,15 @@ object FormRelProduto: TFormRelProduto
       Width = 57
       Height = 23
       TabOrder = 5
+      OnExit = CodCFOPExit
+      OnKeyDown = CodCFOPKeyDown
     end
     object pnlDescGrupo1: TPanel
       Left = 108
       Top = 172
       Width = 282
       Height = 23
-      TabOrder = 6
+      TabOrder = 2
     end
     object grp1: TGroupBox
       Left = 45
@@ -237,7 +209,7 @@ object FormRelProduto: TFormRelProduto
       Width = 345
       Height = 177
       Caption = 'Filtros'
-      TabOrder = 7
+      TabOrder = 4
       object RadioStatus: TRadioGroup
         Left = 16
         Top = 101
@@ -265,378 +237,18 @@ object FormRelProduto: TFormRelProduto
         TabOrder = 1
       end
     end
-    object QuickReport: TQuickRep
-      Left = 741
-      Top = 202
-      Width = 794
-      Height = 1123
-      ShowingPreview = False
-      DataSet = RelProdutos
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Arial'
-      Font.Style = []
-      Functions.Strings = (
-        'PAGENUMBER'
-        'COLUMNNUMBER'
-        'REPORTTITLE')
-      Functions.DATA = (
-        '0'
-        '0'
-        #39#39)
-      Options = [FirstPageHeader, LastPageFooter]
-      Page.Columns = 1
-      Page.Orientation = poPortrait
-      Page.PaperSize = Default
-      Page.Continuous = False
-      Page.Values = (
-        100.000000000000000000
-        2970.000000000000000000
-        100.000000000000000000
-        2100.000000000000000000
-        100.000000000000000000
-        100.000000000000000000
-        0.000000000000000000)
-      PrinterSettings.Copies = 1
-      PrinterSettings.OutputBin = Auto
-      PrinterSettings.Duplex = False
-      PrinterSettings.FirstPage = 0
-      PrinterSettings.LastPage = 0
-      PrinterSettings.UseStandardprinter = False
-      PrinterSettings.UseCustomBinCode = False
-      PrinterSettings.CustomBinCode = 0
-      PrinterSettings.ExtendedDuplex = 0
-      PrinterSettings.UseCustomPaperCode = False
-      PrinterSettings.CustomPaperCode = 0
-      PrinterSettings.PrintMetaFile = False
-      PrinterSettings.MemoryLimit = 1000000
-      PrinterSettings.PrintQuality = 0
-      PrinterSettings.Collate = 0
-      PrinterSettings.ColorOption = 0
-      PrintIfEmpty = True
-      SnapToGrid = True
-      Units = MM
-      Zoom = 100
-      PrevFormStyle = fsNormal
-      PreviewInitialState = wsNormal
-      PreviewWidth = 500
-      PreviewHeight = 500
-      PrevInitialZoom = qrZoomToFit
-      PreviewDefaultSaveType = stPDF
-      PreviewLeft = 0
-      PreviewTop = 0
-      object qrbndPageHeaderBand1: TQRBand
-        Left = 38
-        Top = 38
-        Width = 718
-        Height = 67
-        Frame.DrawBottom = True
-        AlignToBottom = False
-        TransparentBand = False
-        ForceNewColumn = False
-        ForceNewPage = False
-        Size.Values = (
-          177.270833333333300000
-          1899.708333333333000000)
-        PreCaluculateBandHeight = False
-        KeepOnOnePage = False
-        BandType = rbPageHeader
-        object qrlbl1: TQRLabel
-          Left = 248
-          Top = 23
-          Width = 222
-          Height = 20
-          Size.Values = (
-            52.916666666666670000
-            656.166666666666700000
-            60.854166666666670000
-            587.375000000000000000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taCenter
-          AlignToBand = True
-          Caption = 'RELATORIO DE PRODUTOS'
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          VerticalAlignment = tlTop
-          FontSize = 12
-        end
-      end
-      object qrbnd1: TQRBand
-        Left = 38
-        Top = 105
-        Width = 718
-        Height = 42
-        Frame.DrawTop = True
-        Frame.DrawBottom = True
-        AlignToBottom = False
-        TransparentBand = False
-        ForceNewColumn = False
-        ForceNewPage = False
-        Size.Values = (
-          111.125000000000000000
-          1899.708333333333000000)
-        PreCaluculateBandHeight = False
-        KeepOnOnePage = False
-        BandType = rbTitle
-        object lbl4: TLabel
-          Left = 0
-          Top = 10
-          Width = 72
-          Height = 16
-          Caption = 'Cod.Produto'
-        end
-        object lbl5: TLabel
-          Left = 91
-          Top = 10
-          Width = 107
-          Height = 16
-          Caption = 'Descri'#231#227'o Produto'
-        end
-        object lbl6: TLabel
-          Left = 434
-          Top = 11
-          Width = 65
-          Height = 16
-          Caption = 'Cod.Barras'
-        end
-        object lbl7: TLabel
-          Left = 529
-          Top = 11
-          Width = 67
-          Height = 16
-          Caption = 'Val.Compra'
-        end
-        object lbl8: TLabel
-          Left = 635
-          Top = 11
-          Width = 58
-          Height = 16
-          Caption = 'Val.Venda'
-        end
-        object lbl41: TLabel
-          Left = 218
-          Top = 10
-          Width = 62
-          Height = 16
-          Caption = 'Cod.Grupo'
-        end
-        object lbl51: TLabel
-          Left = 306
-          Top = 10
-          Width = 97
-          Height = 16
-          Caption = 'Descri'#231#227'o Grupo'
-        end
-      end
-      object qrbnd2: TQRBand
-        Left = 38
-        Top = 147
-        Width = 718
-        Height = 35
-        AlignToBottom = False
-        TransparentBand = False
-        ForceNewColumn = False
-        ForceNewPage = False
-        Size.Values = (
-          92.604166666666670000
-          1899.708333333333000000)
-        PreCaluculateBandHeight = False
-        KeepOnOnePage = False
-        BandType = rbTitle
-        object qrdbtxtCodGrupo: TQRDBText
-          Left = 0
-          Top = 0
-          Width = 59
-          Height = 17
-          Size.Values = (
-            44.979166666666670000
-            0.000000000000000000
-            0.000000000000000000
-            156.104166666666700000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'CodGrupo'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtCodGrupo1: TQRDBText
-          Left = 91
-          Top = 0
-          Width = 76
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            240.770833333333300000
-            0.000000000000000000
-            201.083333333333300000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'DescProduto'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtDescProduto: TQRDBText
-          Left = 218
-          Top = 0
-          Width = 59
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            576.791666666666700000
-            0.000000000000000000
-            156.104166666666700000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'CodGrupo'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtCodGrupo2: TQRDBText
-          Left = 306
-          Top = 0
-          Width = 66
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            809.625000000000000000
-            0.000000000000000000
-            174.625000000000000000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'DescGrupo'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtDescGrupo: TQRDBText
-          Left = 434
-          Top = 0
-          Width = 72
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            1148.291666666667000000
-            0.000000000000000000
-            190.500000000000000000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'CodigoBarra'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtCodigoBarra: TQRDBText
-          Left = 529
-          Top = 0
-          Width = 80
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            1399.645833333333000000
-            0.000000000000000000
-            211.666666666666700000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'CustoCompra'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-        object qrdbtxtCustoCompra: TQRDBText
-          Left = 635
-          Top = 0
-          Width = 72
-          Height = 19
-          Size.Values = (
-            50.270833333333330000
-            1680.104166666667000000
-            0.000000000000000000
-            190.500000000000000000)
-          XLColumn = 0
-          XLNumFormat = nfGeneral
-          ActiveInPreview = False
-          Alignment = taLeftJustify
-          AlignToBand = False
-          Color = clWhite
-          DataSet = RelProdutos
-          DataField = 'CustoVenda'
-          Transparent = False
-          ExportAs = exptText
-          WrapStyle = BreakOnSpaces
-          FullJustify = False
-          MaxBreakChars = 0
-          VerticalAlignment = tlTop
-          FontSize = 10
-        end
-      end
+    object DBGrid1: TDBGrid
+      Left = 32
+      Top = 399
+      Width = 515
+      Height = 242
+      DataSource = DSRelProdutos
+      TabOrder = 6
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
     end
   end
   object RelProdutos: TADOQuery
@@ -711,5 +323,12 @@ object FormRelProduto: TFormRelProduto
     DataSet = RelProdutos
     Left = 368
     Top = 24
+  end
+  object QueryConsulta: TADOQuery
+    Connection = frmViewBase.Base
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 504
+    Top = 56
   end
 end
