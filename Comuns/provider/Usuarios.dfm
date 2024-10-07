@@ -4,8 +4,8 @@ object FormUsuarios: TFormUsuarios
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Usuarios'
-  ClientHeight = 257
-  ClientWidth = 840
+  ClientHeight = 253
+  ClientWidth = 838
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,7 +13,7 @@ object FormUsuarios: TFormUsuarios
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -22,16 +22,16 @@ object FormUsuarios: TFormUsuarios
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 840
-    Height = 257
+    Width = 838
+    Height = 253
     Align = alClient
     TabOrder = 0
     object PagListagem: TPageControl
       Left = 1
       Top = 1
-      Width = 838
-      Height = 255
-      ActivePage = PagManutencao
+      Width = 836
+      Height = 251
+      ActivePage = ts1
       Align = alClient
       TabOrder = 0
       object ts1: TTabSheet
@@ -43,8 +43,8 @@ object FormUsuarios: TFormUsuarios
         Font.Style = [fsBold]
         ParentFont = False
         DesignSize = (
-          830
-          225)
+          828
+          221)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -62,8 +62,8 @@ object FormUsuarios: TFormUsuarios
         end
         object dbgrd1: TDBGrid
           Left = 0
-          Top = 69
-          Width = 830
+          Top = 65
+          Width = 828
           Height = 156
           Align = alBottom
           DataSource = DSQueryListagem
@@ -142,21 +142,21 @@ object FormUsuarios: TFormUsuarios
         object Pesquisa: TEdit
           Left = 183
           Top = 22
-          Width = 488
-          Height = 21
+          Width = 478
+          Height = 24
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -13
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
-          ExplicitWidth = 486
+          ExplicitWidth = 476
         end
         object chkTodos: TCheckBox
-          Left = 858
+          Left = 848
           Top = 24
           Width = 106
           Height = 17
@@ -170,10 +170,10 @@ object FormUsuarios: TFormUsuarios
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
-          ExplicitLeft = 856
+          ExplicitLeft = 846
         end
         object Todos: TCheckBox
-          Left = 689
+          Left = 679
           Top = 26
           Width = 106
           Height = 17
@@ -188,7 +188,7 @@ object FormUsuarios: TFormUsuarios
           ShowHint = True
           TabOrder = 3
           OnClick = TodosClick
-          ExplicitLeft = 687
+          ExplicitLeft = 677
         end
       end
       object PagManutencao: TTabSheet
@@ -332,17 +332,17 @@ object FormUsuarios: TFormUsuarios
         end
         inline FrameBtn: TFrmFrameToolBar
           Left = 0
-          Top = 196
-          Width = 830
+          Top = 192
+          Width = 828
           Height = 29
           Align = alBottom
           TabOrder = 3
-          ExplicitTop = 196
-          ExplicitWidth = 830
+          ExplicitTop = 192
+          ExplicitWidth = 828
           ExplicitHeight = 29
           inherited TollBar: TToolBar
-            Width = 830
-            ExplicitWidth = 830
+            Width = 828
+            ExplicitWidth = 828
           end
         end
         object DBComboBox: TDBComboBox

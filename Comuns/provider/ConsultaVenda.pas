@@ -78,6 +78,8 @@ type
     procedure VendasAfterDelete(DataSet: TDataSet);
     procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure GridVendaDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -199,6 +201,15 @@ begin
   PnlDescproduto.Caption := Fucao.ConsultaQuery('Produtos','DescProduto','CodProduto',
   IntToStr(Vendas.FieldByName('CodProduto').AsInteger),QueryConsulta);
 
+end;
+
+procedure TFormConsultaVenda.GridVendaDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  Funcao : TNFuncao;
+begin
+   // Chama a função de zebragem de linhas
+   Funcao .AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
 end;
 
 procedure TFormConsultaVenda.FormClose(Sender: TObject;

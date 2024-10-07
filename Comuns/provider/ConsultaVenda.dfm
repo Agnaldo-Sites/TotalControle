@@ -3,7 +3,7 @@ object FormConsultaVenda: TFormConsultaVenda
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'FormConsultaVenda'
+  Caption = 'Consulta Vendas'
   ClientHeight = 441
   ClientWidth = 960
   Color = clBtnFace
@@ -13,7 +13,7 @@ object FormConsultaVenda: TFormConsultaVenda
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -134,12 +134,12 @@ object FormConsultaVenda: TFormConsultaVenda
       object Pesquisa: TEdit
         Left = 183
         Top = 22
-        Width = 610
-        Height = 21
+        Width = 602
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
@@ -147,7 +147,7 @@ object FormConsultaVenda: TFormConsultaVenda
         OnChange = PesquisaChange
       end
       object chkTodos: TCheckBox
-        Left = 980
+        Left = 972
         Top = 24
         Width = 106
         Height = 17
@@ -163,7 +163,7 @@ object FormConsultaVenda: TFormConsultaVenda
         TabOrder = 2
       end
       object Todos: TCheckBox
-        Left = 811
+        Left = 803
         Top = 26
         Width = 106
         Height = 17
@@ -292,6 +292,7 @@ object FormConsultaVenda: TFormConsultaVenda
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = [fsBold]
         OnCellClick = GridVendaCellClick
+        OnDrawColumnCell = GridVendaDrawColumnCell
         Columns = <
           item
             Expanded = False

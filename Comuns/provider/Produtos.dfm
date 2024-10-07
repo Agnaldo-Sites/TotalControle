@@ -13,7 +13,7 @@ object FormProdutos: TFormProdutos
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -24,7 +24,7 @@ object FormProdutos: TFormProdutos
     Top = 0
     Width = 817
     Height = 394
-    ActivePage = ts1
+    ActivePage = Fiscal
     Align = alClient
     TabOrder = 0
     object ts1: TTabSheet
@@ -250,21 +250,20 @@ object FormProdutos: TFormProdutos
       object Pesquisa: TEdit
         Left = 190
         Top = 22
-        Width = 421
-        Height = 21
+        Width = 411
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 1
         OnChange = PesquisaChange
-        ExplicitWidth = 419
       end
       object chkTodos: TCheckBox
-        Left = 831
+        Left = 821
         Top = 24
         Width = 106
         Height = 17
@@ -278,10 +277,9 @@ object FormProdutos: TFormProdutos
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
-        ExplicitLeft = 829
       end
       object Todos: TCheckBox
-        Left = 662
+        Left = 652
         Top = 26
         Width = 106
         Height = 17
@@ -296,7 +294,6 @@ object FormProdutos: TFormProdutos
         ShowHint = True
         TabOrder = 3
         OnClick = TodosClick
-        ExplicitLeft = 660
       end
     end
     object PagManutencao: TTabSheet
@@ -456,8 +453,10 @@ object FormProdutos: TFormProdutos
           DataSource = DSQueryProdutos
           Enabled = False
           TabOrder = 3
+          OnExit = DBCodGrupoExit
+          OnKeyDown = DBCodGrupoKeyDown
         end
-        object DescGrupo: TPanel
+        object PngDescGrupo: TPanel
           Left = 156
           Top = 96
           Width = 282
@@ -607,8 +606,10 @@ object FormProdutos: TFormProdutos
           DataSource = DSQueryProdutos
           Enabled = False
           TabOrder = 2
+          OnExit = DBCFOPExit
+          OnKeyDown = DBCFOPKeyDown
         end
-        object DescCFOP: TPanel
+        object pngDescCFOP: TPanel
           Left = 309
           Top = 39
           Width = 201
@@ -668,6 +669,8 @@ object FormProdutos: TFormProdutos
         Align = alBottom
         BevelInner = bvLowered
         TabOrder = 0
+        ExplicitTop = 316
+        ExplicitWidth = 807
         DesignSize = (
           809
           44)
@@ -863,6 +866,7 @@ object FormProdutos: TFormProdutos
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
+          ExplicitLeft = 1181
         end
       end
       object dbgrd2: TDBGrid
@@ -920,20 +924,21 @@ object FormProdutos: TFormProdutos
       object PesquisaEstoque: TEdit
         Left = 191
         Top = 22
-        Width = 400
-        Height = 21
+        Width = 390
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 2
         OnChange = PesquisaEstoqueChange
+        ExplicitWidth = 388
       end
       object chkTodos11: TCheckBox
-        Left = 654
+        Left = 644
         Top = 24
         Width = 106
         Height = 17
@@ -948,6 +953,7 @@ object FormProdutos: TFormProdutos
         ShowHint = True
         TabOrder = 3
         OnClick = chkTodos11Click
+        ExplicitLeft = 642
       end
     end
     object ImportaExcel: TTabSheet
@@ -1065,7 +1071,7 @@ object FormProdutos: TFormProdutos
       object edt1: TEdit
         Left = 123
         Top = 22
-        Width = 568
+        Width = 558
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Enabled = False
@@ -1672,7 +1678,7 @@ object FormProdutos: TFormProdutos
       
         'select Produtos.CodProduto,Produtos.DescProduto,Grupo.DescGrupo,' +
         'Produtos.QuantEstoque,Produtos.PermiteMovEstoque from Produtos'
-      'left outer join Grupo on Produtos.CodProduto = Grupo.CodProduto')
+      'left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo')
     Left = 684
     Top = 274
     object atncfldQueryEstoqueCodProduto: TAutoIncField
@@ -1700,5 +1706,16 @@ object FormProdutos: TFormProdutos
     DataSet = QueryEstoque
     Left = 716
     Top = 274
+  end
+  object QueryConsulta: TADOQuery
+    Connection = frmViewBase.Base
+    CursorType = ctStatic
+    BeforeInsert = QueryProdutosBeforeInsert
+    BeforeEdit = QueryProdutosBeforeEdit
+    AfterPost = QueryProdutosAfterPost
+    AfterCancel = QueryProdutosAfterCancel
+    Parameters = <>
+    Left = 64
+    Top = 288
   end
 end

@@ -13,7 +13,7 @@ object FormFornecedor: TFormFornecedor
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -24,7 +24,7 @@ object FormFornecedor: TFormFornecedor
     Top = 0
     Width = 859
     Height = 316
-    ActivePage = PagManutencao
+    ActivePage = Listagem
     Align = alClient
     TabOrder = 0
     object Listagem: TTabSheet
@@ -145,20 +145,21 @@ object FormFornecedor: TFormFornecedor
       object Pesquisa: TEdit
         Left = 205
         Top = 22
-        Width = 479
-        Height = 21
+        Width = 471
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 1
         OnChange = PesquisaChange
+        ExplicitWidth = 469
       end
       object Todos: TCheckBox
-        Left = 716
+        Left = 708
         Top = 24
         Width = 106
         Height = 17
@@ -179,6 +180,7 @@ object FormFornecedor: TFormFornecedor
         ShowHint = True
         TabOrder = 2
         OnClick = TodosClick
+        ExplicitLeft = 706
       end
     end
     object PagManutencao: TTabSheet
@@ -341,7 +343,7 @@ object FormFornecedor: TFormFornecedor
         ExplicitHeight = 35
         inherited TollBar: TToolBar
           Width = 851
-          ExplicitWidth = 849
+          ExplicitWidth = 851
         end
         inherited DataSet: TActionList
           inherited dtstnsrt: TDataSetInsert

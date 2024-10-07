@@ -14,7 +14,7 @@ object FormVendas: TFormVendas
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -28,15 +28,17 @@ object FormVendas: TFormVendas
     Height = 651
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1011
+    ExplicitHeight = 647
     object Panel2: TPanel
       Left = 1
-      Top = 576
-      Width = 1013
+      Top = 572
+      Width = 1011
       Height = 78
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 572
-      ExplicitWidth = 1011
+      ExplicitTop = 568
+      ExplicitWidth = 1009
       object BtnConfimaCompra: TSpeedButton
         Left = 47
         Top = 14
@@ -333,17 +335,17 @@ object FormVendas: TFormVendas
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 1013
+      Width = 1011
       Height = 104
       Align = alTop
       TabOrder = 1
-      ExplicitWidth = 1011
+      ExplicitWidth = 1009
       object Label1: TLabel
         AlignWithMargins = True
         Left = 11
         Top = 54
         Width = 452
-        Height = 30
+        Height = 46
         Margins.Left = 10
         Margins.Top = 10
         Align = alLeft
@@ -355,12 +357,13 @@ object FormVendas: TFormVendas
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitHeight = 30
       end
       object Label2: TLabel
         AlignWithMargins = True
         Left = 11
         Top = 4
-        Width = 217
+        Width = 996
         Height = 37
         Margins.Left = 10
         Align = alTop
@@ -372,21 +375,22 @@ object FormVendas: TFormVendas
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitWidth = 217
       end
       object Panel11: TPanel
-        Left = 527
+        Left = 525
         Top = 44
         Width = 485
         Height = 59
         Align = alRight
         TabOrder = 0
-        ExplicitLeft = 525
+        ExplicitLeft = 523
         object lblCliente: TLabel
           AlignWithMargins = True
           Left = 11
           Top = 6
           Width = 68
-          Height = 30
+          Height = 49
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -398,6 +402,7 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
         object EditCliente: TEdit
           Left = 96
@@ -418,10 +423,10 @@ object FormVendas: TFormVendas
       end
     end
     object Panel4: TPanel
-      Left = 528
+      Left = 526
       Top = 105
       Width = 486
-      Height = 471
+      Height = 467
       Align = alRight
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -430,8 +435,8 @@ object FormVendas: TFormVendas
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 526
-      ExplicitHeight = 467
+      ExplicitLeft = 524
+      ExplicitHeight = 463
       object BtnSelecionar: TSpeedButton
         Left = 20
         Top = 394
@@ -679,7 +684,7 @@ object FormVendas: TFormVendas
           Left = 11
           Top = 6
           Width = 90
-          Height = 30
+          Height = 54
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -691,6 +696,7 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
       end
       object RadioGroup1: TRadioGroup
@@ -780,10 +786,10 @@ object FormVendas: TFormVendas
       Left = 1
       Top = 105
       Width = 526
-      Height = 471
+      Height = 467
       Align = alLeft
       TabOrder = 3
-      ExplicitHeight = 467
+      ExplicitHeight = 463
       object Panel7: TPanel
         Left = 1
         Top = 1
@@ -799,7 +805,7 @@ object FormVendas: TFormVendas
           Left = 11
           Top = 6
           Width = 171
-          Height = 30
+          Height = 54
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -811,11 +817,12 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
       end
       object Panel8: TPanel
         Left = 1
-        Top = 406
+        Top = 402
         Width = 524
         Height = 64
         Align = alBottom
@@ -823,7 +830,7 @@ object FormVendas: TFormVendas
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 402
+        ExplicitTop = 398
         object Panel9: TPanel
           Left = 272
           Top = 1
@@ -841,8 +848,8 @@ object FormVendas: TFormVendas
             AlignWithMargins = True
             Left = 71
             Top = 4
-            Width = 86
-            Height = 32
+            Width = 176
+            Height = 54
             Margins.Left = 70
             Align = alClient
             Caption = 'R$ 0,00'
@@ -855,6 +862,8 @@ object FormVendas: TFormVendas
             ParentColor = False
             ParentFont = False
             Layout = tlCenter
+            ExplicitWidth = 86
+            ExplicitHeight = 32
           end
         end
         object Panel10: TPanel
@@ -877,12 +886,12 @@ object FormVendas: TFormVendas
         Left = 1
         Top = 65
         Width = 524
-        Height = 341
+        Height = 337
         Align = alClient
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goRowSelect, goFixedRowDefAlign]
         PopupMenu = PopupMenu1
         TabOrder = 2
-        ExplicitHeight = 337
+        ExplicitHeight = 333
         ColWidths = (
           64
           64

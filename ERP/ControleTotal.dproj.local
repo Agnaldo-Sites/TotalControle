@@ -32,8 +32,8 @@
     <Transaction>2024/09/27 15:07:30.000.476,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\provider\LoginUsuarios.pas=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
     <Transaction>2024/09/30 09:21:48.000.362,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas</Transaction>
     <Transaction>2024/09/30 09:22:20.000.695,C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\ERP\Unit1.pas=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\Comuns\Class\Criptografia.pas</Transaction>
-    <Transaction>2024/09/30 09:54:46.000.053,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.Intf.pas</Transaction>
     <Transaction>2024/09/30 09:54:46.000.026,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.Consts.pas</Transaction>
+    <Transaction>2024/09/30 09:54:46.000.053,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.Intf.pas</Transaction>
     <Transaction>2024/09/30 09:54:46.000.080,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.Types.pas</Transaction>
     <Transaction>2024/09/30 09:54:46.000.067,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.pas</Transaction>
     <Transaction>2024/09/30 09:54:46.000.041,=C:\Users\teste\OneDrive\Documentos\GitHub\TotalControle\modules\bcrypt\src\BCrypt.Core.pas</Transaction>

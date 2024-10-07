@@ -298,7 +298,7 @@ begin
     lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
     lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
     Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
-    Pesquisa.Width := 636;
+    Pesquisa.Width := 473;
     dbgrd1.Invalidate;
 end;
 
@@ -384,7 +384,18 @@ begin
           QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
 
         else if CampoFiltrado = 'CEP' then
-          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Email' then
+          QueryListagem.SQL.Add(' and Email like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Estado' then
+          QueryListagem.SQL.Add(' and Estado like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'StatusFor' then
+          QueryListagem.SQL.Add(' and isnull(Status,''N'') like ''%'+Pesquisa.Text[1]+'%''');
+
+
 
         QueryListagem.Open;
         end;

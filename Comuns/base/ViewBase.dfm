@@ -11,7 +11,7 @@ object frmViewBase: TfrmViewBase
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIForm
-  PopupMenu = PopMenu1
+  PopupMenu = PopupMenu1
   Position = poDesktopCenter
   Visible = True
   WindowState = wsMaximized
@@ -797,6 +797,7 @@ object frmViewBase: TfrmViewBase
             000000000000}
           Layout = blGlyphTop
           Spacing = 0
+          Visible = False
           OnClick = BtnRelProdutosClick
           ExplicitLeft = 383
           ExplicitTop = 8
@@ -1406,21 +1407,21 @@ object frmViewBase: TfrmViewBase
   object QueryConsulta: TADOQuery
     Connection = Base
     Parameters = <>
-    Left = 1001
-    Top = 193
+    Left = 281
+    Top = 89
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 968
-    Top = 224
+    Left = 248
+    Top = 120
   end
-  object PopMenu1: TPopupMenu
-    Left = 992
-    Top = 304
-    object CarregaLogin1: TMenuItem
-      Caption = 'Carrega Login'
+  object PopupMenu1: TPopupMenu
+    Left = 568
+    Top = 272
+    object CarregarLogin1: TMenuItem
+      Caption = 'Carregar Login '
       ShortCut = 119
-      OnClick = CarregaLogin1Click
+      OnClick = CarregarLogin1Click
     end
   end
 end

@@ -99,6 +99,7 @@ type
     procedure QueryClienteAfterPost(DataSet: TDataSet);
     procedure QueryClienteAfterCancel(DataSet: TDataSet);
     procedure BtnSelecionarClick(Sender: TObject);
+    procedure DBCepChange(Sender: TObject);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -245,6 +246,26 @@ begin
     TimerCli.Enabled  := false;
     TimerCli.Enabled  := True;
 end;
+procedure TFormClientes.DBCepChange(Sender: TObject);
+var
+  Texto: string;
+begin
+  // Remover qualquer caractere que não seja número
+  Texto := DBCep.Text;
+  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);
+
+  // Formatar para o padrão 12345-123
+  if Length(Texto) > 5 then
+    Texto := Copy(Texto, 1, 5) + '-' + Copy(Texto, 6, Length(Texto) - 5);
+
+  // Atualiza o texto do Edit sem mover o cursor
+  DBCep.OnChange := nil;
+  DBCep.Text := Texto;
+  DBCep.SelStart := Length(DBCep.Text);
+  DBCep.OnChange := DBCepChange;
+
+end;
+
 procedure TFormClientes.dbgrd1CellClick(Column: TColumn);
 begin
   QueryCliente.Close;
@@ -350,7 +371,15 @@ procedure TFormClientes.QueryClienteAfterPost(DataSet: TDataSet);
 var
   i: integer;
 begin
-    for i := 0 to PagListagem.PageCount - 1 do
+
+  if (DBNomeCliente.Text = '') or (DBEmail.Text = '') or (DBTelefone.Text = '') then
+    begin
+      ShowMessage('Algum Campo obrigario esta Vazio Verifique !!');
+      Exit;
+    end;
+
+
+  for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
@@ -368,6 +397,9 @@ begin
   DBEndereco.Enabled := false;
   DBCidade.Enabled := false;
   DBUF.Enabled := false;
+
+  QueryListagem.Close;
+  QueryListagem.Open;
 end;
 procedure TFormClientes.QueryClienteBeforeEdit(DataSet: TDataSet);
 var
@@ -436,16 +468,24 @@ begin
           QueryListagem.SQL.Add('select * from Clientes where (1=1)');
         if CampoFiltrado = 'Nome' then
             QueryListagem.SQL.Add(' and Nome like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'Email' then
           QueryListagem.SQL.Add(' and Email like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'Telefone' then
           QueryListagem.SQL.Add(' and Telefone like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'Cidade' then
           QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'Estado' then
           QueryListagem.SQL.Add(' and Estado like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'CEP' then
-          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Endereco' then
+          QueryListagem.SQL.Add(' and Endereco like ''%'+Pesquisa.Text+'%''');
 
         QueryListagem.Open;
         end;

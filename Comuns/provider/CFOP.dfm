@@ -4,8 +4,8 @@ object FormCFOP: TFormCFOP
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'CFOP'
-  ClientHeight = 337
-  ClientWidth = 626
+  ClientHeight = 333
+  ClientWidth = 624
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,7 +13,7 @@ object FormCFOP: TFormCFOP
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -35,8 +35,8 @@ object FormCFOP: TFormCFOP
   object PagListagem: TPageControl
     Left = 0
     Top = 0
-    Width = 626
-    Height = 337
+    Width = 624
+    Height = 333
     ActivePage = ts1
     Align = alClient
     TabOrder = 0
@@ -49,8 +49,8 @@ object FormCFOP: TFormCFOP
       Font.Style = [fsBold]
       ParentFont = False
       DesignSize = (
-        618
-        307)
+        616
+        303)
       object lblTitulo: TLabel
         Left = 12
         Top = 24
@@ -154,21 +154,21 @@ object FormCFOP: TFormCFOP
       object Pesquisa: TEdit
         Left = 186
         Top = 22
-        Width = 269
-        Height = 21
+        Width = 257
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 0
         OnChange = PesquisaChange
-        ExplicitWidth = 267
+        ExplicitWidth = 255
       end
       object chkTodos: TCheckBox
-        Left = 860
+        Left = 848
         Top = 24
         Width = 106
         Height = 17
@@ -182,10 +182,10 @@ object FormCFOP: TFormCFOP
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
-        ExplicitLeft = 858
+        ExplicitLeft = 846
       end
       object Todos: TCheckBox
-        Left = 467
+        Left = 455
         Top = 24
         Width = 106
         Height = 17
@@ -200,12 +200,12 @@ object FormCFOP: TFormCFOP
         ShowHint = True
         TabOrder = 2
         OnClick = TodosClick
-        ExplicitLeft = 465
+        ExplicitLeft = 453
       end
       object dbgrd1: TDBGrid
         Left = 0
-        Top = 104
-        Width = 618
+        Top = 100
+        Width = 616
         Height = 203
         Align = alBottom
         DataSource = DSQueryListagem
@@ -337,17 +337,17 @@ object FormCFOP: TFormCFOP
       end
       inline FrameBtn: TFrmFrameToolBar
         Left = 0
-        Top = 278
-        Width = 618
+        Top = 274
+        Width = 616
         Height = 29
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 278
-        ExplicitWidth = 618
+        ExplicitTop = 274
+        ExplicitWidth = 616
         ExplicitHeight = 29
         inherited TollBar: TToolBar
-          Width = 618
-          ExplicitWidth = 618
+          Width = 616
+          ExplicitWidth = 616
         end
         inherited DataSet: TActionList
           inherited dtstnsrt: TDataSetInsert

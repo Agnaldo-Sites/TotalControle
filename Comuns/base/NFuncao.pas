@@ -14,11 +14,14 @@ type
       procedure LimpaGrid(Grid : TStringGrid);
       procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer;Column: TColumn; State: TGridDrawState);
       procedure AjustaTamanhoGrid(Grid : TStringGrid);
+      procedure AbreTelaLogin;
   end;
 
 implementation
 
 { TNFuncao }
+
+uses Usuarios, LoginUsuarios, ViewBase;
 
 procedure TNFuncao.LimpaGrid(Grid: TStringGrid);
 begin
@@ -44,6 +47,38 @@ begin
 
   // Forçar o redesenho do grid
   Grid.Invalidate;
+end;
+
+procedure TNFuncao.AbreTelaLogin;
+var
+  I, QtdeTelasAtivas: Integer;
+  Resultado : Integer;
+begin
+  QtdeTelasAtivas := 0;
+  for I := 0 to Screen.FormCount - 1 do
+  if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) then begin
+    QtdeTelasAtivas := QtdeTelasAtivas + 1;
+  end;
+  if (QtdeTelasAtivas > 0) then begin
+    Resultado := MessageDlg('Para alterar a aparência do sistema é necessário fechar todas as tela do Sistema Deseja Fechar tudo altomaticamente?',mtConfirmation,[mbYes, mbNo],0);
+  end;
+    if Resultado = mrYes
+      then begin
+        Try
+          for I := 0 to Screen.FormCount - 1 do
+            if Screen.Forms[I].HandleAllocated and IsWindowVisible(Screen.Forms[I].Handle) and (Screen.Forms[I] <> frmViewBase)
+              then Screen.Forms[I].Close;
+        Except
+          exit;
+        End;
+
+        try
+          Application.CreateForm(TFormLoginUsuarios,FormLoginUsuarios);
+          FormLoginUsuarios.ShowModal;
+        finally
+          FormLoginUsuarios.Free;
+        end;
+      end;
 end;
 
 procedure TNFuncao.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect;

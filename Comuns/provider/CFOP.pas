@@ -71,7 +71,7 @@ implementation
 
 {$R *.dfm}
 
-uses NFuncao, RelProduto, Grupo, ViewBase;
+uses NFuncao, RelProduto, Grupo, ViewBase, Produtos;
 
 procedure TFormCFOP.BtnSelecionarClick(Sender: TObject);
 begin
@@ -79,6 +79,13 @@ begin
     begin
       FormRelProduto.pnlDescGrupo1.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescCFOP').AsString;
       FormRelProduto.CodCFOP.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodCFOP').AsInteger);
+      Self.close;
+      exit;
+    end
+  else if vOnde = 'Produtos' then
+    begin
+      FormProdutos.pngDescCFOP.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescCFOP').AsString;
+      FormProdutos.DBCFOP.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodCFOP').AsInteger);
       Self.close;
       exit;
     end;
@@ -262,7 +269,7 @@ begin
           QueryListagem.SQL.Add(' and DescCFOP like ''%'+Pesquisa.Text+'%''')
 
         else if CampoFiltrado = 'AtivoCFOP' then
-          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text[1]+'%''');
 
         QueryListagem.Open;
         end;

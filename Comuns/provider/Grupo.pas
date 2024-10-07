@@ -72,6 +72,7 @@ type
   public
     { Public declarations }
     ViraTelaLocalizar: string;
+    vOnde : string;
   end;
 
 var
@@ -81,16 +82,27 @@ implementation
 
 {$R *.dfm}
 
-uses RelProduto, NFuncao, ViewBase;
+uses RelProduto, NFuncao, ViewBase, Produtos;
 
 procedure TFormGrupo.BtnSelecionarClick(Sender: TObject);
 var
   Funcao : TNFuncao;
 begin
-  FormRelProduto.pnlDescGrupo.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescGrupo').AsString;
-  FormRelProduto.CodGrupo.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodGrupo').AsInteger);
-  Self.close;
-  exit;
+  if vOnde = 'RelProdutos' then
+    begin
+
+      FormRelProduto.pnlDescGrupo.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescGrupo').AsString;
+      FormRelProduto.CodGrupo.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodGrupo').AsInteger);
+      Self.close;
+      exit;
+    end
+  else if vOnde= 'Produtos' then
+        begin
+          FormProdutos.DBCodGrupo.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodGrupo').AsInteger);
+          FormProdutos.PngDescGrupo.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescGrupo').AsString;
+          Self.close;
+          exit;
+        end;
 end;
 
 procedure TFormGrupo.dbgrd1CellClick(Column: TColumn);
@@ -124,7 +136,7 @@ begin
       lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
       lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
       Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
-      Pesquisa.Width := 450;
+      Pesquisa.Width := 391;
       Pesquisa.Visible := true;
       dbgrd1.Invalidate;
 end;
@@ -329,10 +341,13 @@ begin
           ' where (1=1)');
         if CampoFiltrado = 'DescGrupo' then
             QueryListagem.SQL.Add(' and DescGrupo like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'CodGrupo' then
           QueryListagem.SQL.Add(' and CodGrupo like ''%'+Pesquisa.Text+'%''')
+
         else if CampoFiltrado = 'AtivoGrupo' then
-          QueryListagem.SQL.Add(' and Grupo.Ativo like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and Grupo.Ativo like ''%'+Pesquisa.Text[1]+'%''');
+
         QueryListagem.Open;
         end;
 

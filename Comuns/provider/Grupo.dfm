@@ -4,8 +4,8 @@ object FormGrupo: TFormGrupo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Grupo'
-  ClientHeight = 331
-  ClientWidth = 791
+  ClientHeight = 327
+  ClientWidth = 789
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,7 +13,7 @@ object FormGrupo: TFormGrupo
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -22,8 +22,8 @@ object FormGrupo: TFormGrupo
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 791
-    Height = 331
+    Width = 789
+    Height = 327
     Align = alClient
     BorderStyle = bsSingle
     Color = clWindow
@@ -32,8 +32,8 @@ object FormGrupo: TFormGrupo
     object PagListagem: TPageControl
       Left = 1
       Top = 1
-      Width = 785
-      Height = 325
+      Width = 783
+      Height = 321
       ActivePage = ts1
       Align = alClient
       TabOrder = 0
@@ -46,8 +46,8 @@ object FormGrupo: TFormGrupo
         Font.Style = [fsBold]
         ParentFont = False
         DesignSize = (
-          777
-          295)
+          775
+          291)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -65,7 +65,7 @@ object FormGrupo: TFormGrupo
         end
         object BtnSelecionar: TSpeedButton
           Left = 12
-          Top = 54
+          Top = 49
           Width = 141
           Height = 27
           Caption = 'Selecionar'
@@ -151,21 +151,21 @@ object FormGrupo: TFormGrupo
         object Pesquisa: TEdit
           Left = 208
           Top = 22
-          Width = 403
-          Height = 21
+          Width = 391
+          Height = 24
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -13
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 0
           OnChange = PesquisaChange
-          ExplicitWidth = 401
+          ExplicitWidth = 389
         end
         object chkTodos: TCheckBox
-          Left = 1019
+          Left = 1007
           Top = 24
           Width = 106
           Height = 17
@@ -179,10 +179,10 @@ object FormGrupo: TFormGrupo
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
-          ExplicitLeft = 1017
+          ExplicitLeft = 1005
         end
         object Todos: TCheckBox
-          Left = 626
+          Left = 614
           Top = 24
           Width = 106
           Height = 17
@@ -197,12 +197,12 @@ object FormGrupo: TFormGrupo
           ShowHint = True
           TabOrder = 2
           OnClick = TodosClick
-          ExplicitLeft = 624
+          ExplicitLeft = 612
         end
         object dbgrd1: TDBGrid
           Left = 0
-          Top = 84
-          Width = 777
+          Top = 80
+          Width = 775
           Height = 211
           Align = alBottom
           DataSource = DSQueryListagem
@@ -339,17 +339,17 @@ object FormGrupo: TFormGrupo
         end
         inline FrameBtn: TFrmFrameToolBar
           Left = 0
-          Top = 266
-          Width = 777
+          Top = 262
+          Width = 775
           Height = 29
           Align = alBottom
           TabOrder = 1
-          ExplicitTop = 266
-          ExplicitWidth = 777
+          ExplicitTop = 262
+          ExplicitWidth = 775
           ExplicitHeight = 29
           inherited TollBar: TToolBar
-            Width = 777
-            ExplicitWidth = 777
+            Width = 775
+            ExplicitWidth = 775
           end
           inherited DataSet: TActionList
             inherited dtstnsrt: TDataSetInsert

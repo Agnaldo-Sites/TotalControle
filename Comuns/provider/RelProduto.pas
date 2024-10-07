@@ -147,6 +147,7 @@ begin
     FormGrupo := TFormGrupo.Create(Self);
     try
       FormGrupo.BtnSelecionar.Visible := true;
+      FormGrupo.vOnde := 'RelProdutos';
       Application.CreateForm(TFormGrupo, FormGrupo);
     finally
       FormGrupo.BtnSelecionar.Visible := false;

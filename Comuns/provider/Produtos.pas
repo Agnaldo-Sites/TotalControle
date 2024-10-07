@@ -28,7 +28,7 @@ type
     lbl4: TLabel;
     lbl41: TLabel;
     DBCodGrupo: TDBEdit;
-    DescGrupo: TPanel;
+    PngDescGrupo: TPanel;
     DBQuantEstoque: TDBEdit;
     lbl411: TLabel;
     DBPermiteMovEstoque: TDBComboBox;
@@ -44,7 +44,7 @@ type
     DBCEST: TDBEdit;
     DBCFOP: TDBEdit;
     lbl412111: TLabel;
-    DescCFOP: TPanel;
+    pngDescCFOP: TPanel;
     DBAliquotaICMS: TDBEdit;
     lbl41221: TLabel;
     DBAliquotaIPI: TDBEdit;
@@ -124,6 +124,7 @@ type
     btn2: TSpeedButton;
     btn3: TSpeedButton;
     BtnSelecionar: TSpeedButton;
+    QueryConsulta: TADOQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure TimerTimer(Sender: TObject);
     procedure PesquisaChange(Sender: TObject);
@@ -148,6 +149,11 @@ type
     procedure btn12Click(Sender: TObject);
     procedure btn11Click(Sender: TObject);
     procedure BtnSelecionarClick(Sender: TObject);
+    procedure DBCodGrupoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBCodGrupoExit(Sender: TObject);
+    procedure DBCFOPKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure DBCFOPExit(Sender: TObject);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -160,7 +166,7 @@ var
   FormProdutos: TFormProdutos;
 implementation
 uses
-  ViewBase, Vendas, ConsultaVenda, NFuncao;
+  ViewBase, Vendas, ConsultaVenda, NFuncao, Grupo, CFOP;
 {$R *.dfm}
 
 procedure TFormProdutos.btn11Click(Sender: TObject);
@@ -387,6 +393,78 @@ begin
   TimerEstoque.Enabled := false;
   TimerEstoque.Enabled := true;
 end;
+procedure TFormProdutos.DBCFOPExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescCFOP : string;
+begin
+  if  DBCFOP.Text = '' then exit;
+
+  DescCFOP := Funcao.ConsultaQuery('CFOP','DescCFOP','CodCFOP',DBCFOP.Text,QueryConsulta);
+  if DescCFOP <> '' then
+    pngDescCFOP.Caption :=  DescCFOP
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      DBCFOP.SetFocus;
+      Exit;
+    end;
+
+end;
+
+procedure TFormProdutos.DBCFOPKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormCFOP := TFormCFOP.Create(Self);
+    try
+      FormCFOP.BtnSelecionar.Visible := true;
+      FormCFOP.vOnde := 'Produtos';
+      Application.CreateForm(TFormCFOP, FormCFOP);
+    finally
+      FormCFOP.BtnSelecionar.Visible := false;
+      FormCFOP.Free;
+    end;
+  end;
+end;
+
+procedure TFormProdutos.DBCodGrupoExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescGrupo: string;
+begin
+  if DBCodGrupo.Text = '' then exit;
+
+  DescGrupo := Funcao.ConsultaQuery('Grupo','DescGrupo','CodGrupo',DBCodGrupo.Text,QueryConsulta);
+  if DescGrupo <> '' then
+      PngDescGrupo.Caption :=  DescGrupo
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      DBCodGrupo.SetFocus;
+      Exit;
+    end;
+
+end;
+
+procedure TFormProdutos.DBCodGrupoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormGrupo := TFormGrupo.Create(Self);
+    try
+      FormGrupo.BtnSelecionar.Visible := true;
+      FormGrupo.vOnde := 'Produtos';
+      Application.CreateForm(TFormGrupo, FormGrupo);
+    finally
+      FormGrupo.BtnSelecionar.Visible := false;
+      FormGrupo.Free;
+    end;
+  end;
+end;
+
 procedure TFormProdutos.dbgrd1CellClick(Column: TColumn);
 begin
   QueryProdutos.Close;
@@ -415,7 +493,7 @@ begin
   lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
   lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
   Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
-  Pesquisa.Width := 483;
+  Pesquisa.Width := 411;
   dbgrd1.Invalidate;
 end;
 
@@ -442,7 +520,7 @@ begin
   lblTitulo1.Caption := 'Pesquisar: ' +Column.Title.Caption;
   lblTitulo1.Width := lblTitulo1.Canvas.TextWidth(lblTitulo1.Caption);
   PesquisaEstoque.Left := lblTitulo1.Left + lblTitulo1.Width + 10;
-  PesquisaEstoque.Width := 422;
+  PesquisaEstoque.Width := 390;
   dbgrd1.Invalidate;
 
 end;
@@ -601,7 +679,7 @@ begin
       QueryEstoque.Close;
       QueryEstoque.SQL.Clear;
       QueryEstoque.SQL.Add('select Produtos.CodProduto,Produtos.DescProduto,Grupo.DescGrupo,Produtos.QuantEstoque,Produtos.PermiteMovEstoque from Produtos'+
-      ' left outer join Grupo on Produtos.CodProduto = Grupo.CodProduto');
+      ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo');
       QueryEstoque.Open;
     end
   else
@@ -611,7 +689,7 @@ begin
           QueryEstoque.Close;
           QueryEstoque.SQL.Clear;
           QueryEstoque.SQL.Add('select Produtos.CodProduto,Produtos.DescProduto,Grupo.DescGrupo,Produtos.QuantEstoque,Produtos.PermiteMovEstoque from Produtos'+
-          ' left outer join Grupo on Produtos.CodProduto = Grupo.CodProduto where (1=1)');
+          ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo where (1=1)');
         if CampoFiltrado = 'DescProduto' then
             QueryEstoque.SQL.Add(' and DescProduto like ''%'+Pesquisa.Text+'%''')
         else if CampoFiltrado = 'DescGrupo' then

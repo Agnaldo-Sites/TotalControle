@@ -19,11 +19,11 @@ type
     ConsultaUsuario: TADOQuery;
     Timer1: TTimer;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure SpeedButton1Click(Sender: TObject);
     procedure BtnConcluirClick(Sender: TObject);
     procedure EditNomeExit(Sender: TObject);
     procedure EditNomeKeyPress(Sender: TObject; var Key: Char);
     procedure EditSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
     xButtonClose : integer;
@@ -119,11 +119,18 @@ begin
 end;
 procedure TFormLoginUsuarios.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+   Action := CaFree;
+   Release;
+   FormLoginUsuarios := nil;
+
   if xButtonClose <> 1 then
-    Application.Terminate;
+      Application.Terminate
+  else
+    close;
 end;
 procedure TFormLoginUsuarios.SpeedButton1Click(Sender: TObject);
 begin
-   Application.Terminate;
+  close;
 end;
+
 end.

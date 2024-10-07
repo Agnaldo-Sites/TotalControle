@@ -13,7 +13,6 @@ object FormRelProduto: TFormRelProduto
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Scaled = False
   Visible = True
@@ -26,6 +25,8 @@ object FormRelProduto: TFormRelProduto
     Height = 712
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 790
+    ExplicitHeight = 708
     object lbl1: TLabel
       Left = 168
       Top = 21
@@ -80,13 +81,13 @@ object FormRelProduto: TFormRelProduto
     end
     object pnl2: TPanel
       Left = 1
-      Top = 659
-      Width = 792
+      Top = 655
+      Width = 790
       Height = 56
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 655
-      ExplicitWidth = 790
+      ExplicitTop = 651
+      ExplicitWidth = 788
       object btn1: TSpeedButton
         Left = 92
         Top = 14

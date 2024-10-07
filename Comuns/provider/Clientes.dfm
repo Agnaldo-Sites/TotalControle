@@ -13,7 +13,7 @@ object FormClientes: TFormClientes
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
-  PopupMenu = frmViewBase.PopMenu1
+  PopupMenu = frmViewBase.PopupMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -256,21 +256,20 @@ object FormClientes: TFormClientes
         object Pesquisa: TEdit
           Left = 172
           Top = 22
-          Width = 425
-          Height = 21
+          Width = 419
+          Height = 24
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -13
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
-          ExplicitWidth = 423
         end
         object Todos: TCheckBox
-          Left = 630
+          Left = 624
           Top = 24
           Width = 106
           Height = 17
@@ -285,7 +284,6 @@ object FormClientes: TFormClientes
           ShowHint = True
           TabOrder = 2
           OnClick = TodosClick
-          ExplicitLeft = 628
         end
       end
       object PagManutencao: TTabSheet
@@ -427,6 +425,7 @@ object FormClientes: TFormClientes
           Top = 35
           Width = 281
           Height = 23
+          CharCase = ecUpperCase
           DataField = 'Nome'
           DataSource = DSQueryCliente
           Enabled = False
@@ -461,12 +460,14 @@ object FormClientes: TFormClientes
           DataSource = DSQueryCliente
           Enabled = False
           TabOrder = 3
+          OnChange = DBCepChange
         end
         object DBEndereco: TDBEdit
           Left = 299
           Top = 91
           Width = 246
           Height = 23
+          CharCase = ecUpperCase
           DataField = 'Endereco'
           DataSource = DSQueryCliente
           Enabled = False
@@ -477,6 +478,7 @@ object FormClientes: TFormClientes
           Top = 147
           Width = 246
           Height = 23
+          CharCase = ecUpperCase
           DataField = 'Cidade'
           DataSource = DSQueryCliente
           Enabled = False
@@ -502,6 +504,7 @@ object FormClientes: TFormClientes
           Top = 147
           Width = 45
           Height = 23
+          CharCase = ecUpperCase
           DataField = 'Estado'
           DataSource = DSQueryCliente
           Enabled = False
@@ -945,7 +948,7 @@ object FormClientes: TFormClientes
         object edt1: TEdit
           Left = 123
           Top = 22
-          Width = 562
+          Width = 556
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Enabled = False
@@ -957,7 +960,6 @@ object FormClientes: TFormClientes
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
-          ExplicitWidth = 564
         end
         object GridExcel: TStringGrid
           Left = 0
