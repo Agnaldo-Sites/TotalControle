@@ -114,7 +114,7 @@ implementation
 
 
 uses
-  ViewBase, Vendas, ConsultaVenda;
+  ViewBase, Vendas, ConsultaVenda, RelProduto;
 {$R *.dfm}
 
 
@@ -239,6 +239,13 @@ begin
       Self.close;
       exit;
     end;
+    if vOnde = 'Relatorios' then //Condição para saber em qual tela as Informações vão
+    begin
+      FormRelProduto.EditCliente.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodCliente').AsInteger);
+      FormRelProduto.PlnCliente.Caption := dbgrd1.DataSource.DataSet.FieldByName('Nome').AsString;
+      Self.close;
+      exit;
+    end;
 end;
 
 procedure TFormClientes.DateEdit1Change(Sender: TObject);
@@ -253,11 +260,9 @@ begin
   // Remover qualquer caractere que não seja número
   Texto := DBCep.Text;
   Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);
-
   // Formatar para o padrão 12345-123
   if Length(Texto) > 5 then
     Texto := Copy(Texto, 1, 5) + '-' + Copy(Texto, 6, Length(Texto) - 5);
-
   // Atualiza o texto do Edit sem mover o cursor
   DBCep.OnChange := nil;
   DBCep.Text := Texto;

@@ -166,7 +166,7 @@ var
   FormProdutos: TFormProdutos;
 implementation
 uses
-  ViewBase, Vendas, ConsultaVenda, NFuncao, Grupo, CFOP;
+  ViewBase, Vendas, ConsultaVenda, NFuncao, Grupo, CFOP, RelProduto;
 {$R *.dfm}
 
 procedure TFormProdutos.btn11Click(Sender: TObject);
@@ -385,6 +385,14 @@ begin
       Self.close;
       exit;
 
+    end
+  else if vOnde = 'Relatorios' then
+    begin
+      FormRelProduto.EditCodProduto.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodProduto').AsInteger);
+      FormRelProduto.plnProduto.Caption :=  dbgrd1.DataSource.DataSet.FieldByName('DescProduto').AsString;
+
+      Self.close;
+      exit;
     end;
 end;
 

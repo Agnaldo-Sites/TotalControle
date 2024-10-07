@@ -1,0 +1,421 @@
+unit RelProduto;
+interface
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.Buttons, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids,
+  QRCtrls, QuickRpt, Vcl.ComCtrls;
+type
+  TFormRelProduto = class(TForm)
+    RelProdutos: TADOQuery;
+    DSRelProdutos: TDataSource;
+    atncfldRelProdutosCodProduto: TAutoIncField;
+    strngfldRelProdutosDescProduto: TStringField;
+    strngfldRelProdutosCodigoBarra: TStringField;
+    strngfldRelProdutosCFOP: TStringField;
+    intgrfldRelProdutosCodGrupo: TIntegerField;
+    strngfldRelProdutosDescGrupo: TStringField;
+    QueryConsulta: TADOQuery;
+    RelProdutosCustoCompra: TWideStringField;
+    RelProdutosCustoVenda: TWideStringField;
+    RelProdutosAtivo: TStringField;
+    RelProdutosPermiteMovEstoque: TStringField;
+    PageControl1: TPageControl;
+    PagProdutos: TTabSheet;
+    pnl1: TPanel;
+    lbl3: TLabel;
+    lbl31: TLabel;
+    pnl2: TPanel;
+    btn1: TSpeedButton;
+    CodGrupo: TEdit;
+    pnlDescGrupo: TPanel;
+    CodCFOP: TEdit;
+    pnlDescGrupo1: TPanel;
+    grp1: TGroupBox;
+    RadioStatus: TRadioGroup;
+    RadioEstoque: TRadioGroup;
+    QuickRep1: TQuickRep;
+    DetailBand1: TQRBand;
+    QRDBText1: TQRDBText;
+    QRDBText3: TQRDBText;
+    QRDBText4: TQRDBText;
+    QRDBText2: TQRDBText;
+    QRDBText5: TQRDBText;
+    QRDBText6: TQRDBText;
+    QRBand1: TQRBand;
+    QRLabel2: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLabel6: TQRLabel;
+    QRLabel3: TQRLabel;
+    QRLabel7: TQRLabel;
+    PageHeaderBand1: TQRBand;
+    QRLabel1: TQRLabel;
+    QRSysData1: TQRSysData;
+    PagVendas: TTabSheet;
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
+    EditVenda: TEdit;
+    EditCliente: TEdit;
+    PlnCliente: TPanel;
+    QuickRep2: TQuickRep;
+    QRBand2: TQRBand;
+    QRDBText7: TQRDBText;
+    QRDBText8: TQRDBText;
+    QRDBText9: TQRDBText;
+    QRDBText10: TQRDBText;
+    QRDBText11: TQRDBText;
+    QRDBText12: TQRDBText;
+    QRBand3: TQRBand;
+    QRLabel8: TQRLabel;
+    QRLabel9: TQRLabel;
+    QRLabel10: TQRLabel;
+    QRLabel11: TQRLabel;
+    QRLabel12: TQRLabel;
+    QRLabel13: TQRLabel;
+    QRBand4: TQRBand;
+    QRLabel14: TQRLabel;
+    QRSysData2: TQRSysData;
+    QueryVendas: TADOQuery;
+    DSQueryVendas: TDataSource;
+    QueryVendasCodCliente: TIntegerField;
+    QueryVendasNome: TWideStringField;
+    QueryVendasMetodoPagamento: TWideStringField;
+    QueryVendasCodProduto: TIntegerField;
+    QueryVendasDescProduto: TStringField;
+    QueryVendasQuant: TIntegerField;
+    QueryVendasCodUsuario: TIntegerField;
+    QueryVendasNome_1: TWideStringField;
+    QueryVendasCodGrupo: TIntegerField;
+    QueryVendasDescGrupo: TStringField;
+    QuickRep3: TQuickRep;
+    QRBand5: TQRBand;
+    QRDBText13: TQRDBText;
+    QRDBText14: TQRDBText;
+    QRDBText15: TQRDBText;
+    QRBand6: TQRBand;
+    QRLabel15: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel19: TQRLabel;
+    QRBand7: TQRBand;
+    QRLabel21: TQRLabel;
+    QueryVendasCodVenda: TStringField;
+    QueryVendasValUnitario: TWideStringField;
+    QueryVendasValTot: TWideStringField;
+    QueryVendasTotVenda: TWideStringField;
+    QRLabel17: TQRLabel;
+    QRDBText16: TQRDBText;
+    QRLabel18: TQRLabel;
+    QRDBText17: TQRDBText;
+    QRLabel20: TQRLabel;
+    QRDBText18: TQRDBText;
+    QRDBText19: TQRDBText;
+    QRLabel23: TQRLabel;
+    QRSysData3: TQRSysData;
+    QRDBText20: TQRDBText;
+    plnProduto: TPanel;
+    EditCodProduto: TEdit;
+    Label3: TLabel;
+    RadioGroup2: TRadioGroup;
+    RadioGroup1: TRadioGroup;
+    QueryVendasPermiteMovEstoque: TStringField;
+    procedure btn1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CodGrupoExit(Sender: TObject);
+    procedure CodCFOPExit(Sender: TObject);
+    procedure CodGrupoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure CodCFOPKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure EditVendaExit(Sender: TObject);
+    procedure EditVendaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditClienteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditClienteExit(Sender: TObject);
+    procedure EditCodProdutoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodProdutoExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+var
+  FormRelProduto: TFormRelProduto;
+implementation
+uses
+  ViewBase, NFuncao, Grupo, CFOP, ConsultaVenda, Clientes, Produtos;
+{$R *.dfm}
+procedure TFormRelProduto.btn1Click(Sender: TObject);
+begin
+  WITH RelProdutos do
+    begin
+      close;
+      SQL.Clear;
+      SQL.Add('select Produtos.CodProduto,Produtos.DescProduto,Produtos.CodigoBarra, FORMAT(Produtos.CustoCompra, ''C'', ''pt-BR'') as CustoCompra'+
+      ',FORMAT(Produtos.CustoVenda, ''C'', ''pt-BR'') as CustoVenda,Produtos.CFOP,CASE when isnull(Produtos.Ativo,''N'') = ''N'' then ''Não'' else ''Sim'' END as Ativo,'+
+      ' CASE when isnull(Produtos.PermiteMovEstoque,''N'') = ''N'' then ''Não'' else ''Sim'' END as PermiteMovEstoque,Produtos.CodGrupo,Grupo.DescGrupo'+
+      ' from Produtos'+
+      ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo where (1=1)');
+
+      if CodGrupo.Text <> '' then
+        SQL.Add(' and Produtos.CodGrupo = '+CodGrupo.Text);
+      if CodCFOP.Text <> '' then
+        SQL.Add(' and Produtos.CFOP = '+CodCFOP.Text);
+      case RadioEstoque.ItemIndex of
+        0:SQL.Add(' and Produtos.PermiteMovEstoque = ''S''');
+        1:SQL.Add(' and Produtos.PermiteMovEstoque = ''N''');
+      end;
+
+      case RadioStatus.ItemIndex of
+        0:SQL.Add(' and Produtos.Ativo = ''S''');
+        1:SQL.Add(' and Produtos.Ativo = ''N''');
+      end;
+      Open;
+
+      if IsEmpty then
+        begin
+          ShowMessage('Erro Consulta não Encontrada Verifique !!');
+          Exit;
+        end;
+    end;
+
+    QuickRep1.Preview;
+
+end;
+procedure TFormRelProduto.CodCFOPExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescCFOP : string;
+begin
+  if CodCFOP.Text = '' then exit;
+
+  DescCFOP := Funcao.ConsultaQuery('CFOP','DescCFOP','CodCFOP',CodCFOP.Text,QueryConsulta);
+  if DescCFOP <> '' then
+    pnlDescGrupo.Caption :=  DescCFOP
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      CodCFOP.SetFocus;
+      Exit;
+    end;
+
+end;
+
+procedure TFormRelProduto.CodCFOPKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormCFOP := TFormCFOP.Create(Self);
+    try
+      FormCFOP.BtnSelecionar.Visible := true;
+      FormCFOP.vOnde := 'RelProdutos';
+      Application.CreateForm(TFormCFOP, FormCFOP);
+    finally
+      FormCFOP.BtnSelecionar.Visible := false;
+      FormCFOP.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.CodGrupoExit(Sender: TObject);
+var
+  Funcao : TNFuncao;
+  DescGrupo: string;
+begin
+  if CodGrupo.Text = '' then exit;
+
+  DescGrupo := Funcao.ConsultaQuery('Grupo','DescGrupo','CodGrupo',CodGrupo.Text,QueryConsulta);
+  if DescGrupo <> '' then
+    pnlDescGrupo.Caption :=  DescGrupo
+  else
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      CodGrupo.SetFocus;
+      Exit;
+    end;
+end;
+
+procedure TFormRelProduto.CodGrupoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F5 then
+  begin
+    FormGrupo := TFormGrupo.Create(Self);
+    try
+      FormGrupo.BtnSelecionar.Visible := true;
+      FormGrupo.vOnde := 'RelProdutos';
+      Application.CreateForm(TFormGrupo, FormGrupo);
+    finally
+      FormGrupo.BtnSelecionar.Visible := false;
+      FormGrupo.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.EditClienteExit(Sender: TObject);
+var
+  F : TNFuncao;
+  NomeCliente : string;
+begin
+    if EditCliente.Text = '' then exit;
+
+    NomeCliente := F.ConsultaQuery('Clientes','Nome','CodCliente',EditCliente.Text,QueryConsulta);
+    if NomeCliente = '' then
+      begin
+        ShowMessage('Nome de Cliente não Cadastrado Verifique !!');
+        EditCliente.SetFocus;
+        Exit;
+      end;
+
+end;
+
+procedure TFormRelProduto.EditClienteKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = VK_F5 then
+  begin
+      FormClientes := TFormClientes.Create(Self);
+    try
+      FormClientes.BtnSelecionar.Visible := true;
+      FormClientes.vOnde := 'Relatorios';
+      Application.CreateForm(TFormClientes, FormClientes);
+    finally
+      FormClientes.BtnSelecionar.Visible := false;
+      FormClientes.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.EditCodProdutoExit(Sender: TObject);
+var
+  F : TNFuncao;
+  NomeProduto : string;
+begin
+     if EditCodProduto.Text = '' then exit;
+
+     NomeProduto := F.ConsultaQuery('Produtos','DescProduto','CodProduto',EditCodProduto.Text,QueryConsulta);
+    if NomeProduto = '' then
+      begin
+        ShowMessage('Produto não Cadastrado Verifique !!');
+        EditCodProduto.SetFocus;
+        Exit;
+      end;
+
+end;
+
+procedure TFormRelProduto.EditCodProdutoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    if Key = VK_F5 then
+  begin
+    FormProdutos := TFormProdutos.Create(Self);
+    try
+      FormProdutos.BtnSelecionar.Visible := true;
+      FormProdutos.vOnde := 'Relatorios';
+      Application.CreateForm(TFormProdutos, FormProdutos);
+    finally
+      FormProdutos.BtnSelecionar.Visible := false;
+      FormProdutos.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.EditVendaExit(Sender: TObject);
+var
+  F : TNFuncao;
+  Venda: string;
+begin
+  if  EditVenda.Text = '' then exit;
+
+  Venda := F.ConsultaQuery('Vendas','CodVenda','CodVenda',EditVenda.Text,QueryConsulta);
+  if  Venda = '' then
+    begin
+      ShowMessage('Erro Grupo não encontrado Verifique');
+      CodGrupo.SetFocus;
+      Exit;
+    end;
+
+end;
+
+procedure TFormRelProduto.EditVendaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    if Key = VK_F5 then
+  begin
+     FormConsultaVenda := TFormConsultaVenda.Create(Self);
+    try
+      FormConsultaVenda.BtnSelecionar.Visible := true;
+      FormConsultaVenda.vOnde := 'Relatorios';
+      Application.CreateForm(TFormConsultaVenda, FormConsultaVenda);
+    finally
+      FormConsultaVenda.BtnSelecionar.Visible := false;
+      FormConsultaVenda.Free;
+    end;
+  end;
+end;
+
+procedure TFormRelProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  RelProdutos := nil;
+end;
+
+procedure TFormRelProduto.SpeedButton1Click(Sender: TObject);
+begin
+  WITH RelProdutos do
+    begin
+      close;
+      SQL.Clear;
+      SQL.Add('select (''Venda - ''+CONVERT(VARCHAR,Vendas.CodVenda)) CodVenda,Vendas.CodCliente,Clientes.Nome,Vendas.MetodoPagamento,FORMAT(Vendas.TotVenda, ''C'', ''pt-BR'') as TotVenda,ItensVenda.CodProduto,'+
+      ' Produtos.DescProduto,ItensVenda.Quant,FORMAT(ItensVenda.ValUnitario, ''C'', ''pt-BR'') as ValUnitario,FORMAT(ItensVenda.ValTot, ''C'', ''pt-BR'') as ValTot,Vendas.CodUsuario,Usuarios.Nome,'+
+      ' produtos.CodGrupo,Grupo.DescGrupo,Produtos.PermiteMovEstoque'+
+      ' from Vendas'+
+      ' inner join ItensVenda on Vendas.CodVenda = ItensVenda.CodVenda'+
+      ' inner join Produtos on ItensVenda.CodProduto = Produtos.CodProduto'+
+      ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo'+
+      ' left outer join Clientes on Vendas.CodCliente = Clientes.CodCliente'+
+      ' left outer join  Usuarios on Vendas.CodUsuario = Usuarios.Codusuario'+
+      ' where (1=1)');
+
+      if EditCliente.Text <> '' then
+        SQL.Add(' and Vendas.CodCliente ='+EditCliente.Text) ;
+
+      if EditCodProduto.Text <> '' then
+        SQL.Add(' and itensVenda.CodProduto = '+ EditCodProduto.Text);
+
+      if EditVenda.Text <> '' then
+        SQL.Add(' and Vendas.CodVenda ='+EditVenda.Text);
+
+      case RadioGroup1.ItemIndex of
+         0:SQL.Add(' and Produtos.PermiteMovEstoque = ''S''');
+         1:SQL.Add(' and Produtos.PermiteMovEstoque = ''N''');
+      end;
+
+      case RadioGroup2.ItemIndex of
+         0:SQL.Add(' and Vendas.MetodoPagamento = ''Dinhero''');
+         1:SQL.Add(' and Vendas.MetodoPagamento = ''Cartão de Credito''');
+         2:SQL.Add(' and Vendas.MetodoPagamento = ''Cartão de Debido''');
+      end;
+
+      SQL.Add('order by Vendas.CodVenda');
+      Open;
+
+      if IsEmpty then
+        begin
+          ShowMessage('Erro Consulta não Encontrada Verifique !!');
+          Exit;
+        end;
+    end;
+
+    QuickRep2.Preview;
+end;
+
+end.
+

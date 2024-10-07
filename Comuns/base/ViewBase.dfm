@@ -661,7 +661,7 @@ object frmViewBase: TfrmViewBase
           Height = 62
           Hint = 'Cadastro de Clientes'
           Align = alLeft
-          Caption = 'Rel.Produtos'
+          Caption = 'Relatorios'
           Flat = True
           Glyph.Data = {
             42100000424D4210000000000000420000002800000020000000200000000100
@@ -797,10 +797,9 @@ object frmViewBase: TfrmViewBase
             000000000000}
           Layout = blGlyphTop
           Spacing = 0
-          Visible = False
           OnClick = BtnRelProdutosClick
-          ExplicitLeft = 383
-          ExplicitTop = 8
+          ExplicitLeft = 446
+          ExplicitTop = -12
         end
         object BtnGrupo: TSpeedButton
           Left = 302

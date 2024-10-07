@@ -57,6 +57,7 @@ type
     VendasValUnitario: TBCDField;
     VendasValTot: TBCDField;
     QueryConsulta: TADOQuery;
+    BtnSelecionar: TSpeedButton;
     procedure TimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure PesquisaChange(Sender: TObject);
@@ -80,6 +81,7 @@ type
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure GridVendaDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnSelecionarClick(Sender: TObject);
   private
     { Private declarations }
     CampoFiltrado : string;
@@ -88,6 +90,7 @@ type
     row : Integer;
   public
     { Public declarations }
+    vOnde : string;
   end;
 
 var
@@ -97,7 +100,17 @@ implementation
 
 {$R *.dfm}
 
-uses NFuncao, Produtos, Vendas, Clientes, ViewBase;
+uses NFuncao, Produtos, Vendas, Clientes, ViewBase, RelProduto;
+
+procedure TFormConsultaVenda.BtnSelecionarClick(Sender: TObject);
+begin
+  if vOnde = 'Relatorios' then
+    begin
+      FormRelProduto.EditVenda.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodVenda').AsInteger);
+      Self.close;
+      exit;
+    end;
+end;
 
 procedure TFormConsultaVenda.DBEdit1Exit(Sender: TObject);
 var

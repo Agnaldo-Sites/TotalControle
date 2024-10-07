@@ -24,7 +24,7 @@ object FormProdutos: TFormProdutos
     Top = 0
     Width = 817
     Height = 394
-    ActivePage = Fiscal
+    ActivePage = ts1
     Align = alClient
     TabOrder = 0
     object ts1: TTabSheet
@@ -250,7 +250,7 @@ object FormProdutos: TFormProdutos
       object Pesquisa: TEdit
         Left = 190
         Top = 22
-        Width = 411
+        Width = 409
         Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -263,7 +263,7 @@ object FormProdutos: TFormProdutos
         OnChange = PesquisaChange
       end
       object chkTodos: TCheckBox
-        Left = 821
+        Left = 819
         Top = 24
         Width = 106
         Height = 17
@@ -279,7 +279,7 @@ object FormProdutos: TFormProdutos
         TabOrder = 2
       end
       object Todos: TCheckBox
-        Left = 652
+        Left = 650
         Top = 26
         Width = 106
         Height = 17
@@ -924,7 +924,7 @@ object FormProdutos: TFormProdutos
       object PesquisaEstoque: TEdit
         Left = 191
         Top = 22
-        Width = 390
+        Width = 388
         Height = 24
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -935,10 +935,10 @@ object FormProdutos: TFormProdutos
         ParentFont = False
         TabOrder = 2
         OnChange = PesquisaEstoqueChange
-        ExplicitWidth = 388
+        ExplicitWidth = 386
       end
       object chkTodos11: TCheckBox
-        Left = 644
+        Left = 642
         Top = 24
         Width = 106
         Height = 17
@@ -953,7 +953,7 @@ object FormProdutos: TFormProdutos
         ShowHint = True
         TabOrder = 3
         OnClick = chkTodos11Click
-        ExplicitLeft = 642
+        ExplicitLeft = 640
       end
     end
     object ImportaExcel: TTabSheet
@@ -1071,7 +1071,7 @@ object FormProdutos: TFormProdutos
       object edt1: TEdit
         Left = 123
         Top = 22
-        Width = 558
+        Width = 556
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Enabled = False

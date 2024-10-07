@@ -256,7 +256,7 @@ object FormClientes: TFormClientes
         object Pesquisa: TEdit
           Left = 172
           Top = 22
-          Width = 419
+          Width = 417
           Height = 24
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
@@ -267,9 +267,10 @@ object FormClientes: TFormClientes
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
+          ExplicitWidth = 415
         end
         object Todos: TCheckBox
-          Left = 624
+          Left = 622
           Top = 24
           Width = 106
           Height = 17
@@ -284,6 +285,7 @@ object FormClientes: TFormClientes
           ShowHint = True
           TabOrder = 2
           OnClick = TodosClick
+          ExplicitLeft = 620
         end
       end
       object PagManutencao: TTabSheet
@@ -496,7 +498,7 @@ object FormClientes: TFormClientes
           ExplicitHeight = 29
           inherited TollBar: TToolBar
             Width = 786
-            ExplicitWidth = 784
+            ExplicitWidth = 786
           end
         end
         object DBUF: TDBEdit
@@ -948,7 +950,7 @@ object FormClientes: TFormClientes
         object edt1: TEdit
           Left = 123
           Top = 22
-          Width = 556
+          Width = 554
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Enabled = False
