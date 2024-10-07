@@ -88,6 +88,7 @@ type
     procedure EditClienteKeyPress(Sender: TObject; var Key: Char);
     procedure EditClienteKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure VendasAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
     procedure CarregaStringGrid;

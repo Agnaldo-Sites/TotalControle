@@ -5,8 +5,8 @@ object FormVendas: TFormVendas
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Vendas'
-  ClientHeight = 651
-  ClientWidth = 1013
+  ClientHeight = 655
+  ClientWidth = 1015
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,10 +24,12 @@ object FormVendas: TFormVendas
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1013
-    Height = 651
+    Width = 1015
+    Height = 655
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1013
+    ExplicitHeight = 651
     object Panel2: TPanel
       Left = 1
       Top = 576
@@ -343,7 +345,7 @@ object FormVendas: TFormVendas
         Left = 11
         Top = 54
         Width = 452
-        Height = 30
+        Height = 46
         Margins.Left = 10
         Margins.Top = 10
         Align = alLeft
@@ -355,12 +357,13 @@ object FormVendas: TFormVendas
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitHeight = 30
       end
       object Label2: TLabel
         AlignWithMargins = True
         Left = 11
         Top = 4
-        Width = 217
+        Width = 998
         Height = 37
         Margins.Left = 10
         Align = alTop
@@ -372,6 +375,7 @@ object FormVendas: TFormVendas
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitWidth = 217
       end
       object Panel11: TPanel
         Left = 527
@@ -386,7 +390,7 @@ object FormVendas: TFormVendas
           Left = 11
           Top = 6
           Width = 68
-          Height = 30
+          Height = 49
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -398,6 +402,7 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
         object EditCliente: TEdit
           Left = 96
@@ -679,7 +684,7 @@ object FormVendas: TFormVendas
           Left = 11
           Top = 6
           Width = 90
-          Height = 30
+          Height = 54
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -691,6 +696,7 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
       end
       object RadioGroup1: TRadioGroup
@@ -799,7 +805,7 @@ object FormVendas: TFormVendas
           Left = 11
           Top = 6
           Width = 171
-          Height = 30
+          Height = 54
           Margins.Left = 10
           Margins.Top = 5
           Align = alLeft
@@ -811,6 +817,7 @@ object FormVendas: TFormVendas
           Font.Style = [fsBold]
           ParentFont = False
           Layout = tlCenter
+          ExplicitHeight = 30
         end
       end
       object Panel8: TPanel
@@ -841,8 +848,8 @@ object FormVendas: TFormVendas
             AlignWithMargins = True
             Left = 71
             Top = 4
-            Width = 86
-            Height = 32
+            Width = 176
+            Height = 54
             Margins.Left = 70
             Align = alClient
             Caption = 'R$ 0,00'
@@ -855,6 +862,8 @@ object FormVendas: TFormVendas
             ParentColor = False
             ParentFont = False
             Layout = tlCenter
+            ExplicitWidth = 86
+            ExplicitHeight = 32
           end
         end
         object Panel10: TPanel
