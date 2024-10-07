@@ -4,8 +4,8 @@ object FormRelProduto: TFormRelProduto
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Relatorio de Produtos'
-  ClientHeight = 720
-  ClientWidth = 796
+  ClientHeight = 712
+  ClientWidth = 792
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,7 @@ object FormRelProduto: TFormRelProduto
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
+  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Scaled = False
   Visible = True
@@ -21,8 +22,8 @@ object FormRelProduto: TFormRelProduto
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 796
-    Height = 720
+    Width = 792
+    Height = 712
     Align = alClient
     TabOrder = 0
     object lbl1: TLabel
@@ -79,13 +80,13 @@ object FormRelProduto: TFormRelProduto
     end
     object pnl2: TPanel
       Left = 1
-      Top = 663
-      Width = 794
+      Top = 659
+      Width = 792
       Height = 56
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 659
-      ExplicitWidth = 792
+      ExplicitTop = 655
+      ExplicitWidth = 790
       object btn1: TSpeedButton
         Left = 92
         Top = 14

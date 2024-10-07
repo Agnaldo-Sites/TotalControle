@@ -15,7 +15,6 @@ object FormAparencia: TFormAparencia
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object pnl1: TPanel
     Left = 0
@@ -24,6 +23,8 @@ object FormAparencia: TFormAparencia
     Height = 310
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 483
+    ExplicitHeight = 306
     object lbl1: TLabel
       Left = 24
       Top = 24
@@ -52,6 +53,8 @@ object FormAparencia: TFormAparencia
       Height = 227
       Align = alBottom
       TabOrder = 1
+      ExplicitTop = 78
+      ExplicitWidth = 481
       object lbl2: TLabel
         Left = 20
         Top = 16

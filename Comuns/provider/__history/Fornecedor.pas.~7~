@@ -1,0 +1,397 @@
+﻿unit Fornecedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Data.DB, Vcl.ExtCtrls, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, FrameToolBar, Vcl.DBCtrls, Vcl.Mask;
+
+type
+  TFormFornecedor = class(TForm)
+    PagListagem: TPageControl;
+    Listagem: TTabSheet;
+    PagManutencao: TTabSheet;
+    qryQueryOperacoes: TADOQuery;
+    Timer: TTimer;
+    QueryFornecedor: TADOQuery;
+    DSQueryFornecedor: TDataSource;
+    QueryListagem: TADOQuery;
+    DSQueryListagem: TDataSource;
+    atncfldQueryListagemCodFor: TAutoIncField;
+    strngfldQueryListagemNome: TStringField;
+    strngfldQueryListagemCNPJ: TStringField;
+    strngfldQueryListagemTelefone: TStringField;
+    strngfldQueryListagemEmail: TStringField;
+    strngfldQueryListagemEndereco: TStringField;
+    strngfldQueryListagemCidade: TStringField;
+    strngfldQueryListagemEstado: TStringField;
+    strngfldQueryListagemCEP: TStringField;
+    strngfldQueryListagemStatus: TStringField;
+    strngfldQueryListagemStatusFor: TStringField;
+    dbgrd1: TDBGrid;
+    Pesquisa: TEdit;
+    Todos: TCheckBox;
+    lblTitulo: TLabel;
+    atncfldQueryFornecedorCodFor: TAutoIncField;
+    strngfldQueryFornecedorNome: TStringField;
+    strngfldQueryFornecedorCNPJ: TStringField;
+    strngfldQueryFornecedorTelefone: TStringField;
+    strngfldQueryFornecedorEmail: TStringField;
+    strngfldQueryFornecedorEndereco: TStringField;
+    strngfldQueryFornecedorCidade: TStringField;
+    strngfldQueryFornecedorEstado: TStringField;
+    strngfldQueryFornecedorCEP: TStringField;
+    strngfldQueryFornecedorStatus: TStringField;
+    FrameBtn: TFrmFrameToolBar;
+    lbl1: TLabel;
+    dbtxtCodCliente: TDBText;
+    lbl31: TLabel;
+    DBCNPJ: TDBEdit;
+    DBNome: TDBEdit;
+    lbl2: TLabel;
+    lbl4: TLabel;
+    DBEmail: TDBEdit;
+    DBTelefone: TDBEdit;
+    lbl6: TLabel;
+    DBComboBox: TDBComboBox;
+    lbl8: TLabel;
+    DBCEP: TDBEdit;
+    lbl61: TLabel;
+    DBEndereco: TDBEdit;
+    lbl611: TLabel;
+    DBCidade: TDBEdit;
+    lbl6111: TLabel;
+    DBEstado: TDBEdit;
+    lbl61111: TLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure PesquisaChange(Sender: TObject);
+    procedure TimerTimer(Sender: TObject);
+    procedure dbgrd1TitleClick(Column: TColumn);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure dbgrd1CellClick(Column: TColumn);
+    procedure TodosClick(Sender: TObject);
+    procedure QueryFornecedorBeforeEdit(DataSet: TDataSet);
+    procedure QueryFornecedorBeforeInsert(DataSet: TDataSet);
+    procedure QueryFornecedorAfterPost(DataSet: TDataSet);
+    procedure QueryFornecedorAfterCancel(DataSet: TDataSet);
+    procedure DBCEPChange(Sender: TObject);
+    procedure DBCNPJChange(Sender: TObject);
+    procedure DBTelefoneChange(Sender: TObject);
+  private
+    { Private declarations }
+    ColunaFiltrada: TColumn;
+  public
+    { Public declarations }
+    CampoFiltrado : string;
+  end;
+
+var
+  FormFornecedor: TFormFornecedor;
+
+implementation
+
+uses
+  ViewBase, NFuncao;
+
+{$R *.dfm}
+
+procedure TFormFornecedor.PesquisaChange(Sender: TObject);
+begin
+  Timer.Enabled  := false;
+  Timer.Enabled  := True;
+end;
+
+procedure TFormFornecedor.QueryFornecedorAfterCancel(DataSet: TDataSet);
+var
+  i : integer;
+begin
+for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os Btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Desabilita os Enabled dos Campos
+  DBNome.Enabled := false;
+  DBEmail.Enabled := false;
+  DBTelefone.Enabled := false;
+  DBComboBox.Enabled := false;
+  DBCNPJ.Enabled := false;
+  DBCEP.Enabled := false;
+  DBEndereco.Enabled := false;
+  DBCidade.Enabled := false;
+  DBEstado.Enabled := false;
+
+end;
+
+procedure TFormFornecedor.QueryFornecedorAfterPost(DataSet: TDataSet);
+var
+  i: integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os Btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Desabilita os Enabled dos Campos
+  DBNome.Enabled := false;
+  DBEmail.Enabled := false;
+  DBTelefone.Enabled := false;
+  DBComboBox.Enabled := false;
+  DBCNPJ.Enabled := false;
+  DBCEP.Enabled := false;
+  DBEndereco.Enabled := false;
+  DBCidade.Enabled := false;
+  DBEstado.Enabled := false;
+end;
+
+procedure TFormFornecedor.QueryFornecedorBeforeEdit(DataSet: TDataSet);
+var
+  i : integer;
+begin
+
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+  // Desabilita as outras operações
+  FrameBtn.BtnInserir.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+  DBEmail.Enabled := true;
+  DBTelefone.Enabled := true;
+  DBComboBox.Enabled := true;
+  DBCNPJ.Enabled := true;
+  DBCEP.Enabled := true;
+  DBEndereco.Enabled := true;
+  DBCidade.Enabled := true;
+  DBEstado.Enabled := true;
+
+end;
+
+procedure TFormFornecedor.QueryFornecedorBeforeInsert(DataSet: TDataSet);
+var
+  i: integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+   // Desabilita as outras operações
+  FrameBtn.BtnEditar.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+  DBEmail.Enabled := true;
+  DBTelefone.Enabled := true;
+  DBComboBox.Enabled := true;
+  DBCNPJ.Enabled := true;
+  DBCEP.Enabled := true;
+  DBEndereco.Enabled := true;
+  DBCidade.Enabled := true;
+  DBEstado.Enabled := true;
+end;
+
+procedure TFormFornecedor.DBCEPChange(Sender: TObject);
+var
+  Texto: string;
+begin
+  // Remover qualquer caractere que não seja número
+  Texto := DBCEP.Text;
+  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);
+
+  // Formatar para o padrão 12345-123
+  if Length(Texto) > 5 then
+    Texto := Copy(Texto, 1, 5) + '-' + Copy(Texto, 6, Length(Texto) - 5);
+
+  // Atualiza o texto do Edit sem mover o cursor
+  DBCEP.OnChange := nil;
+  DBCEP.Text := Texto;
+  DBCEP.SelStart := Length(DBCEP.Text);
+  DBCEP.OnChange := DBCEPChange;
+end;
+
+procedure TFormFornecedor.DBCNPJChange(Sender: TObject);
+var
+  Texto: string;
+begin
+
+  // Remove qualquer caractere que não seja número
+  Texto := DBCNPJ.Text;
+  Texto := StringReplace(Texto, '.', '', [rfReplaceAll]); // Remove pontos
+  Texto := StringReplace(Texto, '/', '', [rfReplaceAll]); // Remove barra
+  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]); // Remove hífen
+
+  // Formatar para o padrão XX.XXX.XXX/XXXX-XX
+  if Length(Texto) > 2 then
+    Texto := Copy(Texto, 1, 2) + '.' + Copy(Texto, 3, Length(Texto) - 2);
+
+  if Length(Texto) > 6 then
+    Texto := Copy(Texto, 1, 6) + '.' + Copy(Texto, 7, Length(Texto) - 6);
+
+  if Length(Texto) > 10 then
+    Texto := Copy(Texto, 1, 10) + '/' + Copy(Texto, 11, Length(Texto) - 10);
+
+  if Length(Texto) > 15 then
+    Texto := Copy(Texto, 1, 15) + '-' + Copy(Texto, 16, Length(Texto) - 15);
+
+  // Atualiza o texto do Edit sem mover o cursor
+  DBCNPJ.OnChange := nil;
+  DBCNPJ.Text := Texto;
+  DBCNPJ.SelStart := Length(DBCNPJ.Text);
+  DBCNPJ.OnChange := DBCNPJChange;
+
+end;
+
+procedure TFormFornecedor.dbgrd1CellClick(Column: TColumn);
+begin
+  QueryFornecedor.Close;
+  QueryFornecedor.Parameters.ParamByName('CodFor').Value := dbgrd1.DataSource.DataSet.FieldByName('CodFor').AsInteger;
+  QueryFornecedor.Open;
+end;
+
+procedure TFormFornecedor.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
+begin
+   // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
+end;
+
+procedure TFormFornecedor.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
+begin
+
+  ColunaFiltrada := Column;
+
+  if Column.Field.FieldName <> CampoFiltrado then
+    begin
+      CampoFiltrado := Column.Field.FieldName;
+    end;
+
+
+  if Assigned(ColunaFiltrada) then
+    ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+
+    ColunaFiltrada := Column;
+    ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
+    lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+    lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+    Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
+    Pesquisa.Width := 636;
+    dbgrd1.Invalidate;
+end;
+
+procedure TFormFornecedor.DBTelefoneChange(Sender: TObject);
+var
+  Texto: string;
+begin
+  // Remove qualquer caractere que não seja número
+  Texto := DBTelefone.Text;
+  Texto := StringReplace(Texto, '(', '', [rfReplaceAll]);  // Remove parênteses
+  Texto := StringReplace(Texto, ')', '', [rfReplaceAll]);  // Remove parênteses
+  Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);  // Remove hífen
+  Texto := StringReplace(Texto, ' ', '', [rfReplaceAll]);  // Remove espaços
+
+  // Formatar para o padrão (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+  if Length(Texto) > 2 then
+    Texto := '(' + Copy(Texto, 1, 2) + ') ' + Copy(Texto, 3, Length(Texto) - 2);
+
+  if Length(Texto) > 9 then
+    Texto := Copy(Texto, 1, 9) + '-' + Copy(Texto, 10, Length(Texto) - 9);
+
+  // Atualiza o texto do Edit sem mover o cursor
+  DBTelefone.OnChange := nil;
+  DBTelefone.Text := Texto;
+  DBTelefone.SelStart := Length(DBTelefone.Text);
+  DBTelefone.OnChange :=DBTelefoneChange;
+
+end;
+
+procedure TFormFornecedor.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  // Limpa a tela no fechamendo dela
+  Action := CaFree;
+  Release;
+  FormFornecedor := nil
+end;
+
+procedure TFormFornecedor.FormShow(Sender: TObject);
+begin
+   PagListagem.ActivePageIndex := 0; //A tela abre sempre com a aba "Listagem"
+end;
+
+procedure TFormFornecedor.TimerTimer(Sender: TObject);
+begin
+  Timer.Enabled := false;
+
+  if Todos.Checked then
+    begin
+      QueryListagem.Close;
+      QueryListagem.SQL.Clear;
+      QueryListagem.SQL.Add('select *,case when Status = ''S'' then ''SIM'' else ''NÂO'' end StatusFor from Fornecedores');
+      QueryListagem.Open;
+    end
+  else
+    begin
+      if (Pesquisa.Text <> '') then
+        begin
+          QueryListagem.Close;
+          QueryListagem.SQL.Clear;
+          QueryListagem.SQL.Add('select *,case when Status = ''S'' then ''SIM'' else ''NÂO'' end StatusFor from Fornecedores where (1=1)');
+
+        if CampoFiltrado = 'Nome' then
+            QueryListagem.SQL.Add(' and Nome like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CNPJ' then
+          QueryListagem.SQL.Add(' and CNPJ like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Telefone' then
+          QueryListagem.SQL.Add(' and Telefone like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CNPJ' then
+          QueryListagem.SQL.Add(' and CNPJ like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Endereco' then
+          QueryListagem.SQL.Add(' and Endereco like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Cidade' then
+          QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'Cidade' then
+          QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'CEP' then
+          QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''');
+
+        QueryListagem.Open;
+        end;
+
+    end;
+    QueryFornecedor.Close;
+    QueryFornecedor.Open;
+end;
+
+procedure TFormFornecedor.TodosClick(Sender: TObject);
+begin
+  Timer.Enabled  := false;
+  Timer.Enabled  := True;
+end;
+
+end.

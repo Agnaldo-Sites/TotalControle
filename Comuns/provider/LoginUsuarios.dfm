@@ -14,7 +14,6 @@ object FormLoginUsuarios: TFormLoginUsuarios
   Font.Style = []
   Position = poDesktopCenter
   OnClose = FormClose
-  PixelsPerInch = 96
   TextHeight = 15
   object pnl1: TPanel
     Left = 0
@@ -23,6 +22,8 @@ object FormLoginUsuarios: TFormLoginUsuarios
     Height = 367
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 411
+    ExplicitHeight = 363
     object lblNome: TLabel
       Left = 55
       Top = 145

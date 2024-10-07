@@ -1,0 +1,45 @@
+unit NFuncao;
+
+interface
+
+uses
+  SysUtils, ADODB, DB;
+
+type
+  TNFuncao = class
+    public
+      Function ConsultaQuery(NomeTabela,ValorDesejado, CampoChave,ValorChave: string; ADOQuery: TADOQuery): string;
+  end;
+
+implementation
+
+{ TNFuncao }
+
+{ TNFuncao }
+
+function TNFuncao.ConsultaQuery(NomeTabela,ValorDesejado ,CampoChave,ValorChave: string; ADOQuery: TADOQuery): string;
+var
+  SQLQuery: string;
+begin
+  Result := '';
+  SQLQuery := 'SELECT '+ValorDesejado+' FROM ' + NomeTabela + ' WHERE ' + CampoChave + ' = '+ValorChave;
+  try
+    if ADOQuery.Active then
+      ADOQuery.Close;
+    ADOQuery.SQL.Text := SQLQuery;
+    ADOQuery.Open;
+    if not ADOQuery.IsEmpty then
+    begin
+      Result := ADOQuery.FieldByName(ValorDesejado).AsString;
+    end
+    else Result := '';
+  except
+    on E: Exception do
+    begin
+      //ShowMessage('Erro ao realizar consulta: ' + E.Message);
+      Result := '';  // Retorna vazio em caso de erro
+    end;
+  end;
+end;
+
+end.

@@ -1,0 +1,22 @@
+unit NFuncao;
+
+interface
+
+type
+  TNFuncao = class
+    public
+      Function ConsultaQuery(NomeTabela,CampoChave,ValorChave:string) : string;
+  end;
+
+implementation
+
+{ TNFuncao }
+
+{ TNFuncao }
+
+function TNFuncao.ConsultaQuery(NomeTabela, CampoChave,ValorChave: string): string;
+begin
+  Result := 'select * from '+NomeTabela + ' where '+CampoChave+ ' = '+ValorChave;
+end;
+
+end.

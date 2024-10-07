@@ -19,12 +19,12 @@ implementation
 
 function TCriptografia.CompareHash(const password, HashPassword: string): Boolean;
 begin
-    Result := TBCrypt.CompareHash(password, HashPassword);
+    Result := TBCrypt.CompareHash(password, HashPassword); //Retona a a comparação do HHashPasswordas
 end;
 
 function TCriptografia.GenerateHash(const Password: string): string;
 begin
-    Result := TBCrypt.GenerateHash(password);
+    Result := TBCrypt.GenerateHash(password);  //Cria uma HashPassword para ser registrada no banco
 end;
 
 end.

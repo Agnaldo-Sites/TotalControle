@@ -1,0 +1,74 @@
+unit Grupo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.DBCtrls, FrameToolBar, Vcl.Mask, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ComCtrls, Data.Win.ADODB;
+
+type
+  TFormGrupo = class(TForm)
+    Panel1: TPanel;
+    PagListagem: TPageControl;
+    ts1: TTabSheet;
+    lblTitulo: TLabel;
+    dbgrd1: TDBGrid;
+    Pesquisa: TEdit;
+    chkTodos: TCheckBox;
+    Todos: TCheckBox;
+    PagManutencao: TTabSheet;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    dbtxtCodCliente: TDBText;
+    lbl4: TLabel;
+    lbl6: TLabel;
+    lbl3: TLabel;
+    lbl8: TLabel;
+    lbl82: TLabel;
+    lbl32: TLabel;
+    lbl31: TLabel;
+    DBNome: TDBEdit;
+    DBEmail: TDBEdit;
+    DBTelefone: TDBEdit;
+    FrameBtn: TFrmFrameToolBar;
+    DBComboBox: TDBComboBox;
+    EditSenha: TDBEdit;
+    BtnAlteraSenha: TBitBtn;
+    Timer: TTimer;
+    QueryListagem: TADOQuery;
+    intgrfldQueryListagemCodUsuario: TIntegerField;
+    wdstrngfldQueryListagemNome: TWideStringField;
+    wdstrngfldQueryListagemEmail: TWideStringField;
+    wdstrngfldQueryListagemSenha: TWideStringField;
+    wdstrngfldQueryListagemTelefone: TWideStringField;
+    dtfldQueryListagemDataNascimento: TDateField;
+    blnfldQueryListagemAtivo: TBooleanField;
+    dtmfldQueryListagemDataCriacao: TDateTimeField;
+    dtmfldQueryListagemUltimoLogin: TDateTimeField;
+    strngfldQueryListagemEstiloDeSistema: TStringField;
+    strngfldQueryListagemUserAtivo: TStringField;
+    DSQueryListagem: TDataSource;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormGrupo: TFormGrupo;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormGrupo.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  FormGrupo := nil;
+end;
+
+end.

@@ -1,0 +1,345 @@
+﻿unit Grupo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.DBCtrls, FrameToolBar, Vcl.Mask, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ComCtrls, Data.Win.ADODB, FireDAC.Phys.MySQLDef, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Comp.UI;
+
+type
+  TFormGrupo = class(TForm)
+    Timer: TTimer;
+    DSQueryListagem: TDataSource;
+    DSQueryGrupo: TDataSource;
+    QueryListagem: TADOQuery;
+    Panel1: TPanel;
+    PagListagem: TPageControl;
+    ts1: TTabSheet;
+    lblTitulo: TLabel;
+    Pesquisa: TEdit;
+    chkTodos: TCheckBox;
+    Todos: TCheckBox;
+    PagManutencao: TTabSheet;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    dbtxtCodCliente: TDBText;
+    lbl82: TLabel;
+    DBNome: TDBEdit;
+    FrameBtn: TFrmFrameToolBar;
+    QueryGrupo: TADOQuery;
+    QueryGrupoCodGrupo: TAutoIncField;
+    QueryGrupoCodProduto: TIntegerField;
+    QueryGrupoDescGrupo: TStringField;
+    QueryGrupoAtivo: TStringField;
+    QueryGrupoDataCadastro: TDateField;
+    QueryListagemCodGrupo: TAutoIncField;
+    QueryListagemCodProduto: TIntegerField;
+    QueryListagemDescGrupo: TStringField;
+    QueryListagemAtivo: TStringField;
+    QueryListagemDataCadastro: TDateField;
+    QueryListagemAtivoGrupo: TStringField;
+    DBComboBox: TDBComboBox;
+    Label1: TLabel;
+    dbgrd1: TDBGrid;
+    BtnSelecionar: TSpeedButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerTimer(Sender: TObject);
+    procedure PesquisaChange(Sender: TObject);
+    procedure TodosClick(Sender: TObject);
+    procedure dbgrd1CellClick(Column: TColumn);
+    procedure dbgrd1TitleClick(Column: TColumn);
+    procedure FormShow(Sender: TObject);
+    procedure QueryGrupoAfterCancel(DataSet: TDataSet);
+    procedure QueryListagemAfterPost(DataSet: TDataSet);
+    procedure QueryListagemBeforeEdit(DataSet: TDataSet);
+    procedure QueryListagemBeforeInsert(DataSet: TDataSet);
+    procedure QueryListagemAfterCancel(DataSet: TDataSet);
+    procedure QueryGrupoAfterPost(DataSet: TDataSet);
+    procedure QueryGrupoBeforeEdit(DataSet: TDataSet);
+    procedure QueryGrupoBeforeInsert(DataSet: TDataSet);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnSelecionarClick(Sender: TObject);
+  private
+    { Private declarations }
+    CampoFiltrado : string;
+    ColunaFiltrada: TColumn;
+  public
+    { Public declarations }
+    ViraTelaLocalizar: string;
+  end;
+
+var
+  FormGrupo: TFormGrupo;
+
+implementation
+
+{$R *.dfm}
+
+uses RelProduto, NFuncao;
+
+procedure TFormGrupo.BtnSelecionarClick(Sender: TObject);
+var
+  Funcao : TNFuncao;
+begin
+  FormRelProduto.pnlDescGrupo.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescGrupo').AsString;
+  FormRelProduto.CodGrupo.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodGrupo').AsInteger);
+  Self.close;
+  exit;
+end;
+
+procedure TFormGrupo.dbgrd1CellClick(Column: TColumn);
+begin
+ QueryGrupo.Close;
+ QueryGrupo.Parameters.ParamByName('CodGrupo').Value := dbgrd1.DataSource.DataSet.FieldByName('CodGrupo').AsInteger;
+ QueryGrupo.Open;
+end;
+
+procedure TFormGrupo.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
+begin
+    // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
+end;
+
+procedure TFormGrupo.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
+begin
+  ColunaFiltrada := Column;
+  if Column.Field.FieldName <> CampoFiltrado then
+    begin
+      CampoFiltrado := Column.Field.FieldName;
+    end;
+
+  if Assigned(ColunaFiltrada) then
+    ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+      ColunaFiltrada := Column;
+      ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
+      lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
+      lblTitulo.Width := lblTitulo.Canvas.TextWidth(lblTitulo.Caption);
+      Pesquisa.Left := lblTitulo.Left + lblTitulo.Width + 10;
+      Pesquisa.Width := 450;
+      Pesquisa.Visible := true;
+      dbgrd1.Invalidate;
+end;
+
+procedure TFormGrupo.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  // Limpa a tela no fechamendo dela
+  Action := CaFree;
+  Release;
+  FormGrupo := nil;
+end;
+
+procedure TFormGrupo.FormShow(Sender: TObject);
+begin
+  PagListagem.ActivePageIndex := 0; //A tela abre sempre com a aba "Listagem"
+end;
+
+procedure TFormGrupo.PesquisaChange(Sender: TObject);
+begin
+  Timer.Enabled := false;
+  Timer.Enabled := True;
+end;
+
+procedure TFormGrupo.QueryGrupoAfterCancel(DataSet: TDataSet);
+var
+  i : integer;
+begin
+for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os Btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Desabilita os Enabled dos Campos
+  DBNome.Enabled := false;
+  DBComboBox.Enabled := false;
+
+end;
+
+procedure TFormGrupo.QueryGrupoAfterPost(DataSet: TDataSet);
+var
+  i: integer;
+begin
+for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os Btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Desabilita os Enabled dos Campos
+  DBNome.Enabled := false;
+  DBComboBox.Enabled := false;
+
+end;
+
+procedure TFormGrupo.QueryGrupoBeforeEdit(DataSet: TDataSet);
+var
+  i : integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+  //Desabilita os Btns
+  FrameBtn.BtnInserir.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+  DBComboBox.Enabled := true;
+
+end;
+
+procedure TFormGrupo.QueryGrupoBeforeInsert(DataSet: TDataSet);
+var
+  i: integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+  //Desabilita os Btns
+  FrameBtn.BtnEditar.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+  DBComboBox.Enabled := true;
+
+end;
+
+procedure TFormGrupo.QueryListagemAfterCancel(DataSet: TDataSet);
+var
+  i: integer;
+begin
+for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os Btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := false;
+
+end;
+
+procedure TFormGrupo.QueryListagemAfterPost(DataSet: TDataSet);
+var
+  i: integer;
+begin
+for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+  end;
+
+  //Habilita os btns
+  FrameBtn.BtnEditar.Enabled := true;
+  FrameBtn.BtnInserir.Enabled := true;
+  FrameBtn.BtnExcluir.Enabled := true;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := false;
+end;
+
+procedure TFormGrupo.QueryListagemBeforeEdit(DataSet: TDataSet);
+var
+  i : integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+  //Desabilita os btns
+  FrameBtn.BtnInserir.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+  
+end;
+
+procedure TFormGrupo.QueryListagemBeforeInsert(DataSet: TDataSet);
+var
+  i: integer;
+begin
+  for i := 0 to PagListagem.PageCount - 1 do
+  begin
+    // Esconde todas as abas, exceto a que foi passada como parâmetro
+    PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
+  end;
+
+  //Desabilita os Btns
+  FrameBtn.BtnEditar.Enabled := false;
+  FrameBtn.BtnExcluir.Enabled := false;
+
+  //Liberar os Enabled dos Campos
+  DBNome.Enabled := true;
+
+end;
+
+procedure TFormGrupo.TimerTimer(Sender: TObject);
+begin
+  Timer.Enabled := false;
+
+  if Todos.Checked then
+    begin
+      QueryListagem.Close;
+      QueryListagem.SQL.Clear;
+      QueryListagem.SQL.Add('select Grupo.*,case when Grupo.Ativo = ''S'' then ''Sim'' else ''NÂO'' END as AtivoGrupo from Grupo');
+      QueryListagem.Open;
+    end
+  else
+    begin
+      if (Pesquisa.Text <> '')  then
+        begin
+          QueryListagem.Close;
+          QueryListagem.SQL.Clear;
+          QueryListagem.SQL.Add('select Grupo.*,case when Grupo.Ativo = ''S'' then ''Sim'' else ''NÂO'' END as AtivoGrupo from Grupo'+
+          ' where (1=1)');
+        if CampoFiltrado = 'DescGrupo' then
+            QueryListagem.SQL.Add(' and DescGrupo like ''%'+Pesquisa.Text+'%''')
+        else if CampoFiltrado = 'CodGrupo' then
+          QueryListagem.SQL.Add(' and CodGrupo like ''%'+Pesquisa.Text+'%''')
+        else if CampoFiltrado = 'AtivoGrupo' then
+          QueryListagem.SQL.Add(' and Grupo.Ativo like ''%'+Pesquisa.Text+'%''');
+        QueryListagem.Open;
+        end;
+
+    end;
+end;
+
+procedure TFormGrupo.TodosClick(Sender: TObject);
+begin
+  Timer.Enabled := false;
+  Timer.Enabled := True;
+end;
+
+end.

@@ -18,7 +18,6 @@ object FormUsuarios: TFormUsuarios
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object pnl1: TPanel
     Left = 0
@@ -32,7 +31,7 @@ object FormUsuarios: TFormUsuarios
       Top = 1
       Width = 838
       Height = 255
-      ActivePage = ts1
+      ActivePage = PagManutencao
       Align = alClient
       TabOrder = 0
       object ts1: TTabSheet
@@ -118,20 +117,6 @@ object FormUsuarios: TFormUsuarios
             end
             item
               Expanded = False
-              FieldName = 'DataNascimento'
-              Title.Caption = 'Nacimento'
-              Width = 77
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'UserAtivo'
-              Title.Caption = 'Ativo'
-              Width = 53
-              Visible = True
-            end
-            item
-              Expanded = False
               FieldName = 'DataCriacao'
               Title.Caption = 'Data de Criacao'
               Visible = False
@@ -140,19 +125,24 @@ object FormUsuarios: TFormUsuarios
               Expanded = False
               FieldName = 'UltimoLogin'
               Title.Caption = 'Ultimo Login '
-              Width = 88
-              Visible = True
+              Visible = False
             end
             item
               Expanded = False
               FieldName = 'EstiloDeSistema'
               Visible = False
+            end
+            item
+              Expanded = False
+              FieldName = 'Ativo'
+              Width = 49
+              Visible = True
             end>
         end
         object Pesquisa: TEdit
           Left = 183
           Top = 22
-          Width = 504
+          Width = 488
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
@@ -163,9 +153,10 @@ object FormUsuarios: TFormUsuarios
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
+          ExplicitWidth = 486
         end
         object chkTodos: TCheckBox
-          Left = 874
+          Left = 858
           Top = 24
           Width = 106
           Height = 17
@@ -179,9 +170,10 @@ object FormUsuarios: TFormUsuarios
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
+          ExplicitLeft = 856
         end
         object Todos: TCheckBox
-          Left = 705
+          Left = 689
           Top = 26
           Width = 106
           Height = 17
@@ -196,23 +188,7 @@ object FormUsuarios: TFormUsuarios
           ShowHint = True
           TabOrder = 3
           OnClick = TodosClick
-        end
-        object DateEdit1: TJvDateEdit
-          Left = 179
-          Top = 22
-          Width = 90
-          Height = 21
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          NumGlyphs = 2
-          ParentFont = False
-          ShowNullDate = False
-          TabOrder = 4
-          Visible = False
-          OnChange = DateEdit1Change
+          ExplicitLeft = 687
         end
       end
       object PagManutencao: TTabSheet
@@ -273,7 +249,7 @@ object FormUsuarios: TFormUsuarios
           ParentFont = False
         end
         object lbl6: TLabel
-          Left = 550
+          Left = 238
           Top = 69
           Width = 49
           Height = 15
@@ -285,21 +261,8 @@ object FormUsuarios: TFormUsuarios
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object lbl3: TLabel
-          Left = 392
-          Top = 69
-          Width = 86
-          Height = 15
-          Caption = 'Data de Cria'#231#227'o'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
         object lbl8: TLabel
-          Left = 705
+          Left = 393
           Top = 69
           Width = 30
           Height = 15
@@ -318,19 +281,6 @@ object FormUsuarios: TFormUsuarios
           Height = 15
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clRed
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
-        object lbl32: TLabel
-          Left = 240
-          Top = 69
-          Width = 107
-          Height = 15
-          Caption = 'Data de Nacimento'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
@@ -371,7 +321,7 @@ object FormUsuarios: TFormUsuarios
           TabOrder = 1
         end
         object DBTelefone: TDBEdit
-          Left = 550
+          Left = 238
           Top = 90
           Width = 137
           Height = 23
@@ -396,7 +346,7 @@ object FormUsuarios: TFormUsuarios
           end
         end
         object DBComboBox: TDBComboBox
-          Left = 705
+          Left = 393
           Top = 90
           Width = 104
           Height = 23
@@ -408,28 +358,6 @@ object FormUsuarios: TFormUsuarios
             'False')
           TabOrder = 4
         end
-        object DBDataCricao: TJvDBDateEdit
-          Left = 392
-          Top = 90
-          Width = 129
-          Height = 23
-          DataField = 'DataCriacao'
-          DataSource = DSQueryUsuarios
-          Enabled = False
-          ShowNullDate = False
-          TabOrder = 5
-        end
-        object DBDataNacimento: TJvDBDateEdit
-          Left = 240
-          Top = 90
-          Width = 129
-          Height = 23
-          DataField = 'DataNascimento'
-          DataSource = DSQueryUsuarios
-          Enabled = False
-          ShowNullDate = False
-          TabOrder = 6
-        end
         object EditSenha: TDBEdit
           Left = 16
           Top = 90
@@ -439,7 +367,7 @@ object FormUsuarios: TFormUsuarios
           DataSource = DSQueryUsuarios
           Enabled = False
           PasswordChar = '*'
-          TabOrder = 7
+          TabOrder = 5
         end
         object BtnAlteraSenha: TBitBtn
           Left = 14
@@ -448,15 +376,15 @@ object FormUsuarios: TFormUsuarios
           Height = 25
           Caption = 'Alterar Senha de Usuario'
           Enabled = False
-          TabOrder = 8
+          TabOrder = 6
           OnClick = BtnAlteraSenhaClick
         end
       end
     end
   end
   object PanelSenha: TPanel
-    Left = 280
-    Top = 41
+    Left = 258
+    Top = 48
     Width = 217
     Height = 160
     Color = 11777023
@@ -465,7 +393,7 @@ object FormUsuarios: TFormUsuarios
     Visible = False
     object lbl5: TLabel
       Left = 41
-      Top = 18
+      Top = 11
       Width = 126
       Height = 17
       Caption = 'Digite a Nova Senha'
@@ -504,57 +432,6 @@ object FormUsuarios: TFormUsuarios
     DataSet = QueryUsuarios
     Left = 725
     Top = 200
-  end
-  object QueryListagem: TADOQuery
-    Connection = frmViewBase.Base
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      
-        'select *, case when Ativo = 1 then '#39'SIM'#39' else '#39'N'#194'O'#39' end UserAtiv' +
-        'o from Usuarios')
-    Left = 717
-    Top = 155
-    object intgrfldQueryListagemCodUsuario: TIntegerField
-      FieldName = 'CodUsuario'
-    end
-    object wdstrngfldQueryListagemNome: TWideStringField
-      FieldName = 'Nome'
-      Size = 100
-    end
-    object wdstrngfldQueryListagemEmail: TWideStringField
-      FieldName = 'Email'
-      Size = 255
-    end
-    object wdstrngfldQueryListagemSenha: TWideStringField
-      FieldName = 'Senha'
-      Size = 255
-    end
-    object wdstrngfldQueryListagemTelefone: TWideStringField
-      FieldName = 'Telefone'
-      Size = 15
-    end
-    object dtfldQueryListagemDataNascimento: TDateField
-      FieldName = 'DataNascimento'
-    end
-    object blnfldQueryListagemAtivo: TBooleanField
-      FieldName = 'Ativo'
-    end
-    object dtmfldQueryListagemDataCriacao: TDateTimeField
-      FieldName = 'DataCriacao'
-    end
-    object dtmfldQueryListagemUltimoLogin: TDateTimeField
-      FieldName = 'UltimoLogin'
-    end
-    object strngfldQueryListagemEstiloDeSistema: TStringField
-      FieldName = 'EstiloDeSistema'
-      Size = 50
-    end
-    object strngfldQueryListagemUserAtivo: TStringField
-      FieldName = 'UserAtivo'
-      ReadOnly = True
-      Size = 3
-    end
   end
   object DSQueryListagem: TDataSource
     DataSet = QueryListagem
@@ -601,14 +478,8 @@ object FormUsuarios: TFormUsuarios
       FieldName = 'Telefone'
       Size = 15
     end
-    object dtfldQueryUsuariosDataNascimento: TDateField
-      FieldName = 'DataNascimento'
-    end
     object blnfldQueryUsuariosAtivo: TBooleanField
       FieldName = 'Ativo'
-    end
-    object dtmfldQueryUsuariosDataCriacao: TDateTimeField
-      FieldName = 'DataCriacao'
     end
     object dtmfldQueryUsuariosUltimoLogin: TDateTimeField
       FieldName = 'UltimoLogin'
@@ -620,8 +491,52 @@ object FormUsuarios: TFormUsuarios
   end
   object QueryOperacoes: TADOQuery
     Connection = frmViewBase.Base
+    CursorType = ctStatic
     Parameters = <>
+    SQL.Strings = (
+      'select * from Usuarios')
     Left = 637
     Top = 155
+  end
+  object QueryListagem: TADOQuery
+    Connection = frmViewBase.Base
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from Usuarios')
+    Left = 717
+    Top = 155
+    object QueryListagemCodUsuario: TIntegerField
+      FieldName = 'CodUsuario'
+    end
+    object QueryListagemNome: TWideStringField
+      FieldName = 'Nome'
+      Size = 100
+    end
+    object QueryListagemEmail: TWideStringField
+      FieldName = 'Email'
+      Size = 255
+    end
+    object QueryListagemSenha: TWideStringField
+      FieldName = 'Senha'
+      Size = 255
+    end
+    object QueryListagemTelefone: TWideStringField
+      FieldName = 'Telefone'
+      Size = 15
+    end
+    object QueryListagemAtivo: TBooleanField
+      FieldName = 'Ativo'
+    end
+    object QueryListagemDataCriacao: TDateTimeField
+      FieldName = 'DataCriacao'
+    end
+    object QueryListagemUltimoLogin: TDateTimeField
+      FieldName = 'UltimoLogin'
+    end
+    object QueryListagemEstiloDeSistema: TStringField
+      FieldName = 'EstiloDeSistema'
+      Size = 50
+    end
   end
 end

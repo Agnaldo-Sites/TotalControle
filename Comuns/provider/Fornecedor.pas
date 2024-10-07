@@ -26,7 +26,6 @@ type
     strngfldQueryListagemCidade: TStringField;
     strngfldQueryListagemEstado: TStringField;
     strngfldQueryListagemCEP: TStringField;
-    dtfldQueryListagemDataCadastro: TDateField;
     strngfldQueryListagemStatus: TStringField;
     strngfldQueryListagemStatusFor: TStringField;
     dbgrd1: TDBGrid;
@@ -42,7 +41,6 @@ type
     strngfldQueryFornecedorCidade: TStringField;
     strngfldQueryFornecedorEstado: TStringField;
     strngfldQueryFornecedorCEP: TStringField;
-    dtfldQueryFornecedorDataCadastro: TDateField;
     strngfldQueryFornecedorStatus: TStringField;
     FrameBtn: TFrmFrameToolBar;
     lbl1: TLabel;
@@ -83,7 +81,6 @@ type
   private
     { Private declarations }
     ColunaFiltrada: TColumn;
-    procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
   public
     { Public declarations }
     CampoFiltrado : string;
@@ -95,7 +92,7 @@ var
 implementation
 
 uses
-  ViewBase;
+  ViewBase, NFuncao;
 
 {$R *.dfm}
 
@@ -114,6 +111,7 @@ for i := 0 to PagListagem.PageCount - 1 do
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
@@ -140,6 +138,7 @@ begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
@@ -154,6 +153,10 @@ begin
   DBEndereco.Enabled := false;
   DBCidade.Enabled := false;
   DBEstado.Enabled := false;
+
+  QueryListagem.Close;
+  QueryListagem.Open;
+
 end;
 
 procedure TFormFornecedor.QueryFornecedorBeforeEdit(DataSet: TDataSet);
@@ -210,21 +213,6 @@ begin
   DBEstado.Enabled := true;
 end;
 
-procedure TFormFornecedor.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
-begin
-        // padroniza zebrado nas colunas
-  if(datacol mod 2 = 0)
-    then Grid.Columns[datacol].Color := clInfoBk
-    else Grid.Columns[datacol].Color := clWindow;
-
-  // padroniza dor de fundo da linha selecionada
-  if gDSelected in State
-    then Grid.Canvas.Brush.Color := clActiveCaption;
-
-  // aplica
-  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
-end;
-
 procedure TFormFornecedor.DBCEPChange(Sender: TObject);
 var
   Texto: string;
@@ -232,9 +220,11 @@ begin
   // Remover qualquer caractere que não seja número
   Texto := DBCEP.Text;
   Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);
+
   // Formatar para o padrão 12345-123
   if Length(Texto) > 5 then
     Texto := Copy(Texto, 1, 5) + '-' + Copy(Texto, 6, Length(Texto) - 5);
+
   // Atualiza o texto do Edit sem mover o cursor
   DBCEP.OnChange := nil;
   DBCEP.Text := Texto;
@@ -246,20 +236,26 @@ procedure TFormFornecedor.DBCNPJChange(Sender: TObject);
 var
   Texto: string;
 begin
+
   // Remove qualquer caractere que não seja número
   Texto := DBCNPJ.Text;
   Texto := StringReplace(Texto, '.', '', [rfReplaceAll]); // Remove pontos
   Texto := StringReplace(Texto, '/', '', [rfReplaceAll]); // Remove barra
   Texto := StringReplace(Texto, '-', '', [rfReplaceAll]); // Remove hífen
+
   // Formatar para o padrão XX.XXX.XXX/XXXX-XX
   if Length(Texto) > 2 then
     Texto := Copy(Texto, 1, 2) + '.' + Copy(Texto, 3, Length(Texto) - 2);
+
   if Length(Texto) > 6 then
     Texto := Copy(Texto, 1, 6) + '.' + Copy(Texto, 7, Length(Texto) - 6);
+
   if Length(Texto) > 10 then
     Texto := Copy(Texto, 1, 10) + '/' + Copy(Texto, 11, Length(Texto) - 10);
+
   if Length(Texto) > 15 then
     Texto := Copy(Texto, 1, 15) + '-' + Copy(Texto, 16, Length(Texto) - 15);
+
   // Atualiza o texto do Edit sem mover o cursor
   DBCNPJ.OnChange := nil;
   DBCNPJ.Text := Texto;
@@ -276,13 +272,18 @@ begin
 end;
 
 procedure TFormFornecedor.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
 begin
-   AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+   // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
 end;
 
-procedure TFormFornecedor.dbgrd1TitleClick(Column: TColumn);
+procedure TFormFornecedor.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
+
   ColunaFiltrada := Column;
+
   if Column.Field.FieldName <> CampoFiltrado then
     begin
       CampoFiltrado := Column.Field.FieldName;
@@ -311,11 +312,14 @@ begin
   Texto := StringReplace(Texto, ')', '', [rfReplaceAll]);  // Remove parênteses
   Texto := StringReplace(Texto, '-', '', [rfReplaceAll]);  // Remove hífen
   Texto := StringReplace(Texto, ' ', '', [rfReplaceAll]);  // Remove espaços
+
   // Formatar para o padrão (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
   if Length(Texto) > 2 then
     Texto := '(' + Copy(Texto, 1, 2) + ') ' + Copy(Texto, 3, Length(Texto) - 2);
+
   if Length(Texto) > 9 then
     Texto := Copy(Texto, 1, 9) + '-' + Copy(Texto, 10, Length(Texto) - 9);
+
   // Atualiza o texto do Edit sem mover o cursor
   DBTelefone.OnChange := nil;
   DBTelefone.Text := Texto;
@@ -326,6 +330,7 @@ end;
 
 procedure TFormFornecedor.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // Limpa a tela no fechamendo dela
   Action := CaFree;
   Release;
   FormFornecedor := nil
@@ -333,7 +338,9 @@ end;
 
 procedure TFormFornecedor.FormShow(Sender: TObject);
 begin
-   PagListagem.ActivePageIndex := 0;
+   PagListagem.ActivePageIndex := 0; //A tela abre sempre com a aba "Listagem"
+   QueryFornecedor.Close;
+    QueryFornecedor.Open;
 end;
 
 procedure TFormFornecedor.TimerTimer(Sender: TObject);
@@ -382,8 +389,9 @@ begin
         QueryListagem.Open;
         end;
 
-
     end;
+    QueryFornecedor.Close;
+    QueryFornecedor.Open;
 end;
 
 procedure TFormFornecedor.TodosClick(Sender: TObject);

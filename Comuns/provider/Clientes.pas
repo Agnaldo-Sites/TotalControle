@@ -1,12 +1,9 @@
 ﻿unit Clientes;
-
 interface
-
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.ExtCtrls, Data.Win.ADODB, Vcl.StdCtrls, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, JvExMask, JvToolEdit, Vcl.DBCtrls, JvDBControls, FrameToolBar,ComObj, ActiveX, Vcl.Buttons, Vcl.Menus;
-
+  Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, Vcl.DBCtrls, FrameToolBar,ComObj, ActiveX, Vcl.Buttons, Vcl.Menus,NFuncao;
 type
   TFormClientes = class(TForm)
     pnl1: TPanel;
@@ -57,7 +54,6 @@ type
     DBCidade: TDBEdit;
     lbl81: TLabel;
     lbl82: TLabel;
-    DbEstado: TDBText;
     FrameBtns: TFrmFrameToolBar;
     PagClientesExcel: TTabSheet;
     pnl2: TPanel;
@@ -83,6 +79,8 @@ type
     pnl31: TPanel;
     btn11: TSpeedButton;
     lbl83: TLabel;
+    BtnSelecionar: TSpeedButton;
+    DBUF: TDBEdit;
     procedure TimerCliTimer(Sender: TObject);
     procedure dbgrd1TitleClick(Column: TColumn);
     procedure TodosClick(Sender: TObject);
@@ -97,106 +95,73 @@ type
     procedure DeletaLinhaClick(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure btn11Click(Sender: TObject);
-    procedure QueryClienteAfterInsert(DataSet: TDataSet);
     procedure QueryClienteBeforeInsert(DataSet: TDataSet);
-    procedure QueryClienteAfterEdit(DataSet: TDataSet);
-    procedure QueryClienteAfterOpen(DataSet: TDataSet);
     procedure QueryClienteAfterPost(DataSet: TDataSet);
     procedure QueryClienteAfterCancel(DataSet: TDataSet);
+    procedure BtnSelecionarClick(Sender: TObject);
   private
     { Private declarations }
     CampoFiltrado : string;
     ColunaFiltrada: TColumn;
-    procedure AjustaTamanhoGrid(Grid: TStringGrid);
-    procedure LimpaGrid;
-    procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
   public
     { Public declarations }
+    vOnde : string;
   end;
-
 var
   FormClientes: TFormClientes;
-
 implementation
 
-uses
-  ViewBase;
 
+uses
+  ViewBase, Vendas, ConsultaVenda;
 {$R *.dfm}
 
-procedure TFormClientes.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
-begin
-    // padroniza zebrado nas colunas
-  if(datacol mod 2 = 0)
-    then Grid.Columns[datacol].Color := clInfoBk
-    else Grid.Columns[datacol].Color := clWindow;
-
-  // padroniza dor de fundo da linha selecionada
-  if gDSelected in State
-    then Grid.Canvas.Brush.Color := clActiveCaption;
-
-  // aplica
-  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
-end;
-
-procedure TFormClientes.AjustaTamanhoGrid(Grid: TStringGrid);
-var
-  Col, Row, MaxWidth, TextWidth: Integer;
-  CellText: string;
-begin
-  for Col := 0 to Grid.ColCount - 1 do
-  begin
-    MaxWidth := 0;
-    for Row := 0 to Grid.RowCount - 1 do
-    begin
-      CellText := Grid.Cells[Col, Row];
-      TextWidth := Canvas.TextWidth(CellText); // Calcula a largura do texto
-      if TextWidth > MaxWidth then
-        MaxWidth := TextWidth; // Atualiza a largura máxima se necessário
-    end;
-    Grid.ColWidths[Col] := MaxWidth + 10; // Ajusta a largura da coluna
-  end;
-
-end;
 
 procedure TFormClientes.btn11Click(Sender: TObject);
 var
   i: integer;
   NomeTab : string;
+  F : TNFuncao;
 begin
-  LimpaGrid;
+
+  F.LimpaGrid(GridExcel); // Função na Unit NFuncao Que limpa a Grid, é chamada mais de uma vez neste FORM
   edt1.Text := '';
+
   for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
-  ShowMessage('Dados Limpos com Sucesso !!');
-end;
 
+  ShowMessage('Dados Limpos com Sucesso !!');
+
+end;
 procedure TFormClientes.btn1Click(Sender: TObject);
 var
   Row, Col: Integer;
   Valores: string;
+  F :TNFuncao;
 begin
     Row := 1;
     while Row < GridExcel.RowCount do  //Loop para realizar a inclusão de cada linha da Grid
     begin
+
       Valores := '';
       for Col := 1 to GridExcel.ColCount - 1 do
       begin
         if Col > 1 then
           Valores := Valores + ', ';
-        Valores := Valores + QuotedStr(GridExcel.Cells[Col, Row]);
+        Valores := Valores + QuotedStr(GridExcel.Cells[Col, Row]); //Coloca os valores do insert em uma Variavel =  "Valores"
       end;
+
       QueryExcel.SQL.Text := 'insert into Clientes (Nome,Email,Telefone,Endereco,Cidade,Estado,CEP,DataCadastro) ' +
                            'VALUES (' + Valores + ','+DateToStr(Now)+')';
       QueryExcel.ExecSQL;
       Inc(Row);
     end;
-    LimpaGrid;
+
+    F.LimpaGrid(GridExcel); // Função na Unit NFuncao Que limpa a Grid, é chamada mais de uma vez neste FORM
     ShowMessage('Inclusão Realizada Com Sucesso !!');
 end;
-
 procedure TFormClientes.btnSBAparenciaClick(Sender: TObject);
 var
   OpenDialog: TOpenDialog;
@@ -205,37 +170,36 @@ var
   FilePath,Cellstring: string;
   CellValue: Integer;
   i: integer;
-
   ListaCodClientes: TStringList;
   CodCliente : string;
-
+  Funcao : TNFuncao;
 
   QuntLinha,QuantColuna,Col: Integer;
-
 begin
     for i := 0 to PagListagem.PageCount - 1 do
       begin
-        PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagClientesExcel;
+        PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagClientesExcel; //Deixa apenas a Aba Excel Aperta
       end;
 
-    OpenDialog := TOpenDialog.Create(nil);
+    OpenDialog := TOpenDialog.Create(nil); //Cria o Componente que vai carregar o arquivo Excel
     ListaCodClientes := TStringList.Create;
 try
-    OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx';
+    OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx'; //Apenas se for esses tipos de arquivo
     if OpenDialog.Execute then
     begin
       FilePath := OpenDialog.FileName;
+
       // Mostra o nome do arquivo no TEdit
       edt1.Text := ExtractFileName(FilePath);
 
       // Cria a instância do Excel
       ExcelApp := CreateOleObject('Excel.Application');
       try
-
         ExcelApp.Visible := False;
 
         // Abre o arquivo Excel
         Workbook := ExcelApp.Workbooks.Open(FilePath);
+
         Worksheet := Workbook.Worksheets[1];
         QuntLinha := Worksheet.UsedRange.Rows.Count;
         QuantColuna := Worksheet.UsedRange.Columns.Count;
@@ -253,20 +217,27 @@ try
             GridExcel.Cells[Col - 1, Row - 1] := VarToStr(Worksheet.Cells[Row, Col].Value);
           end;
         end;
-        AjustaTamanhoGrid(GridExcel);
+        Funcao.AjustaTamanhoGrid(GridExcel);
           finally
-
             // Fecha o Workbook e o Excel
             Workbook.Close(False);
             ExcelApp.Quit;
             ExcelApp := Unassigned;
-
       end;
     end;
   finally
     OpenDialog.Free;
   end;
-
+end;
+procedure TFormClientes.BtnSelecionarClick(Sender: TObject);
+begin
+  if vOnde = 'Vendas' then //Condição para saber em qual tela as Informações vão
+    begin
+      FormVendas.EditCliente.text := dbgrd1.DataSource.DataSet.FieldByName('Nome').AsString;
+      FormVendas.xCodCliente := dbgrd1.DataSource.DataSet.FieldByName('CodCliente').AsInteger;
+      Self.close;
+      exit;
+    end;
 end;
 
 procedure TFormClientes.DateEdit1Change(Sender: TObject);
@@ -274,28 +245,26 @@ begin
     TimerCli.Enabled  := false;
     TimerCli.Enabled  := True;
 end;
-
 procedure TFormClientes.dbgrd1CellClick(Column: TColumn);
 begin
   QueryCliente.Close;
   QueryCliente.Parameters.ParamByName('CodCliente').Value := dbgrd1.DataSource.DataSet.FieldByName('CodCliente').AsInteger;
   QueryCliente.Open;
 end;
-
 procedure TFormClientes.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  Funcao : TNFuncao;
 begin
-
-   AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+   // Chama a função de zebragem de linhas
+   Funcao .AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
 end;
-
-procedure TFormClientes.dbgrd1TitleClick(Column: TColumn);
+procedure TFormClientes.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
   ColunaFiltrada := Column;
   if Column.Field.FieldName <> CampoFiltrado then
     begin
       CampoFiltrado := Column.Field.FieldName;
     end;
-
 
   if Assigned(ColunaFiltrada) then
     ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
@@ -307,9 +276,7 @@ begin
   Pesquisa.Width := 453;
   dbgrd1.Invalidate;
 
-
 end;
-
 procedure TFormClientes.DeletaLinhaClick(Sender: TObject);
 var
   LinhaSelecionado,AjudaLinhaGrid : integer;
@@ -317,7 +284,9 @@ begin
   // Verifica se há mais de uma linha (para evitar deletar todas as linhas)
   if GridExcel.RowCount > 1 then
   begin
+
     LinhaSelecionado := GridExcel.Row; // Obtém a linha selecionada
+
     // Desloca todas as linhas abaixo da linha selecionada para cima
     for AjudaLinhaGrid := 0 to GridExcel.ColCount - 1 do
     begin
@@ -326,15 +295,16 @@ begin
         GridExcel.Cells[AjudaLinhaGrid, LinhaSelecionado] := GridExcel.Cells[AjudaLinhaGrid, LinhaSelecionado + 1];
       end;
     end;
+
     // Remove a última linha, que agora está duplicada
     GridExcel.RowCount := GridExcel.RowCount - 1;
   end
   else
     ShowMessage('Não é possível excluir todas as linhas.');
 end;
-
 procedure TFormClientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // Limpa a tela no fechamendo dela
   Action := CaFree;
   Release;
   FormClientes := nil;
@@ -342,28 +312,9 @@ end;
 
 procedure TFormClientes.FormShow(Sender: TObject);
 begin
-    PagListagem.ActivePageIndex := 0;
-end;
-
-procedure TFormClientes.LimpaGrid;
-begin
-  // Limpa o conteúdo do grid
-  GridExcel.RowCount := 2;
-  GridExcel.ColCount := 2;
-  // Limpa todas as células do StringGrid
-  GridExcel.Cols[0].Clear;
-  GridExcel.Cols[1].Clear;
-  // Restaura as configurações padrão
-  GridExcel.FixedCols := 1;
-  GridExcel.FixedRows := 1;
-  // Habilita a edição das células
-  GridExcel.Options := GridExcel.Options + [goEditing];
-  // Redefinindo as cores e configurações do grid
-  GridExcel.Color := clWindow;
-  GridExcel.DefaultRowHeight := 24;
-  // Forçar o redesenho do grid
-  GridExcel.Invalidate;
-
+    PagListagem.ActivePageIndex := 0;  //A tela abre sempre com a aba "Listagem"
+    QueryCliente.Close;
+    QueryCliente.Open;
 end;
 
 procedure TFormClientes.PesquisaChange(Sender: TObject);
@@ -371,7 +322,6 @@ begin
     TimerCli.Enabled  := false;
    TimerCli.Enabled  := True;
 end;
-
 procedure TFormClientes.QueryClienteAfterCancel(DataSet: TDataSet);
 var
   i: integer;
@@ -381,41 +331,19 @@ begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
-  //Bloqueado os btns
+  //Habilita os btns
   FrameBtns.BtnInserir.Enabled := true;
   FrameBtns.BtnExcluir.Enabled := true;
   FrameBtns.BtnEditar.Enabled := true;
 
-  //Liberar os Enabled dos Campos
+  //Desabilita os Enabled dos Campos
   DBNomeCliente.Enabled := false;
   DBEmail.Enabled := false;
   DBTelefone.Enabled := false;
   DBCep.Enabled := false;
   DBEndereco.Enabled := false;
   DBCidade.Enabled := false;
-
-end;
-
-procedure TFormClientes.QueryClienteAfterEdit(DataSet: TDataSet);
-var
-  i: integer;
-begin
-
-end;
-
-procedure TFormClientes.QueryClienteAfterInsert(DataSet: TDataSet);
-var
-  i : integer;
-begin
-
-end;
-
-
-procedure TFormClientes.QueryClienteAfterOpen(DataSet: TDataSet);
-var
-  i : integer;
-begin
-
+  DBUF.Enabled := false;
 end;
 
 procedure TFormClientes.QueryClienteAfterPost(DataSet: TDataSet);
@@ -427,31 +355,30 @@ begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
-  //Bloqueado os btns
+  //Habilitando os btns
   FrameBtns.BtnInserir.Enabled := true;
   FrameBtns.BtnExcluir.Enabled := true;
   FrameBtns.BtnEditar.Enabled := true;
 
-  //Liberar os Enabled dos Campos
+  //Desabilitando os Enabled dos Campos
   DBNomeCliente.Enabled := false;
   DBEmail.Enabled := false;
   DBTelefone.Enabled := false;
   DBCep.Enabled := false;
   DBEndereco.Enabled := false;
   DBCidade.Enabled := false;
-
+  DBUF.Enabled := false;
 end;
-
 procedure TFormClientes.QueryClienteBeforeEdit(DataSet: TDataSet);
 var
   i : integer;
 begin
+
 for i := 0 to PagListagem.PageCount - 1 do
   begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
-
 
   //Bloqueado os btns
   FrameBtns.BtnInserir.Enabled := false;
@@ -464,9 +391,8 @@ for i := 0 to PagListagem.PageCount - 1 do
   DBCep.Enabled := true;
   DBEndereco.Enabled := true;
   DBCidade.Enabled := true;
-
+  DBUF.Enabled := true;
 end;
-
 
 procedure TFormClientes.QueryClienteBeforeInsert(DataSet: TDataSet);
 var
@@ -477,7 +403,6 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
-
 
   //Bloqueado os btns
   FrameBtns.BtnEditar.Enabled := false;
@@ -490,13 +415,11 @@ begin
   DBCep.Enabled := true;
   DBEndereco.Enabled := true;
   DBCidade.Enabled := true;
-
+  DBUF.Enabled := true;
 end;
-
 procedure TFormClientes.TimerCliTimer(Sender: TObject);
 begin
   TimerCli.Enabled := false;
-
   if Todos.Checked then
     begin
       QueryListagem.Close;
@@ -511,38 +434,29 @@ begin
           QueryListagem.Close;
           QueryListagem.SQL.Clear;
           QueryListagem.SQL.Add('select * from Clientes where (1=1)');
-
         if CampoFiltrado = 'Nome' then
             QueryListagem.SQL.Add(' and Nome like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'Email' then
           QueryListagem.SQL.Add(' and Email like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'Telefone' then
           QueryListagem.SQL.Add(' and Telefone like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'Cidade' then
           QueryListagem.SQL.Add(' and Cidade like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'Estado' then
           QueryListagem.SQL.Add(' and Estado like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'CEP' then
           QueryListagem.SQL.Add(' and CEP like ''%'+Pesquisa.Text+'%''');
-
 
         QueryListagem.Open;
         end;
 
-
     end;
-
+    QueryCliente.Close;
+    QueryCliente.Open;
 end;
-
 procedure TFormClientes.TodosClick(Sender: TObject);
 begin
   TimerCli.Enabled  := false;
   TimerCli.Enabled  := True;
 end;
-
 end.

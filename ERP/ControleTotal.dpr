@@ -1,5 +1,4 @@
 program ControleTotal;
-
 uses
   Vcl.Forms,
   ViewBase in '..\Comuns\base\ViewBase.pas' {frmViewBase},
@@ -19,14 +18,19 @@ uses
   Usuarios in '..\Comuns\provider\Usuarios.pas' {FormUsuarios},
   Fornecedor in '..\Comuns\provider\Fornecedor.pas' {FormFornecedor},
   Produtos in '..\Comuns\provider\Produtos.pas' {FormProdutos},
-  RelProduto in '..\Comuns\provider\RelProduto.pas' {FormRelProduto};
+  RelProduto in '..\Comuns\provider\RelProduto.pas' {FormRelProduto},
+  NFuncao in '..\Comuns\base\NFuncao.pas',
+  Grupo in '..\Comuns\provider\Grupo.pas' {FormGrupo},
+  CFOP in '..\Comuns\provider\CFOP.pas' {FormCFOP},
+  Vendas in '..\Comuns\provider\Vendas.pas' {FormVendas},
+  ConsultaVenda in '..\Comuns\provider\ConsultaVenda.pas' {FormConsultaVenda},
+  ClassConexao in '..\Comuns\base\ClassConexao.pas';
 
 {$R *.res}
-
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Amethyst Kamri');
   Application.CreateForm(TfrmViewBase, frmViewBase);
-  Application.Run;
+  application.Run;
 end.

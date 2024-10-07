@@ -38,12 +38,10 @@ type
     QueryGrupoCodProduto: TIntegerField;
     QueryGrupoDescGrupo: TStringField;
     QueryGrupoAtivo: TStringField;
-    QueryGrupoDataCadastro: TDateField;
     QueryListagemCodGrupo: TAutoIncField;
     QueryListagemCodProduto: TIntegerField;
     QueryListagemDescGrupo: TStringField;
     QueryListagemAtivo: TStringField;
-    QueryListagemDataCadastro: TDateField;
     QueryListagemAtivoGrupo: TStringField;
     DBComboBox: TDBComboBox;
     Label1: TLabel;
@@ -64,7 +62,6 @@ type
     procedure QueryGrupoAfterPost(DataSet: TDataSet);
     procedure QueryGrupoBeforeEdit(DataSet: TDataSet);
     procedure QueryGrupoBeforeInsert(DataSet: TDataSet);
-    procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
     procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure BtnSelecionarClick(Sender: TObject);
@@ -84,23 +81,7 @@ implementation
 
 {$R *.dfm}
 
-uses RelProduto, NFuncao;
-
-procedure TFormGrupo.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect;
-  DataCol: Integer; State: TGridDrawState);
-begin
-  // padroniza zebrado nas colunas
-  if(datacol mod 2 = 0)
-    then Grid.Columns[datacol].Color := clInfoBk
-    else Grid.Columns[datacol].Color := clWindow;
-
-  // padroniza dor de fundo da linha selecionada
-  if gDSelected in State
-    then Grid.Canvas.Brush.Color := clActiveCaption;
-
-  // aplica
-  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
-end;
+uses RelProduto, NFuncao, ViewBase;
 
 procedure TFormGrupo.BtnSelecionarClick(Sender: TObject);
 var
@@ -121,11 +102,14 @@ end;
 
 procedure TFormGrupo.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
 begin
-  AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+    // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
 end;
 
-procedure TFormGrupo.dbgrd1TitleClick(Column: TColumn);
+procedure TFormGrupo.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
   ColunaFiltrada := Column;
   if Column.Field.FieldName <> CampoFiltrado then
@@ -147,6 +131,7 @@ end;
 
 procedure TFormGrupo.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // Limpa a tela no fechamendo dela
   Action := CaFree;
   Release;
   FormGrupo := nil;
@@ -154,8 +139,9 @@ end;
 
 procedure TFormGrupo.FormShow(Sender: TObject);
 begin
-  PagListagem.ActivePageIndex := 0;
-  //if ViraTelaLocalizar = 'S' then plgSelecionar.Visible := true;
+  PagListagem.ActivePageIndex := 0; //A tela abre sempre com a aba "Listagem"
+  QueryGrupo.Close;
+  QueryGrupo.Open;
 end;
 
 procedure TFormGrupo.PesquisaChange(Sender: TObject);
@@ -172,10 +158,13 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
-  //Liberar os Enabled dos Campos
+
+  //Desabilita os Enabled dos Campos
   DBNome.Enabled := false;
   DBComboBox.Enabled := false;
 
@@ -189,12 +178,18 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
-  //Liberar os Enabled dos Campos
+
+  //Desabilita os Enabled dos Campos
   DBNome.Enabled := false;
   DBComboBox.Enabled := false;
+
+  QueryListagem.Close;
+  QueryListagem.Open;
 
 end;
 
@@ -207,8 +202,11 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os Btns
   FrameBtn.BtnInserir.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
   DBComboBox.Enabled := true;
@@ -224,8 +222,11 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os Btns
   FrameBtn.BtnEditar.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
   DBComboBox.Enabled := true;
@@ -240,9 +241,12 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := false;
 
@@ -256,9 +260,12 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := false;
 end;
@@ -272,8 +279,11 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os btns
   FrameBtn.BtnInserir.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
   
@@ -288,8 +298,11 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os Btns
   FrameBtn.BtnEditar.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
 
@@ -324,6 +337,7 @@ begin
         end;
 
     end;
+
 end;
 
 procedure TFormGrupo.TodosClick(Sender: TObject);

@@ -1,11 +1,8 @@
 unit LoginUsuarios;
-
 interface
-
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, Data.DB, Data.Win.ADODB, Vcl.Themes;
-
 type
   TFormLoginUsuarios = class(TForm)
     pnl1: TPanel;
@@ -33,63 +30,51 @@ type
   public
     { Public declarations }
   end;
-
 var
   FormLoginUsuarios: TFormLoginUsuarios;
-
 implementation
-
 uses
-  ViewBase, Criptografia;
-
+  ViewBase, Criptografia, NFuncao;
 {$R *.dfm}
-
 procedure TFormLoginUsuarios.BtnConcluirClick(Sender: TObject);
 var
   Criptografia : TCriptografia;
 begin
-
   if (EditNome.Text = '') and (EditSenha.Text = '')  then
     begin
         ShowMessage('Campo tende ser Obrigatorio Verifique !!');
         EditNome.SetFocus;
         Exit;
     end;
-
   ConsultaUsuario.Close;
   ConsultaUsuario.SQL.Clear;
   ConsultaUsuario.SQL.Add('select * from Usuarios where Nome =:Nome');
   ConsultaUsuario.Parameters.ParamByName('Nome').Value := EditNome.Text;
   ConsultaUsuario.Open;
-
   if ConsultaUsuario.IsEmpty then
     begin
         ShowMessage('Nome de Usuario não existe Verifique !!');
         EditNome.SetFocus;
         Exit;
     end;
-
    while not ConsultaUsuario.Eof do
     begin
+      //Compara a senha com a que existe no bando de dados
       if Criptografia.CompareHash(EditSenha.Text, ConsultaUsuario.FieldByName('Senha').AsString) = true then
         begin
           frmViewBase.vCodUsuario := ConsultaUsuario.FieldByName('CodUsuario').AsInteger;
-
-          if ConsultaUsuario.FieldByName('Ativo').AsBoolean <> true then
+          if ConsultaUsuario.FieldByName('Ativo').AsBoolean <> true then // Se o usuario esta Ativo
             begin
               ShowMessage('Usuario não esta Ativo no Sistema Contate o ADMINISTRADOR do Sistema !!');
               EditSenha.SetFocus;
               exit;
             end;
 
-
           ConsultaUsuario.Close;
           ConsultaUsuario.SQL.Clear;
           ConsultaUsuario.SQL.Add('select EstiloDeSistema from Usuarios where CodUsuario = '+ IntToStr(frmViewBase.vCodUsuario));
           ConsultaUsuario.Open;
-
           TStyleManager.TrySetStyle(ConsultaUsuario.FieldByName('EstiloDeSistema').AsString);
-
           xButtonClose := 1;
           self.close;
           exit;
@@ -97,23 +82,23 @@ begin
       ConsultaUsuario.Next;
     end;
     ShowMessage('Usuario não Encontrado Verifique !!');
-
 end;
-
-procedure TFormLoginUsuarios.EditNomeExit(Sender: TObject);
+procedure TFormLoginUsuarios.EditNomeExit(Sender: TObject); // Verifica se o Nome Existe
 begin
-   ConsultaUsuario.Close;
-   ConsultaUsuario.SQL.Clear;
-   ConsultaUsuario.SQL.Add('select * from Usuarios where Nome =:Nome');
-   ConsultaUsuario.Parameters.ParamByName('Nome').Value := EditNome.Text;
-   ConsultaUsuario.Open;
+  with ConsultaUsuario do
+    begin
+      close;
+      SQL.Clear;
+      SQL.Add('select * from Usuarios where Nome = '''+EditNome.Text+'''');
+      Open;
 
-   if ConsultaUsuario.IsEmpty then
-     begin
-         ShowMessage('Nome de Usuario não existe Verifique !!');
-         EditNome.SetFocus;
-         Exit;
-     end;
+      if IsEmpty then
+        begin
+          ShowMessage('Erro Nome de Usuario não existe Verifique !!');
+          EditNome.SetFocus;
+          exit;
+        end;
+    end;
 end;
 
 procedure TFormLoginUsuarios.EditNomeKeyPress(Sender: TObject; var Key: Char);
@@ -124,25 +109,21 @@ begin
       EditSenha.SetFocus;
     end;
 end;
-
 procedure TFormLoginUsuarios.EditSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if Key = VK_RETURN then  // VK_RETURN é a constante para a tecla Enter
+  if Key = VK_RETURN then  //Se o enter for Clicado
   begin
     Key := 0;  // Evita o som de "beep"
     BtnConcluir.Click;
   end;
 end;
-
 procedure TFormLoginUsuarios.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if xButtonClose <> 1 then
     Application.Terminate;
 end;
-
 procedure TFormLoginUsuarios.SpeedButton1Click(Sender: TObject);
 begin
    Application.Terminate;
 end;
-
 end.

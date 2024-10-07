@@ -4,8 +4,8 @@ object FormClientes: TFormClientes
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Clientes'
-  ClientHeight = 317
-  ClientWidth = 800
+  ClientHeight = 309
+  ClientWidth = 796
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,6 @@ object FormClientes: TFormClientes
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object lbl3: TLabel
     Left = 24
@@ -49,16 +48,16 @@ object FormClientes: TFormClientes
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 800
-    Height = 317
+    Width = 796
+    Height = 309
     Align = alClient
     TabOrder = 0
     object PagListagem: TPageControl
       Left = 1
       Top = 1
-      Width = 798
-      Height = 315
-      ActivePage = PagClientesExcel
+      Width = 794
+      Height = 307
+      ActivePage = ts1
       Align = alClient
       TabOrder = 0
       object ts1: TTabSheet
@@ -70,8 +69,8 @@ object FormClientes: TFormClientes
         Font.Style = [fsBold]
         ParentFont = False
         DesignSize = (
-          790
-          285)
+          786
+          277)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -87,11 +86,96 @@ object FormClientes: TFormClientes
           ParentColor = False
           ParentFont = False
         end
+        object BtnSelecionar: TSpeedButton
+          Left = 12
+          Top = 50
+          Width = 141
+          Height = 27
+          Caption = 'Selecionar'
+          Glyph.Data = {
+            42090000424D4209000000000000420000002800000018000000180000000100
+            20000300000000090000B1000000B100000000000000000000000000FF0000FF
+            0000FF0000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000000000000000000000000000000000000000000091EEAE2C8FEF
+            B0C18EF1AA120000000000000000000000000000000000FF00014491009D468F
+            0062000000000000000000000000000000000000000000000000000000000000
+            000000000000000000000000000000000000000000008FF0AD228FEFB0E68FEF
+            B0FF8FEEB0C895EAAA0C0000000000000000000000004591008D459000FF4590
+            00FC468F00540000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000008BF3AE168FEFB0D98FEFB0FF8FEF
+            B0FF8FEFB0FF8FEFAFBD80DFBF0800000000468F0080459000FF459000FF4590
+            00FF459000F94490004700000000000000000000000000000000000000000000
+            000000000000000000000000000088EEAA0F8FEFB0CF8FEFB0FF8FEFB0FF8FEF
+            B0FF8FEFB0FF8FEFB0FF8FEFB0B14792056C459000FF459000FF459000FF4590
+            00FF459000FF459000F5458F003B000000000000000000000000000000000000
+            000000000000000000008BE8B90B8FF0B0C68FEFB0FF8FEFB0FF8FEFB0FF8FEF
+            B0FD8FEFB0FF8FEFB0FF74CD70FF459101FE459000FF459000FF459000FD4590
+            00FF459000FF459000FF459000ED448E002D0000000000000000000000000000
+            000000000000000000008FEFAF408FEFB0FF8FEFB0FF8FEFB0FF8FEFB09490F1
+            B0378FEFB0F48FEFB0FF55A427FF459000FF459000FF459000DF478F00324590
+            00AE459000FF459000FF459000FF459000E6478E002400000000000000000000
+            00000000000000000000000000008FEFB0AA8FEFB0F88FF0B064000000000000
+            00008FEFB1528FEFB0FD80DC8DFF469102FF56A72AFF83E0948C00000000398E
+            0009459000CA459000FF459000FF459000FF459000E24491001E000000000000
+            00000000000000000000000000008EECB31B8EF1AF3600000000000000000000
+            0000000000008FEEB1798FEFB0FF79D27BFF8EEDADFF8FEFB0FF8EEFAF730000
+            00004992001C459000E5459000FF459000FF459000FF459000D5408C00140000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000000000008FEFB0A28FEFB0FF8FEFB0FF8FEFB0FF8FEFB0FE8FF0
+            AF6600000000478F0032459000F4459000FF459000FF459000FF459000CF408F
+            0010000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000092FFB6078FEFB0C48FEFB0FF8FEFB0FF8FEFB0FF8FF0
+            B1B6000000000000000045900055459000FE459000FF459000FF459000F64690
+            0037000000000000000000000000000000000000000000000000000000000000
+            000000000000000000000000000094F2AE138FEFB0DC8FEFB0FF8FF0B0C695EA
+            AA0C0000000000000000000000004591007D459000FF459000FA4690004C0000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000008FECAE298FEFB0C196F0B4110000
+            000000000000000000000000000000FF0001469000A146910058000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000000000000000000000000000000FFFFFF01000000000000
+            00000000000000000000000000000000000000FF000100000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000}
+          Visible = False
+          OnClick = BtnSelecionarClick
+        end
         object dbgrd1: TDBGrid
           Left = 0
-          Top = 67
-          Width = 790
-          Height = 218
+          Top = 84
+          Width = 786
+          Height = 193
           Align = alBottom
           DataSource = DSQueryListagem
           Font.Charset = DEFAULT_CHARSET
@@ -172,7 +256,7 @@ object FormClientes: TFormClientes
         object Pesquisa: TEdit
           Left = 172
           Top = 22
-          Width = 453
+          Width = 425
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
@@ -183,9 +267,10 @@ object FormClientes: TFormClientes
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
+          ExplicitWidth = 423
         end
         object Todos: TCheckBox
-          Left = 658
+          Left = 630
           Top = 24
           Width = 106
           Height = 17
@@ -200,6 +285,7 @@ object FormClientes: TFormClientes
           ShowHint = True
           TabOrder = 2
           OnClick = TodosClick
+          ExplicitLeft = 628
         end
       end
       object PagManutencao: TTabSheet
@@ -323,21 +409,6 @@ object FormClientes: TFormClientes
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object DbEstado: TDBText
-          Left = 276
-          Top = 151
-          Width = 52
-          Height = 15
-          AutoSize = True
-          DataField = 'Estado'
-          DataSource = DSQueryCliente
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
         object lbl83: TLabel
           Left = 276
           Top = 126
@@ -413,26 +484,36 @@ object FormClientes: TFormClientes
         end
         inline FrameBtns: TFrmFrameToolBar
           Left = 0
-          Top = 256
-          Width = 790
+          Top = 248
+          Width = 786
           Height = 29
           Align = alBottom
           TabOrder = 6
-          ExplicitTop = 256
-          ExplicitWidth = 790
+          ExplicitTop = 248
+          ExplicitWidth = 786
           ExplicitHeight = 29
           inherited TollBar: TToolBar
-            Width = 790
-            ExplicitWidth = 790
+            Width = 786
+            ExplicitWidth = 784
           end
+        end
+        object DBUF: TDBEdit
+          Left = 276
+          Top = 147
+          Width = 45
+          Height = 23
+          DataField = 'Estado'
+          DataSource = DSQueryCliente
+          Enabled = False
+          TabOrder = 7
         end
       end
       object PagClientesExcel: TTabSheet
         Caption = 'Excel de Clientes'
         ImageIndex = 2
         DesignSize = (
-          790
-          285)
+          786
+          277)
         object Titulo1: TLabel
           Left = 3
           Top = 24
@@ -541,8 +622,8 @@ object FormClientes: TFormClientes
         end
         object pnl2: TPanel
           Left = 0
-          Top = 230
-          Width = 790
+          Top = 222
+          Width = 786
           Height = 55
           Align = alBottom
           TabOrder = 0
@@ -864,7 +945,7 @@ object FormClientes: TFormClientes
         object edt1: TEdit
           Left = 123
           Top = 22
-          Width = 590
+          Width = 562
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Enabled = False
@@ -876,11 +957,12 @@ object FormClientes: TFormClientes
           ParentFont = False
           TabOrder = 1
           OnChange = PesquisaChange
+          ExplicitWidth = 564
         end
         object GridExcel: TStringGrid
           Left = 0
-          Top = 56
-          Width = 790
+          Top = 48
+          Width = 786
           Height = 174
           Align = alBottom
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goFixedRowDefAlign]

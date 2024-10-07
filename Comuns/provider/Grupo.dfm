@@ -4,8 +4,8 @@ object FormGrupo: TFormGrupo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Grupo'
-  ClientHeight = 343
-  ClientWidth = 797
+  ClientHeight = 331
+  ClientWidth = 791
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,7 @@ object FormGrupo: TFormGrupo
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
+  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
@@ -21,23 +22,21 @@ object FormGrupo: TFormGrupo
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 797
-    Height = 343
+    Width = 791
+    Height = 331
     Align = alClient
     BorderStyle = bsSingle
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 239
     object PagListagem: TPageControl
       Left = 1
       Top = 1
-      Width = 791
-      Height = 337
+      Width = 785
+      Height = 325
       ActivePage = ts1
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 233
       object ts1: TTabSheet
         Caption = 'Listagem'
         Font.Charset = DEFAULT_CHARSET
@@ -47,8 +46,8 @@ object FormGrupo: TFormGrupo
         Font.Style = [fsBold]
         ParentFont = False
         DesignSize = (
-          783
-          307)
+          777
+          295)
         object lblTitulo: TLabel
           Left = 12
           Top = 24
@@ -152,7 +151,7 @@ object FormGrupo: TFormGrupo
         object Pesquisa: TEdit
           Left = 208
           Top = 22
-          Width = 423
+          Width = 403
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
@@ -163,9 +162,10 @@ object FormGrupo: TFormGrupo
           ParentFont = False
           TabOrder = 0
           OnChange = PesquisaChange
+          ExplicitWidth = 401
         end
         object chkTodos: TCheckBox
-          Left = 1039
+          Left = 1019
           Top = 24
           Width = 106
           Height = 17
@@ -179,9 +179,10 @@ object FormGrupo: TFormGrupo
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
+          ExplicitLeft = 1017
         end
         object Todos: TCheckBox
-          Left = 646
+          Left = 626
           Top = 24
           Width = 106
           Height = 17
@@ -196,11 +197,12 @@ object FormGrupo: TFormGrupo
           ShowHint = True
           TabOrder = 2
           OnClick = TodosClick
+          ExplicitLeft = 624
         end
         object dbgrd1: TDBGrid
           Left = 0
-          Top = 96
-          Width = 783
+          Top = 84
+          Width = 777
           Height = 211
           Align = alBottom
           DataSource = DSQueryListagem
@@ -244,11 +246,6 @@ object FormGrupo: TFormGrupo
             item
               Expanded = False
               FieldName = 'Ativo'
-              Visible = False
-            end
-            item
-              Expanded = False
-              FieldName = 'DataCadastro'
               Visible = False
             end
             item
@@ -342,17 +339,17 @@ object FormGrupo: TFormGrupo
         end
         inline FrameBtn: TFrmFrameToolBar
           Left = 0
-          Top = 278
-          Width = 783
+          Top = 266
+          Width = 777
           Height = 29
           Align = alBottom
           TabOrder = 1
-          ExplicitTop = 174
-          ExplicitWidth = 783
+          ExplicitTop = 266
+          ExplicitWidth = 777
           ExplicitHeight = 29
           inherited TollBar: TToolBar
-            Width = 783
-            ExplicitWidth = 781
+            Width = 777
+            ExplicitWidth = 777
           end
           inherited DataSet: TActionList
             inherited dtstnsrt: TDataSetInsert
@@ -419,9 +416,6 @@ object FormGrupo: TFormGrupo
       FixedChar = True
       Size = 1
     end
-    object QueryListagemDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
     object QueryListagemAtivoGrupo: TStringField
       FieldName = 'AtivoGrupo'
       ReadOnly = True
@@ -463,9 +457,6 @@ object FormGrupo: TFormGrupo
       FieldName = 'Ativo'
       FixedChar = True
       Size = 1
-    end
-    object QueryGrupoDataCadastro: TDateField
-      FieldName = 'DataCadastro'
     end
   end
 end

@@ -22,26 +22,24 @@ type
     lbl1: TLabel;
     lbl2: TLabel;
     dbtxtCodCliente: TDBText;
-    lbl82: TLabel;
     Label1: TLabel;
     DBNome: TDBEdit;
     FrameBtn: TFrmFrameToolBar;
     QueryCFOP: TADOQuery;
-    QueryCFOPCodGrupo: TAutoIncField;
-    QueryCFOPCodProduto: TIntegerField;
-    QueryCFOPDescGrupo: TStringField;
-    QueryCFOPAtivo: TStringField;
-    QueryCFOPDataCadastro: TDateField;
     DSQueryCFOP: TDataSource;
     DSQueryListagem: TDataSource;
     QueryListagem: TADOQuery;
-    QueryListagemCodGrupo: TAutoIncField;
-    QueryListagemCodProduto: TIntegerField;
-    QueryListagemDescGrupo: TStringField;
-    QueryListagemAtivo: TStringField;
-    QueryListagemDataCadastro: TDateField;
-    QueryListagemAtivoGrupo: TStringField;
     Timer: TTimer;
+    QueryListagemCodCFOP: TAutoIncField;
+    QueryListagemDescCFOP: TStringField;
+    QueryListagemAtivo: TStringField;
+    QueryListagemAtivoCFOP: TStringField;
+    QueryCFOPCodCFOP: TAutoIncField;
+    QueryCFOPDescCFOP: TStringField;
+    QueryCFOPAtivo: TStringField;
+    DBComboBox1: TDBComboBox;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure TimerTimer(Sender: TObject);
     procedure PesquisaChange(Sender: TObject);
     procedure TodosClick(Sender: TObject);
@@ -54,12 +52,16 @@ type
     procedure QueryCFOPBeforeInsert(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
     CampoFiltrado : string;
     ColunaFiltrada : TColumn;
   public
     { Public declarations }
+    vOnde : string;
   end;
 
 var
@@ -69,14 +71,17 @@ implementation
 
 {$R *.dfm}
 
-uses NFuncao, RelProduto, Grupo;
+uses NFuncao, RelProduto, Grupo, ViewBase;
 
 procedure TFormCFOP.BtnSelecionarClick(Sender: TObject);
 begin
-  FormRelProduto.pnlDescGrupo1.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescCFOP').AsString;
-  FormRelProduto.CodCFOP.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodCFOP').AsInteger);
-  Self.close;
-  exit;
+  if vOnde = 'RelProdutos' then //Condição para saber em qual tela as Informações vão
+    begin
+      FormRelProduto.pnlDescGrupo1.Caption := dbgrd1.DataSource.DataSet.FieldByName('DescCFOP').AsString;
+      FormRelProduto.CodCFOP.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodCFOP').AsInteger);
+      Self.close;
+      exit;
+    end;
 end;
 
 procedure TFormCFOP.dbgrd1CellClick(Column: TColumn);
@@ -86,7 +91,17 @@ begin
    QueryCFOP.Open;
 end;
 
-procedure TFormCFOP.dbgrd1TitleClick(Column: TColumn);
+procedure TFormCFOP.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
+begin
+   // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State)
+
+end;
+
+procedure TFormCFOP.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
 ColunaFiltrada := Column;
   if Column.Field.FieldName <> CampoFiltrado then
@@ -96,6 +111,7 @@ ColunaFiltrada := Column;
 
   if Assigned(ColunaFiltrada) then
     ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
+
       ColunaFiltrada := Column;
       ColunaFiltrada.Title.Caption := ColunaFiltrada.Title.Caption;
       lblTitulo.Caption := 'Pesquisar: ' +Column.Title.Caption;
@@ -108,6 +124,7 @@ end;
 
 procedure TFormCFOP.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // Limpa a tela no fechamendo dela
   Action := CaFree;
   Release;
   FormCFOP := nil;
@@ -115,7 +132,9 @@ end;
 
 procedure TFormCFOP.FormShow(Sender: TObject);
 begin
-  PagListagem.ActivePageIndex := 0;
+  PagListagem.ActivePageIndex := 0; //A tela abre sempre com a aba "Listagem"
+  QueryCFOP.Close;
+  QueryCFOP.Open;
 end;
 
 procedure TFormCFOP.PesquisaChange(Sender: TObject);
@@ -132,11 +151,15 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
-  //Liberar os Enabled dos Campos
+
+  //Desabilita os Enabled dos Campos
   DBNome.Enabled := false;
+  DBComboBox1.Enabled := false;
 end;
 
 procedure TFormCFOP.QueryCFOPAfterPost(DataSet: TDataSet);
@@ -147,11 +170,18 @@ for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
+  //Habilita os Btns
   FrameBtn.BtnEditar.Enabled := true;
   FrameBtn.BtnInserir.Enabled := true;
   FrameBtn.BtnExcluir.Enabled := true;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := false;
+  DBComboBox1.Enabled := false;
+
+  QueryListagem.Close;
+  QueryListagem.Open;
 
 end;
 
@@ -164,10 +194,14 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os Btns
   FrameBtn.BtnInserir.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
+  DBComboBox1.Enabled := true;
 
 end;
 
@@ -180,11 +214,26 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
+
+  //Desabilita os Btns
   FrameBtn.BtnEditar.Enabled := false;
   FrameBtn.BtnExcluir.Enabled := false;
+
   //Liberar os Enabled dos Campos
   DBNome.Enabled := true;
+  DBComboBox1.Enabled := true;
 
+end;
+
+procedure TFormCFOP.SpeedButton1Click(Sender: TObject);
+begin
+  with QueryListagem do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('Create table CFOP( CodCFOP INT IDENTITY(1,1) PRIMARY KEY,DescCFOP varchar(200),Ativo char(1) )');
+      ExecSQL;
+    end;
 end;
 
 procedure TFormCFOP.TimerTimer(Sender: TObject);
@@ -195,7 +244,7 @@ begin
     begin
       QueryListagem.Close;
       QueryListagem.SQL.Clear;
-      QueryListagem.SQL.Add('select * from CFOP');
+      QueryListagem.SQL.Add('select CFOP.*, CASE WHEN Ativo = ''S'' then ''SIM'' else ''NÂO'' END AtivoCFOP from CFOP');
       QueryListagem.Open;
     end
   else
@@ -204,18 +253,23 @@ begin
         begin
           QueryListagem.Close;
           QueryListagem.SQL.Clear;
-          QueryListagem.SQL.Add('select * from CFOP where (1=1)');
+          QueryListagem.SQL.Add('select CFOP.*, CASE WHEN Ativo = ''S'' then ''SIM'' else ''NÂO'' END AtivoCFOP from CFOP where (1=1)');
 
         if CampoFiltrado = 'CodCFOP' then
             QueryListagem.SQL.Add(' and CodCFOP like ''%'+Pesquisa.Text+'%''')
 
         else if CampoFiltrado = 'DescCFOP' then
-          QueryListagem.SQL.Add(' and DescCFOP like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and DescCFOP like ''%'+Pesquisa.Text+'%''')
+
+        else if CampoFiltrado = 'AtivoCFOP' then
+          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''');
 
         QueryListagem.Open;
         end;
 
     end;
+    QueryCFOP.Close;
+    QueryCFOP.Open;
 end;
 
 procedure TFormCFOP.TodosClick(Sender: TObject);

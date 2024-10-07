@@ -1,6 +1,7 @@
 object FormCFOP: TFormCFOP
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'CFOP'
   ClientHeight = 337
@@ -12,11 +13,25 @@ object FormCFOP: TFormCFOP
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
+  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
+  object Label2: TLabel
+    Left = 177
+    Top = 71
+    Width = 103
+    Height = 15
+    Caption = 'Descri'#231#227'o de CFOP'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object PagListagem: TPageControl
     Left = 0
     Top = 0
@@ -139,7 +154,7 @@ object FormCFOP: TFormCFOP
       object Pesquisa: TEdit
         Left = 186
         Top = 22
-        Width = 283
+        Width = 269
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -150,10 +165,10 @@ object FormCFOP: TFormCFOP
         ParentFont = False
         TabOrder = 0
         OnChange = PesquisaChange
-        ExplicitWidth = 281
+        ExplicitWidth = 267
       end
       object chkTodos: TCheckBox
-        Left = 874
+        Left = 860
         Top = 24
         Width = 106
         Height = 17
@@ -167,10 +182,10 @@ object FormCFOP: TFormCFOP
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
-        ExplicitLeft = 872
+        ExplicitLeft = 858
       end
       object Todos: TCheckBox
-        Left = 481
+        Left = 467
         Top = 24
         Width = 106
         Height = 17
@@ -185,7 +200,7 @@ object FormCFOP: TFormCFOP
         ShowHint = True
         TabOrder = 2
         OnClick = TodosClick
-        ExplicitLeft = 479
+        ExplicitLeft = 465
       end
       object dbgrd1: TDBGrid
         Left = 0
@@ -193,7 +208,7 @@ object FormCFOP: TFormCFOP
         Width = 618
         Height = 203
         Align = alBottom
-        DataSource = DSQueryCFOP
+        DataSource = DSQueryListagem
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -209,25 +224,20 @@ object FormCFOP: TFormCFOP
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = [fsBold]
         OnCellClick = dbgrd1CellClick
+        OnDrawColumnCell = dbgrd1DrawColumnCell
         OnTitleClick = dbgrd1TitleClick
         Columns = <
           item
             Expanded = False
-            FieldName = 'CodGrupo'
-            Title.Caption = 'Codigo de Grupo'
-            Width = 107
+            FieldName = 'CodCFOP'
+            Title.Caption = 'CFOP'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'CodProduto'
-            Visible = False
-          end
-          item
-            Expanded = False
-            FieldName = 'DescGrupo'
-            Title.Caption = 'Descri'#231#227'o de Grupo'
-            Width = 248
+            FieldName = 'DescCFOP'
+            Title.Caption = 'Descri'#231#227'o do CFOP'
+            Width = 269
             Visible = True
           end
           item
@@ -237,14 +247,9 @@ object FormCFOP: TFormCFOP
           end
           item
             Expanded = False
-            FieldName = 'DataCadastro'
-            Visible = False
-          end
-          item
-            Expanded = False
-            FieldName = 'AtivoGrupo'
+            FieldName = 'AtivoCFOP'
             Title.Caption = 'Ativo'
-            Width = 70
+            Width = 76
             Visible = True
           end>
       end
@@ -284,24 +289,12 @@ object FormCFOP: TFormCFOP
         Width = 90
         Height = 13
         AutoSize = True
-        DataField = 'CodGrupo'
+        DataField = 'CodCFOP'
         DataSource = DSQueryCFOP
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object lbl82: TLabel
-        Left = 169
-        Top = 150
-        Width = 3
-        Height = 15
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -12
-        Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -318,13 +311,26 @@ object FormCFOP: TFormCFOP
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object Label3: TLabel
+        Left = 463
+        Top = 63
+        Width = 30
+        Height = 15
+        Caption = 'Ativo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       object DBNome: TDBEdit
         Left = 169
         Top = 84
-        Width = 400
+        Width = 279
         Height = 23
         CharCase = ecUpperCase
-        DataField = 'DescGrupo'
+        DataField = 'DescCFOP'
         DataSource = DSQueryCFOP
         Enabled = False
         TabOrder = 0
@@ -361,6 +367,18 @@ object FormCFOP: TFormCFOP
           end
         end
       end
+      object DBComboBox1: TDBComboBox
+        Left = 462
+        Top = 84
+        Width = 67
+        Height = 23
+        DataField = 'Ativo'
+        DataSource = DSQueryCFOP
+        Items.Strings = (
+          'SIM'
+          'N'#194'O')
+        TabOrder = 2
+      end
     end
   end
   object QueryCFOP: TADOQuery
@@ -372,7 +390,7 @@ object FormCFOP: TFormCFOP
     AfterCancel = QueryCFOPAfterCancel
     Parameters = <
       item
-        Name = 'CodGrupo'
+        Name = 'CodCFOP'
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
@@ -380,27 +398,21 @@ object FormCFOP: TFormCFOP
         Value = Null
       end>
     SQL.Strings = (
-      'select * from grupo where CodGrupo = :CodGrupo')
+      'select * from CFOP where CodCFOP = :CodCFOP ')
     Left = 405
     Top = 163
-    object QueryCFOPCodGrupo: TAutoIncField
-      FieldName = 'CodGrupo'
+    object QueryCFOPCodCFOP: TAutoIncField
+      FieldName = 'CodCFOP'
       ReadOnly = True
     end
-    object QueryCFOPCodProduto: TIntegerField
-      FieldName = 'CodProduto'
-    end
-    object QueryCFOPDescGrupo: TStringField
-      FieldName = 'DescGrupo'
-      Size = 255
+    object QueryCFOPDescCFOP: TStringField
+      FieldName = 'DescCFOP'
+      Size = 200
     end
     object QueryCFOPAtivo: TStringField
       FieldName = 'Ativo'
       FixedChar = True
       Size = 1
-    end
-    object QueryCFOPDataCadastro: TDateField
-      FieldName = 'DataCadastro'
     end
   end
   object DSQueryCFOP: TDataSource
@@ -419,31 +431,25 @@ object FormCFOP: TFormCFOP
     Parameters = <>
     SQL.Strings = (
       
-        'select Grupo.*,case when Grupo.Ativo = '#39'S'#39' then '#39'Sim'#39' else '#39'N'#194'O'#39 +
-        ' END as AtivoGrupo from Grupo')
+        'select CFOP.*, CASE WHEN Ativo = '#39'S'#39' then '#39'SIM'#39' else '#39'N'#194'O'#39' END A' +
+        'tivoCFOP from CFOP')
     Left = 566
     Top = 163
-    object QueryListagemCodGrupo: TAutoIncField
-      FieldName = 'CodGrupo'
+    object QueryListagemCodCFOP: TAutoIncField
+      FieldName = 'CodCFOP'
       ReadOnly = True
     end
-    object QueryListagemCodProduto: TIntegerField
-      FieldName = 'CodProduto'
-    end
-    object QueryListagemDescGrupo: TStringField
-      FieldName = 'DescGrupo'
-      Size = 255
+    object QueryListagemDescCFOP: TStringField
+      FieldName = 'DescCFOP'
+      Size = 200
     end
     object QueryListagemAtivo: TStringField
       FieldName = 'Ativo'
       FixedChar = True
       Size = 1
     end
-    object QueryListagemDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
-    object QueryListagemAtivoGrupo: TStringField
-      FieldName = 'AtivoGrupo'
+    object QueryListagemAtivoCFOP: TStringField
+      FieldName = 'AtivoCFOP'
       ReadOnly = True
       Size = 3
     end

@@ -1,11 +1,8 @@
 ﻿unit Produtos;
-
 interface
-
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,ComObj,ActiveX,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FrameToolBar, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask, Data.Win.ADODB;
-
 type
   TFormProdutos = class(TForm)
     PagListagem: TPageControl;
@@ -93,7 +90,6 @@ type
     strngfldQueryProdutosCFOP: TStringField;
     strngfldQueryProdutosAliquotaICMS: TStringField;
     strngfldQueryProdutosAliquotaIPI: TStringField;
-    dtfldQueryProdutosDataCadastro: TDateField;
     strngfldQueryProdutosAtivo: TStringField;
     intgrfldQueryProdutosCodGrupo: TIntegerField;
     atncfldQueryListagemCodProduto: TAutoIncField;
@@ -108,7 +104,6 @@ type
     strngfldQueryListagemCFOP: TStringField;
     strngfldQueryListagemAliquotaICMS: TStringField;
     strngfldQueryListagemAliquotaIPI: TStringField;
-    dtfldQueryListagemDataCadastro: TDateField;
     strngfldQueryListagemAtivo: TStringField;
     intgrfldQueryListagemCodGrupo: TIntegerField;
     atncfldQueryExcelCodProduto: TAutoIncField;
@@ -123,12 +118,12 @@ type
     strngfldQueryExcelCFOP: TStringField;
     strngfldQueryExcelAliquotaICMS: TStringField;
     strngfldQueryExcelAliquotaIPI: TStringField;
-    dtfldQueryExcelDataCadastro: TDateField;
     strngfldQueryExcelAtivo: TStringField;
     intgrfldQueryExcelCodGrupo: TIntegerField;
     atncfldQueryEstoqueCodProduto: TAutoIncField;
     btn2: TSpeedButton;
     btn3: TSpeedButton;
+    BtnSelecionar: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure TimerTimer(Sender: TObject);
     procedure PesquisaChange(Sender: TObject);
@@ -152,122 +147,88 @@ type
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure btn12Click(Sender: TObject);
     procedure btn11Click(Sender: TObject);
+    procedure BtnSelecionarClick(Sender: TObject);
   private
     { Private declarations }
     CampoFiltrado : string;
     ColunaFiltrada: TColumn;
-    procedure LimpaGrid;
-    procedure AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
-    procedure AjustaTamanhoGrid(Grid: TStringGrid);
   public
     { Public declarations }
+    vOnde : string;
   end;
-
 var
   FormProdutos: TFormProdutos;
-
 implementation
-
 uses
-  ViewBase;
-
+  ViewBase, Vendas, ConsultaVenda, NFuncao;
 {$R *.dfm}
-
-procedure TFormProdutos.AjustaCorDaGrid(Grid: TDBGrid; const Rect: TRect; DataCol: Integer; State: TGridDrawState);
-begin
-  // padroniza zebrado nas colunas
-  if(datacol mod 2 = 0)
-    then Grid.Columns[datacol].Color := clInfoBk
-    else Grid.Columns[datacol].Color := clWindow;
-
-  // padroniza dor de fundo da linha selecionada
-  if gDSelected in State
-    then Grid.Canvas.Brush.Color := clActiveCaption;
-
-  // aplica
-  Grid.DefaultDrawDataCell(Rect, Grid.columns[datacol].field, State);
-end;
-
-procedure TFormProdutos.AjustaTamanhoGrid(Grid: TStringGrid);
-var
-  Col, Row, MaxWidth, TextWidth: Integer;
-  CellText: string;
-begin
-  for Col := 0 to Grid.ColCount - 1 do
-  begin
-    MaxWidth := 0;
-    for Row := 0 to Grid.RowCount - 1 do
-    begin
-      CellText := Grid.Cells[Col, Row];
-      TextWidth := Canvas.TextWidth(CellText); // Calcula a largura do texto
-      if TextWidth > MaxWidth then
-        MaxWidth := TextWidth; // Atualiza a largura máxima se necessário
-    end;
-    Grid.ColWidths[Col] := MaxWidth + 10; // Ajusta a largura da coluna
-  end;
-
-end;
 
 procedure TFormProdutos.btn11Click(Sender: TObject);
 var
   i: integer;
   NomeTab : string;
+  F : TNFuncao;
 begin
-  LimpaGrid;
+  F.LimpaGrid(GridExcel);
   edt1.Text := '';
+
   for i := 0 to PagListagem.PageCount - 1 do
   begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
+
   ShowMessage('Dados Limpos com Sucesso !!');
-
 end;
-
 procedure TFormProdutos.btn12Click(Sender: TObject);
 var
   Row, Col,i: Integer;
   Valores: string;
+  F : TNFuncao;
 begin
-Row := 1;
-while Row < GridExcel.RowCount do  // Loop para realizar a inclusão de cada linha da Grid
-begin
-  Valores := '';
-  for Col := 0 to GridExcel.ColCount - 1 do
+  Row := 1;
+  while Row < GridExcel.RowCount do  // Loop para realizar a inclusão de cada linha da Grid
   begin
-    if Col > 0 then
-      Valores := Valores + ', ';
-    // Verifica o tipo de dado de acordo com a coluna
-    case Col of
-      // String: Descrição do Produto, CodigoBarra, PermiteMovEstoque, NCM, CEST, Ativo
-      0, 1, 5, 6, 7, 11:
-        Valores := Valores + QuotedStr(GridExcel.Cells[Col, Row]);
-      // Decimais: CustoCompra, CustoVenda, AliquotaICMS, AliquotaIPI
-      2, 3, 9, 10:
-        Valores := Valores + StringReplace(GridExcel.Cells[Col, Row], ',', '.', [rfReplaceAll]);
-      // Inteiros: QuantEstoque, CFOP, CodGrupo
-      4, 8, 12:
-        Valores := Valores + GridExcel.Cells[Col, Row];
-    end;
-  end;
-  // Comando SQL para inserir os dados
-  QueryExcel.SQL.Text := 'INSERT INTO Produtos ' +
-                         '(DescProduto, CodigoBarra, CustoCompra, CustoVenda, QuantEstoque, PermiteMovEstoque, NCM, CEST, CFOP, AliquotaICMS, AliquotaIPI, Ativo, CodGrupo) ' +
-                         'VALUES (' + Valores + ')';
-  QueryExcel.ExecSQL;
-  Inc(Row);
-end;
-LimpaGrid;
-for i := 0 to PagListagem.PageCount - 1 do
-  begin
-    PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
-  end;
-ShowMessage('Inclusão Realizada Com Sucesso !!');
+    Valores := '';
+    for Col := 0 to GridExcel.ColCount - 1 do
+    begin
+      if Col > 0 then
+        Valores := Valores + ', ';
 
+      // Verifica o tipo de dado de acordo com a coluna
+      case Col of
+        // String: Descrição do Produto, CodigoBarra, PermiteMovEstoque, NCM, CEST, Ativo
+        0, 1, 5, 6, 7, 11:
+          Valores := Valores + QuotedStr(GridExcel.Cells[Col, Row]);
+
+        // Decimais: CustoCompra, CustoVenda, AliquotaICMS, AliquotaIPI
+        2, 3, 9, 10:
+          Valores := Valores + StringReplace(GridExcel.Cells[Col, Row], ',', '.', [rfReplaceAll]);
+
+        // Inteiros: QuantEstoque, CFOP, CodGrupo
+        4, 8, 12:
+          Valores := Valores + GridExcel.Cells[Col, Row];
+
+      end;
+    end;
+    // Comando SQL para inserir os dados
+    QueryExcel.SQL.Text := 'INSERT INTO Produtos ' +
+                           '(DescProduto, CodigoBarra, CustoCompra, CustoVenda, QuantEstoque, PermiteMovEstoque, NCM, CEST, CFOP, AliquotaICMS, AliquotaIPI, Ativo, CodGrupo) ' +
+                           'VALUES (' + Valores + ')';
+    QueryExcel.ExecSQL;
+    Inc(Row);
+  end;
+   F.LimpaGrid(GridExcel);
+
+  for i := 0 to PagListagem.PageCount - 1 do
+    begin
+      PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
+    end;
+
+  ShowMessage('Inclusão Realizada Com Sucesso !!');
 end;
 
 procedure TFormProdutos.btn2Click(Sender: TObject);
 begin
-
   if not QueryEstoque.IsEmpty then
     begin
       QueryEstoque.First;
@@ -277,15 +238,12 @@ begin
           QueryEstoque.FieldByName('PermiteMovEstoque').AsString := 'S';
           QueryEstoque.Next;
         end;
-        //QueryEstoque.Post;
     end
   else
     begin
         ShowMessage('Consulta Esta Vazia Verifique !!');
     end;
-
 end;
-
 procedure TFormProdutos.btn3Click(Sender: TObject);
 begin
   if not QueryEstoque.IsEmpty then
@@ -297,7 +255,6 @@ begin
           QueryEstoque.FieldByName('PermiteMovEstoque').AsString := 'N';
           QueryEstoque.Next;
         end;
-        //QueryEstoque.Post;
     end
   else
     begin
@@ -313,7 +270,6 @@ begin
       QueryEstoque.Post;  // Confirma as alterações no dataset local
     end;
     // Envia as alterações ao banco de dados
-    //QueryEstoque.ApplyUpdates;
     ShowMessage('Alterações salvas no banco de dados com sucesso.');
   except
     on E: Exception do
@@ -332,36 +288,35 @@ var
   FilePath,Cellstring: string;
   CellValue: Integer;
   i: integer;
-
   ListaCodClientes: TStringList;
   CodCliente : string;
-
+  F: TNFuncao;
 
   QuntLinha,QuantColuna,Col: Integer;
-
 begin
     for i := 0 to PagListagem.PageCount - 1 do
       begin
         PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = ImportaExcel;
       end;
 
-    OpenDialog := TOpenDialog.Create(nil);
+    OpenDialog := TOpenDialog.Create(nil); //Cria o componete que vai armazenar o arquivo
     ListaCodClientes := TStringList.Create;
 try
     OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx';
     if OpenDialog.Execute then
     begin
       FilePath := OpenDialog.FileName;
+
       // Mostra o nome do arquivo no TEdit
       edt1.Text := ExtractFileName(FilePath);
 
       // Cria a instância do Excel
       ExcelApp := CreateOleObject('Excel.Application');
+
       try
-
         ExcelApp.Visible := False;
-
         // Abre o arquivo Excel
+
         Workbook := ExcelApp.Workbooks.Open(FilePath);
         Worksheet := Workbook.Worksheets[1];
         QuntLinha := Worksheet.UsedRange.Rows.Count;
@@ -380,20 +335,51 @@ try
             GridExcel.Cells[Col - 1, Row - 1] := VarToStr(Worksheet.Cells[Row, Col].Value);
           end;
         end;
-        AjustaTamanhoGrid(GridExcel);
-          finally
 
+         F.AjustaTamanhoGrid(GridExcel);
+
+          finally
             // Fecha o Workbook e o Excel
             Workbook.Close(False);
             ExcelApp.Quit;
             ExcelApp := Unassigned;
-
       end;
     end;
   finally
     OpenDialog.Free;
   end;
+end;
+procedure TFormProdutos.BtnSelecionarClick(Sender: TObject);
+var
+  xCustoCompra,xResultadoSoma : Double;
+  xEstoque : integer;
+begin
+  if vOnde = 'Vendas' then //Manda os dados de acordo com a tela Solicitada
+    begin
+      FormVendas.CodProduto.Text := dbgrd1.DataSource.DataSet.FieldByName('DescProduto').AsString;
+      FormVendas.xCodProduto :=  dbgrd1.DataSource.DataSet.FieldByName('CodProduto').AsInteger;
 
+      with FormVendas.QueryProduto do
+        begin
+          Close;
+          Parameters.ParamByName('DescProduto').Value := dbgrd1.DataSource.DataSet.FieldByName('DescProduto').AsString;
+          Open;
+
+        end;
+
+      Self.close;
+      exit;
+    end
+  else if vOnde = 'ConsultaVendas' then  //Manda os dados de acordo com a tela Solicitada
+    begin
+      FormConsultaVenda.DBEdit1.Text := IntToStr(dbgrd1.DataSource.DataSet.FieldByName('CodProduto').AsInteger);
+      FormConsultaVenda.PnlDescproduto.Caption :=  dbgrd1.DataSource.DataSet.FieldByName('DescProduto').AsString;
+
+
+      Self.close;
+      exit;
+
+    end;
 end;
 
 procedure TFormProdutos.chkTodos11Click(Sender: TObject);
@@ -401,27 +387,26 @@ begin
   TimerEstoque.Enabled := false;
   TimerEstoque.Enabled := true;
 end;
-
 procedure TFormProdutos.dbgrd1CellClick(Column: TColumn);
 begin
   QueryProdutos.Close;
   QueryProdutos.Parameters.ParamByName('CodProduto').Value := dbgrd1.DataSource.DataSet.FieldByName('CodProduto').AsInteger;
   QueryProdutos.Open;
 end;
-
 procedure TFormProdutos.dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
 begin
-  AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+   // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd1, Rect, DataCol, Column, State);
 end;
-
-procedure TFormProdutos.dbgrd1TitleClick(Column: TColumn);
+procedure TFormProdutos.dbgrd1TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
   ColunaFiltrada := Column;
   if Column.Field.FieldName <> CampoFiltrado then
     begin
       CampoFiltrado := Column.Field.FieldName;
     end;
-
 
   if Assigned(ColunaFiltrada) then
     ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
@@ -435,18 +420,20 @@ begin
 end;
 
 procedure TFormProdutos.dbgrd2DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  F : TNFuncao;
 begin
-   AjustaCorDaGrid(dbgrd1, Rect, DataCol, State);
+   // Chama a função de zebragem de linhas
+   F.AjustaCorDaGrid(dbgrd2, Rect, DataCol, Column, State);
 end;
 
-procedure TFormProdutos.dbgrd2TitleClick(Column: TColumn);
+procedure TFormProdutos.dbgrd2TitleClick(Column: TColumn); //Define a Posição e o campo que vai ser filtrado
 begin
    ColunaFiltrada := Column;
   if Column.Field.FieldName <> CampoFiltrado then
     begin
       CampoFiltrado := Column.Field.FieldName;
     end;
-
 
   if Assigned(ColunaFiltrada) then
     ColunaFiltrada.Title.Caption := StringReplace(ColunaFiltrada.Title.Caption, ' ↑', '', [rfReplaceAll]);
@@ -457,6 +444,7 @@ begin
   PesquisaEstoque.Left := lblTitulo1.Left + lblTitulo1.Width + 10;
   PesquisaEstoque.Width := 422;
   dbgrd1.Invalidate;
+
 end;
 
 procedure TFormProdutos.PesquisaEstoqueChange(Sender: TObject);
@@ -467,34 +455,16 @@ end;
 
 procedure TFormProdutos.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+// Limpa a tela no fechamendo dela
   Action := CaFree;
   Release;
   FormProdutos := nil;
 end;
-
 procedure TFormProdutos.FormShow(Sender: TObject);
 begin
-  PagListagem.ActivePageIndex := 0;
-end;
-
-procedure TFormProdutos.LimpaGrid;
-begin
-  // Limpa o conteúdo do grid
-  GridExcel.RowCount := 2;
-  GridExcel.ColCount := 2;
-  // Limpa todas as células do StringGrid
-  GridExcel.Cols[0].Clear;
-  GridExcel.Cols[1].Clear;
-  // Restaura as configurações padrão
-  GridExcel.FixedCols := 1;
-  GridExcel.FixedRows := 1;
-  // Habilita a edição das células
-  GridExcel.Options := GridExcel.Options + [goEditing];
-  // Redefinindo as cores e configurações do grid
-  GridExcel.Color := clWindow;
-  GridExcel.DefaultRowHeight := 24;
-  // Forçar o redesenho do grid
-  GridExcel.Invalidate;
+  PagListagem.ActivePageIndex := 0;  //A tela abre sempre com a aba "Listagem"
+  QueryProdutos.Close;
+  QueryProdutos.Open;
 end;
 
 procedure TFormProdutos.PesquisaChange(Sender: TObject);
@@ -502,7 +472,6 @@ begin
   Timer.Enabled := false;
   Timer.Enabled := true;
 end;
-
 procedure TFormProdutos.QueryProdutosAfterCancel(DataSet: TDataSet);
 var
   i: integer;
@@ -512,7 +481,7 @@ begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
-  //Bloqueado os btns
+  //Habilitadno os btns
   FrameBtns.BtnInserir.Enabled := true;
   FrameBtns.BtnExcluir.Enabled := true;
   FrameBtns.BtnEditar.Enabled := true;
@@ -531,9 +500,7 @@ begin
   DBCFOP.Enabled := false;
   DBAliquotaICMS.Enabled := false;
   DBAliquotaIPI.Enabled := false;
-
 end;
-
 procedure TFormProdutos.QueryProdutosAfterPost(DataSet: TDataSet);
 var
   i: integer;
@@ -543,7 +510,7 @@ begin
     PagListagem.Pages[i].TabVisible := True; // Torna a aba visível
   end;
 
-  //Bloqueado os btns
+  //habilitando os btns
   FrameBtns.BtnInserir.Enabled := true;
   FrameBtns.BtnExcluir.Enabled := true;
   FrameBtns.BtnEditar.Enabled := true;
@@ -563,8 +530,10 @@ begin
   DBAliquotaICMS.Enabled := false;
   DBAliquotaIPI.Enabled := false;
 
-end;
+  QueryListagem.Close;
+  QueryListagem.Open;
 
+end;
 
 procedure TFormProdutos.QueryProdutosBeforeEdit(DataSet: TDataSet);
 var
@@ -575,7 +544,6 @@ for i := 0 to PagListagem.PageCount - 1 do
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
-
 
   //Bloqueado os btns
   FrameBtns.BtnInserir.Enabled := false;
@@ -595,9 +563,7 @@ for i := 0 to PagListagem.PageCount - 1 do
   DBCFOP.Enabled := true;
   DBAliquotaICMS.Enabled := true;
   DBAliquotaIPI.Enabled := true;
-
 end;
-
 procedure TFormProdutos.QueryProdutosBeforeInsert(DataSet: TDataSet);
 var
   i : integer;
@@ -607,7 +573,6 @@ begin
     // Esconde todas as abas, exceto a que foi passada como parâmetro
     PagListagem.Pages[i].TabVisible := PagListagem.Pages[i] = PagManutencao;
   end;
-
 
   //Bloqueado os btns
   FrameBtns.BtnEditar.Enabled := false;
@@ -627,13 +592,10 @@ begin
   DBCFOP.Enabled := true;
   DBAliquotaICMS.Enabled := true;
   DBAliquotaIPI.Enabled := true;
-
 end;
-
 procedure TFormProdutos.TimerEstoqueTimer(Sender: TObject);
 begin
   TimerEstoque.Enabled := false;
-
   if chkTodos11.Checked then
     begin
       QueryEstoque.Close;
@@ -650,30 +612,22 @@ begin
           QueryEstoque.SQL.Clear;
           QueryEstoque.SQL.Add('select Produtos.CodProduto,Produtos.DescProduto,Grupo.DescGrupo,Produtos.QuantEstoque,Produtos.PermiteMovEstoque from Produtos'+
           ' left outer join Grupo on Produtos.CodProduto = Grupo.CodProduto where (1=1)');
-
         if CampoFiltrado = 'DescProduto' then
             QueryEstoque.SQL.Add(' and DescProduto like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'DescGrupo' then
           QueryEstoque.SQL.Add(' and DescGrupo like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'QuantEstoque' then
           QueryEstoque.SQL.Add(' and QuantEstoque like ''%'+Pesquisa.Text+'%''')
-
         else if CampoFiltrado = 'PermiteMovEstoque' then
           QueryEstoque.SQL.Add(' and PermiteMovEstoque like ''%'+Pesquisa.Text+'%''');
-
         QueryEstoque.Open;
         end;
 
-
     end;
 end;
-
 procedure TFormProdutos.TimerTimer(Sender: TObject);
 begin
   Timer.Enabled := false;
-
   if Todos.Checked then
     begin
       QueryListagem.Close;
@@ -723,19 +677,18 @@ begin
           QueryListagem.SQL.Add(' and AliquotaIPI like ''%'+Pesquisa.Text+'%''')
 
           else if CampoFiltrado = 'Ativo' then
-          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''');
+          QueryListagem.SQL.Add(' and Ativo like ''%'+Pesquisa.Text+'%''')
 
+          else if CampoFiltrado = 'PermiteMovEstoque' then
+          QueryListagem.SQL.Add(' and PermiteMovEstoque like ''%'+Pesquisa.Text+'%''');
         QueryListagem.Open;
         end;
 
-
     end;
 end;
-
 procedure TFormProdutos.TodosClick(Sender: TObject);
 begin
   Timer.Enabled := false;
   Timer.Enabled := true;
 end;
-
 end.

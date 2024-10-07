@@ -1,0 +1,117 @@
+unit RelProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.Buttons, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFormRelProduto = class(TForm)
+    pnl1: TPanel;
+    pnl2: TPanel;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    lbl3: TLabel;
+    CodGrupo: TEdit;
+    pnlDescGrupo: TPanel;
+    CodCFOP: TEdit;
+    lbl31: TLabel;
+    pnlDescGrupo1: TPanel;
+    grp1: TGroupBox;
+    RadioStatus: TRadioGroup;
+    btn1: TSpeedButton;
+    RelProdutos: TADOQuery;
+    DSRelProdutos: TDataSource;
+    RadioEstoque: TRadioGroup;
+    atncfldRelProdutosCodProduto: TAutoIncField;
+    strngfldRelProdutosDescProduto: TStringField;
+    strngfldRelProdutosCodigoBarra: TStringField;
+    bcdfldRelProdutosCustoCompra: TBCDField;
+    bcdfldRelProdutosCustoVenda: TBCDField;
+    strngfldRelProdutosCFOP: TStringField;
+    strngfldRelProdutosAtivo: TStringField;
+    strngfldRelProdutosPermiteMovEstoque: TStringField;
+    dtfldRelProdutosDataCadastro: TDateField;
+    intgrfldRelProdutosCodGrupo: TIntegerField;
+    strngfldRelProdutosDescGrupo: TStringField;
+    DBGrid1: TDBGrid;
+    procedure btn1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CodGrupoExit(Sender: TObject);
+    procedure CodGrupoEnter(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormRelProduto: TFormRelProduto;
+
+implementation
+
+uses
+  ViewBase, NFuncao;
+
+{$R *.dfm}
+
+procedure TFormRelProduto.btn1Click(Sender: TObject);
+begin
+  WITH RelProdutos do
+    begin
+      close;
+      SQL.Clear;
+      SQL.Add('select Produtos.CodProduto,Produtos.DescProduto,Produtos.CodigoBarra,Produtos.CustoCompra,Produtos.CustoVenda,Produtos.CFOP,isnull(Produtos.Ativo,''N'') as Ativo,'+
+      ' isnull(Produtos.PermiteMovEstoque,''N'') PermiteMovEstoque,Produtos.DataCadastro,Produtos.CodGrupo,Grupo.DescGrupo'+
+      ' from Produtos'+
+      ' left outer join Grupo on Produtos.CodGrupo = Grupo.CodGrupo where (1=1)');
+
+      {if (DataIni.text <> ' / / ') and (DataFim.Text <> ' / / ') then
+        begin
+          SQL.Add(' and Produtos.DataCadastro between :DatIni and :DataFim');
+          Parameters.ParamByName('DatIni').Value := DataIni.Date;
+          Parameters.ParamByName('DataFim').Value := DataFim.Date;
+        end;      }
+
+      if CodGrupo.Text <> '' then
+        SQL.Add(' and Produtos.CodGrupo = '+CodGrupo.Text);
+
+      if CodCFOP.Text <> '' then
+        SQL.Add(' and Produtos.CFOP = '+CodCFOP.Text);
+
+      case RadioEstoque.ItemIndex of
+        0:SQL.Add(' and Produtos.PermiteMovEstoque = ''S''');
+        1:SQL.Add(' and Produtos.PermiteMovEstoque = ''N''');
+      end;
+
+
+      case RadioStatus.ItemIndex of
+        0:SQL.Add(' and Produtos.Ativo = ''S''');
+        1:SQL.Add(' and Produtos.Ativo = ''N''');
+      end;
+
+      Open;
+
+    end;
+
+end;
+
+pprocedure TFormRelProduto.CodGrupoExit(Sender: TObject);
+begin
+
+end;
+
+rocedure TFormRelProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := CaFree;
+  Release;
+  RelProdutos := nil;
+end;
+
+eprocedure TFormRelProduto.CodGrupoEnter(Sender: TObject);
+begin
+
+end;
+
+nd.

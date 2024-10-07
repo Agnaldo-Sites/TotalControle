@@ -18,14 +18,13 @@ object FormProdutos: TFormProdutos
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object PagListagem: TPageControl
     Left = 0
     Top = 0
     Width = 817
     Height = 394
-    ActivePage = PagManutencao
+    ActivePage = ts1
     Align = alClient
     TabOrder = 0
     object ts1: TTabSheet
@@ -53,6 +52,91 @@ object FormProdutos: TFormProdutos
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+      end
+      object BtnSelecionar: TSpeedButton
+        Left = 12
+        Top = 51
+        Width = 141
+        Height = 27
+        Caption = 'Selecionar'
+        Glyph.Data = {
+          42090000424D4209000000000000420000002800000018000000180000000100
+          20000300000000090000B1000000B100000000000000000000000000FF0000FF
+          0000FF0000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000000000000091EEAE2C8FEF
+          B0C18EF1AA120000000000000000000000000000000000FF00014491009D468F
+          0062000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000008FF0AD228FEFB0E68FEF
+          B0FF8FEEB0C895EAAA0C0000000000000000000000004591008D459000FF4590
+          00FC468F00540000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000008BF3AE168FEFB0D98FEFB0FF8FEF
+          B0FF8FEFB0FF8FEFAFBD80DFBF0800000000468F0080459000FF459000FF4590
+          00FF459000F94490004700000000000000000000000000000000000000000000
+          000000000000000000000000000088EEAA0F8FEFB0CF8FEFB0FF8FEFB0FF8FEF
+          B0FF8FEFB0FF8FEFB0FF8FEFB0B14792056C459000FF459000FF459000FF4590
+          00FF459000FF459000F5458F003B000000000000000000000000000000000000
+          000000000000000000008BE8B90B8FF0B0C68FEFB0FF8FEFB0FF8FEFB0FF8FEF
+          B0FD8FEFB0FF8FEFB0FF74CD70FF459101FE459000FF459000FF459000FD4590
+          00FF459000FF459000FF459000ED448E002D0000000000000000000000000000
+          000000000000000000008FEFAF408FEFB0FF8FEFB0FF8FEFB0FF8FEFB09490F1
+          B0378FEFB0F48FEFB0FF55A427FF459000FF459000FF459000DF478F00324590
+          00AE459000FF459000FF459000FF459000E6478E002400000000000000000000
+          00000000000000000000000000008FEFB0AA8FEFB0F88FF0B064000000000000
+          00008FEFB1528FEFB0FD80DC8DFF469102FF56A72AFF83E0948C00000000398E
+          0009459000CA459000FF459000FF459000FF459000E24491001E000000000000
+          00000000000000000000000000008EECB31B8EF1AF3600000000000000000000
+          0000000000008FEEB1798FEFB0FF79D27BFF8EEDADFF8FEFB0FF8EEFAF730000
+          00004992001C459000E5459000FF459000FF459000FF459000D5408C00140000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000008FEFB0A28FEFB0FF8FEFB0FF8FEFB0FF8FEFB0FE8FF0
+          AF6600000000478F0032459000F4459000FF459000FF459000FF459000CF408F
+          0010000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000092FFB6078FEFB0C48FEFB0FF8FEFB0FF8FEFB0FF8FF0
+          B1B6000000000000000045900055459000FE459000FF459000FF459000F64690
+          0037000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000094F2AE138FEFB0DC8FEFB0FF8FF0B0C695EA
+          AA0C0000000000000000000000004591007D459000FF459000FA4690004C0000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000008FECAE298FEFB0C196F0B4110000
+          000000000000000000000000000000FF0001469000A146910058000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000FFFFFF01000000000000
+          00000000000000000000000000000000000000FF000100000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000}
+        Visible = False
+        OnClick = BtnSelecionarClick
       end
       object dbgrd1: TDBGrid
         Left = 0
@@ -109,20 +193,22 @@ object FormProdutos: TFormProdutos
             Expanded = False
             FieldName = 'CustoVenda'
             Title.Caption = 'Pre'#231'o de Venda'
-            Width = 96
+            Width = 99
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'QuantEstoque'
             Title.Caption = 'Estoque'
-            Width = 54
+            Width = 58
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'PermiteMovEstoque'
-            Visible = False
+            Title.Caption = 'Mov.Estoque'
+            Width = 84
+            Visible = True
           end
           item
             Expanded = False
@@ -139,11 +225,6 @@ object FormProdutos: TFormProdutos
             FieldName = 'CFOP'
             Width = 45
             Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'DataCadastro'
-            Visible = False
           end
           item
             Expanded = False
@@ -169,7 +250,7 @@ object FormProdutos: TFormProdutos
       object Pesquisa: TEdit
         Left = 190
         Top = 22
-        Width = 443
+        Width = 421
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -180,9 +261,10 @@ object FormProdutos: TFormProdutos
         ParentFont = False
         TabOrder = 1
         OnChange = PesquisaChange
+        ExplicitWidth = 419
       end
       object chkTodos: TCheckBox
-        Left = 853
+        Left = 831
         Top = 24
         Width = 106
         Height = 17
@@ -196,9 +278,10 @@ object FormProdutos: TFormProdutos
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
+        ExplicitLeft = 829
       end
       object Todos: TCheckBox
-        Left = 684
+        Left = 662
         Top = 26
         Width = 106
         Height = 17
@@ -213,6 +296,7 @@ object FormProdutos: TFormProdutos
         ShowHint = True
         TabOrder = 3
         OnClick = TodosClick
+        ExplicitLeft = 660
       end
     end
     object PagManutencao: TTabSheet
@@ -836,7 +920,7 @@ object FormProdutos: TFormProdutos
       object PesquisaEstoque: TEdit
         Left = 191
         Top = 22
-        Width = 422
+        Width = 400
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -849,7 +933,7 @@ object FormProdutos: TFormProdutos
         OnChange = PesquisaEstoqueChange
       end
       object chkTodos11: TCheckBox
-        Left = 676
+        Left = 654
         Top = 24
         Width = 106
         Height = 17
@@ -981,7 +1065,7 @@ object FormProdutos: TFormProdutos
       object edt1: TEdit
         Left = 123
         Top = 22
-        Width = 590
+        Width = 568
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Enabled = False
@@ -1321,7 +1405,13 @@ object FormProdutos: TFormProdutos
         Width = 809
         Height = 245
         Align = alBottom
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Palatino Linotype'
+        Font.Style = []
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goFixedRowDefAlign]
+        ParentFont = False
         TabOrder = 2
         ColWidths = (
           64
@@ -1335,8 +1425,8 @@ object FormProdutos: TFormProdutos
   object Timer: TTimer
     Enabled = False
     OnTimer = TimerTimer
-    Left = 685
-    Top = 155
+    Left = 677
+    Top = 99
   end
   object QueryProdutos: TADOQuery
     Connection = frmViewBase.Base
@@ -1357,7 +1447,7 @@ object FormProdutos: TFormProdutos
     SQL.Strings = (
       'Select * from Produtos where CodProduto  = :CodProduto')
     Left = 688
-    Top = 192
+    Top = 160
     object atncfldQueryProdutosCodProduto: TAutoIncField
       FieldName = 'CodProduto'
       ReadOnly = True
@@ -1408,9 +1498,6 @@ object FormProdutos: TFormProdutos
       FieldName = 'AliquotaIPI'
       Size = 6
     end
-    object dtfldQueryProdutosDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
     object strngfldQueryProdutosAtivo: TStringField
       FieldName = 'Ativo'
       FixedChar = True
@@ -1434,8 +1521,8 @@ object FormProdutos: TFormProdutos
       end>
     SQL.Strings = (
       'Select * from Produtos  where CodProduto = :CodProduto ')
-    Left = 688
-    Top = 224
+    Left = 544
+    Top = 208
     object atncfldQueryExcelCodProduto: TAutoIncField
       FieldName = 'CodProduto'
       ReadOnly = True
@@ -1486,9 +1573,6 @@ object FormProdutos: TFormProdutos
       FieldName = 'AliquotaIPI'
       Size = 6
     end
-    object dtfldQueryExcelDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
     object strngfldQueryExcelAtivo: TStringField
       FieldName = 'Ativo'
       FixedChar = True
@@ -1501,7 +1585,7 @@ object FormProdutos: TFormProdutos
   object DSQueryProdutos: TDataSource
     DataSet = QueryProdutos
     Left = 717
-    Top = 192
+    Top = 160
   end
   object QueryListagem: TADOQuery
     Connection = frmViewBase.Base
@@ -1509,8 +1593,8 @@ object FormProdutos: TFormProdutos
     Parameters = <>
     SQL.Strings = (
       'select * from Produtos')
-    Left = 717
-    Top = 155
+    Left = 709
+    Top = 99
     object atncfldQueryListagemCodProduto: TAutoIncField
       FieldName = 'CodProduto'
       ReadOnly = True
@@ -1561,9 +1645,6 @@ object FormProdutos: TFormProdutos
       FieldName = 'AliquotaIPI'
       Size = 6
     end
-    object dtfldQueryListagemDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
     object strngfldQueryListagemAtivo: TStringField
       FieldName = 'Ativo'
       FixedChar = True
@@ -1575,13 +1656,13 @@ object FormProdutos: TFormProdutos
   end
   object DSQueryListagem: TDataSource
     DataSet = QueryListagem
-    Left = 749
-    Top = 155
+    Left = 741
+    Top = 99
   end
   object TimerEstoque: TTimer
     OnTimer = TimerEstoqueTimer
-    Left = 676
-    Top = 298
+    Left = 652
+    Top = 274
   end
   object QueryEstoque: TADOQuery
     Connection = frmViewBase.Base
@@ -1592,8 +1673,8 @@ object FormProdutos: TFormProdutos
         'select Produtos.CodProduto,Produtos.DescProduto,Grupo.DescGrupo,' +
         'Produtos.QuantEstoque,Produtos.PermiteMovEstoque from Produtos'
       'left outer join Grupo on Produtos.CodProduto = Grupo.CodProduto')
-    Left = 708
-    Top = 298
+    Left = 684
+    Top = 274
     object atncfldQueryEstoqueCodProduto: TAutoIncField
       FieldName = 'CodProduto'
       ReadOnly = True
@@ -1617,7 +1698,7 @@ object FormProdutos: TFormProdutos
   end
   object DSQueryEstoque: TDataSource
     DataSet = QueryEstoque
-    Left = 740
-    Top = 298
+    Left = 716
+    Top = 274
   end
 end

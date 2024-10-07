@@ -4,8 +4,8 @@ object FormFornecedor: TFormFornecedor
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Fornecedores '
-  ClientHeight = 320
-  ClientWidth = 861
+  ClientHeight = 316
+  ClientWidth = 859
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,25 +13,25 @@ object FormFornecedor: TFormFornecedor
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
+  PopupMenu = frmViewBase.PopMenu1
   Position = poDesktopCenter
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object PagListagem: TPageControl
     Left = 0
     Top = 0
-    Width = 861
-    Height = 320
+    Width = 859
+    Height = 316
     ActivePage = PagManutencao
     Align = alClient
     TabOrder = 0
     object Listagem: TTabSheet
       Caption = 'Listagem'
       DesignSize = (
-        853
-        290)
+        851
+        286)
       object lblTitulo: TLabel
         Left = 12
         Top = 24
@@ -49,8 +49,8 @@ object FormFornecedor: TFormFornecedor
       end
       object dbgrd1: TDBGrid
         Left = 0
-        Top = 72
-        Width = 853
+        Top = 68
+        Width = 851
         Height = 218
         Align = alBottom
         DataSource = DSQueryListagem
@@ -131,11 +131,6 @@ object FormFornecedor: TFormFornecedor
           end
           item
             Expanded = False
-            FieldName = 'DataCadastro'
-            Visible = False
-          end
-          item
-            Expanded = False
             FieldName = 'Status'
             Visible = False
           end
@@ -150,7 +145,7 @@ object FormFornecedor: TFormFornecedor
       object Pesquisa: TEdit
         Left = 205
         Top = 22
-        Width = 491
+        Width = 479
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -161,10 +156,9 @@ object FormFornecedor: TFormFornecedor
         ParentFont = False
         TabOrder = 1
         OnChange = PesquisaChange
-        ExplicitWidth = 636
       end
       object Todos: TCheckBox
-        Left = 728
+        Left = 716
         Top = 24
         Width = 106
         Height = 17
@@ -185,7 +179,6 @@ object FormFornecedor: TFormFornecedor
         ShowHint = True
         TabOrder = 2
         OnClick = TodosClick
-        ExplicitLeft = 873
       end
     end
     object PagManutencao: TTabSheet
@@ -324,7 +317,7 @@ object FormFornecedor: TFormFornecedor
         ParentFont = False
       end
       object lbl61111: TLabel
-        Left = 239
+        Left = 231
         Top = 157
         Width = 36
         Height = 15
@@ -338,17 +331,17 @@ object FormFornecedor: TFormFornecedor
       end
       inline FrameBtn: TFrmFrameToolBar
         Left = 0
-        Top = 255
-        Width = 853
+        Top = 251
+        Width = 851
         Height = 35
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 255
-        ExplicitWidth = 853
+        ExplicitTop = 251
+        ExplicitWidth = 851
         ExplicitHeight = 35
         inherited TollBar: TToolBar
-          Width = 853
-          ExplicitWidth = 853
+          Width = 851
+          ExplicitWidth = 849
         end
         inherited DataSet: TActionList
           inherited dtstnsrt: TDataSetInsert
@@ -541,9 +534,6 @@ object FormFornecedor: TFormFornecedor
       FieldName = 'CEP'
       Size = 10
     end
-    object dtfldQueryFornecedorDataCadastro: TDateField
-      FieldName = 'DataCadastro'
-    end
     object strngfldQueryFornecedorStatus: TStringField
       FieldName = 'Status'
       FixedChar = True
@@ -600,9 +590,6 @@ object FormFornecedor: TFormFornecedor
     object strngfldQueryListagemCEP: TStringField
       FieldName = 'CEP'
       Size = 10
-    end
-    object dtfldQueryListagemDataCadastro: TDateField
-      FieldName = 'DataCadastro'
     end
     object strngfldQueryListagemStatus: TStringField
       FieldName = 'Status'

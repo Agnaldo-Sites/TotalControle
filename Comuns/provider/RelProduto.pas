@@ -112,6 +112,7 @@ begin
     FormCFOP := TFormCFOP.Create(Self);
     try
       FormCFOP.BtnSelecionar.Visible := true;
+      FormCFOP.vOnde := 'RelProdutos';
       Application.CreateForm(TFormCFOP, FormCFOP);
     finally
       FormCFOP.BtnSelecionar.Visible := false;

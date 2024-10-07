@@ -47,7 +47,7 @@ begin
 end;
 
 
-procedure TFormAparencia.ComboBox2Change(Sender: TObject);
+procedure TFormAparencia.ComboBox2Change(Sender: TObject); //Executa o Update do sistama escolhido pelo Usuario
 begin
    with frmViewBase.QueryConsulta do begin
     Close;
@@ -58,7 +58,7 @@ begin
    end;
 
 
-
+  //Seta o estilo no sistema
   TStyleManager.TrySetStyle(ComboBox2.Text);
   self.Show;
 end;
@@ -66,19 +66,21 @@ end;
 
 procedure TFormAparencia.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  //Limpa a Tela apos fechá la
   Action := CaFree;
   Release;
   FormAparencia := nil;
 end;
 
-procedure TFormAparencia.FormShow(Sender: TObject);
+procedure TFormAparencia.FormShow(Sender: TObject); //Amosta no ComboBox todos os estilos Disponiveis
 var
   StyleName: string;
 begin
-  ComboBox2.Items.Clear;
-  for StyleName in TStyleManager.StyleNames
-    do ComboBox2.Items.Add(StyleName);
+  ComboBox2.Items.Clear; //Limpa o ComboBox
+
+  for StyleName in TStyleManager.StyleNames do ComboBox2.Items.Add(StyleName);
   ComboBox2.Sorted := True;
+  //Para cada Estilo Adicione os Estilos no CompoBox
   ComboBox2.ItemIndex := ComboBox2.Items.IndexOf(TStyleManager.ActiveStyle.Name);
 end;
 
