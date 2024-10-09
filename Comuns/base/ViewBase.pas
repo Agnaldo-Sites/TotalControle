@@ -24,6 +24,7 @@ type
     BtnConsultaVenda: TSpeedButton;
     PopupMenu1: TPopupMenu;
     CarregarLogin1: TMenuItem;
+    SpeedButton1: TSpeedButton;
     procedure BtnFornecedorClick(Sender: TObject);
     procedure btnSBAparenciaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -38,6 +39,7 @@ type
     procedure BtnConsultaVendaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CarregarLogin1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
      ProcessaMenu : Boolean;
@@ -51,7 +53,7 @@ var
 implementation
 uses
   Clientes, Aparencia, LoginUsuarios, Usuarios, Fornecedor, Produtos, RelProduto,
-  Grupo, CFOP, Vendas, ConsultaVenda, ClassConexao, NFuncao;
+  Grupo, CFOP, Vendas, ConsultaVenda, ClassConexao, NFuncao, NotaFiscal;
 {$R *.dfm}
 procedure TfrmViewBase.BtnCFOPClick(Sender: TObject);
 var
@@ -288,6 +290,23 @@ end;
 procedure TfrmViewBase.FormCreate(Sender: TObject);
 begin
   ConfigurarConexao; // Funcão de Conexão d Arquivo ini
+end;
+
+procedure TfrmViewBase.SpeedButton1Click(Sender: TObject);
+var
+  i: integer;
+begin
+// Verifica se o formulário já está aberto
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[i] is TFormClientes then
+    begin
+      MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+  // Se não estiver aberto, cria uma nova instância
+  Application.CreateForm(TFormNotaFiscal, FormNotaFiscal); //NFe/Nota Fiscal
 end;
 
 procedure TfrmViewBase.Timer1Timer(Sender: TObject);

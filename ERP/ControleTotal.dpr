@@ -24,7 +24,8 @@ uses
   CFOP in '..\Comuns\provider\CFOP.pas' {FormCFOP},
   Vendas in '..\Comuns\provider\Vendas.pas' {FormVendas},
   ConsultaVenda in '..\Comuns\provider\ConsultaVenda.pas' {FormConsultaVenda},
-  ClassConexao in '..\Comuns\base\ClassConexao.pas';
+  ClassConexao in '..\Comuns\base\ClassConexao.pas',
+  NotaFiscal in '..\Comuns\provider\NotaFiscal.pas' {FormNotaFiscal};
 
 {$R *.res}
 begin

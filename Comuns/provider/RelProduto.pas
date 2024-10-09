@@ -3,7 +3,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.Buttons, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids,
-  QRCtrls, QuickRpt, Vcl.ComCtrls;
+  QRCtrls, QuickRpt, Vcl.ComCtrls, Vcl.DBCtrls;
 type
   TFormRelProduto = class(TForm)
     RelProdutos: TADOQuery;
@@ -90,37 +90,36 @@ type
     QueryVendasNome_1: TWideStringField;
     QueryVendasCodGrupo: TIntegerField;
     QueryVendasDescGrupo: TStringField;
-    QuickRep3: TQuickRep;
-    QRBand5: TQRBand;
-    QRDBText13: TQRDBText;
-    QRDBText14: TQRDBText;
-    QRDBText15: TQRDBText;
-    QRBand6: TQRBand;
-    QRLabel15: TQRLabel;
-    QRLabel16: TQRLabel;
-    QRLabel19: TQRLabel;
-    QRBand7: TQRBand;
-    QRLabel21: TQRLabel;
     QueryVendasCodVenda: TStringField;
     QueryVendasValUnitario: TWideStringField;
     QueryVendasValTot: TWideStringField;
     QueryVendasTotVenda: TWideStringField;
-    QRLabel17: TQRLabel;
-    QRDBText16: TQRDBText;
-    QRLabel18: TQRLabel;
-    QRDBText17: TQRDBText;
-    QRLabel20: TQRLabel;
-    QRDBText18: TQRDBText;
-    QRDBText19: TQRDBText;
-    QRLabel23: TQRLabel;
-    QRSysData3: TQRSysData;
-    QRDBText20: TQRDBText;
     plnProduto: TPanel;
     EditCodProduto: TEdit;
     Label3: TLabel;
     RadioGroup2: TRadioGroup;
     RadioGroup1: TRadioGroup;
     QueryVendasPermiteMovEstoque: TStringField;
+    QuickRep3: TQuickRep;
+    QRBand7: TQRBand;
+    QRLabel21: TQRLabel;
+    QRSysData3: TQRSysData;
+    QRGroup1: TQRGroup;
+    QRDBText13: TQRDBText;
+    QRDBText17: TQRDBText;
+    QRLabel17: TQRLabel;
+    QRLabel18: TQRLabel;
+    QRDBText21: TQRDBText;
+    QRBand6: TQRBand;
+    QRLabel19: TQRLabel;
+    QRLabel20: TQRLabel;
+    QRDBText23: TQRDBText;
+    QRDBText24: TQRDBText;
+    QRDBText25: TQRDBText;
+    QRDBText26: TQRDBText;
+    QRDBText27: TQRDBText;
+    QRDBText28: TQRDBText;
+    QRDBText29: TQRDBText;
     procedure btn1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CodGrupoExit(Sender: TObject);

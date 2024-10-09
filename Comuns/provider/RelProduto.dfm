@@ -4,8 +4,8 @@ object FormRelProduto: TFormRelProduto
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Relatorio de Produtos'
-  ClientHeight = 445
-  ClientWidth = 437
+  ClientHeight = 405
+  ClientWidth = 434
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,24 +21,24 @@ object FormRelProduto: TFormRelProduto
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 437
-    Height = 445
+    Width = 434
+    Height = 405
     ActivePage = PagVendas
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 444
-    ExplicitHeight = 405
+    ExplicitWidth = 435
+    ExplicitHeight = 441
     object PagProdutos: TTabSheet
       Caption = 'Produtos'
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 429
-        Height = 415
+        Width = 426
+        Height = 375
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 442
-        ExplicitHeight = 401
+        ExplicitWidth = 949
+        ExplicitHeight = 797
         object lbl3: TLabel
           Left = 56
           Top = 21
@@ -67,13 +67,13 @@ object FormRelProduto: TFormRelProduto
         end
         object pnl2: TPanel
           Left = 1
-          Top = 358
-          Width = 427
+          Top = 318
+          Width = 424
           Height = 56
           Align = alBottom
           TabOrder = 0
-          ExplicitTop = 318
-          ExplicitWidth = 434
+          ExplicitTop = 740
+          ExplicitWidth = 947
           object btn1: TSpeedButton
             Left = 92
             Top = 14
@@ -779,14 +779,12 @@ object FormRelProduto: TFormRelProduto
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 429
-        Height = 415
+        Width = 426
+        Height = 375
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 40
-        ExplicitTop = -128
-        ExplicitWidth = 1032
-        ExplicitHeight = 753
+        ExplicitWidth = 427
+        ExplicitHeight = 411
         object Label1: TLabel
           Left = 61
           Top = 26
@@ -828,13 +826,13 @@ object FormRelProduto: TFormRelProduto
         end
         object Panel2: TPanel
           Left = 1
-          Top = 358
-          Width = 427
+          Top = 318
+          Width = 424
           Height = 56
           Align = alBottom
           TabOrder = 0
-          ExplicitTop = 318
-          ExplicitWidth = 434
+          ExplicitTop = 354
+          ExplicitWidth = 425
           object SpeedButton1: TSpeedButton
             Left = 92
             Top = 14
@@ -946,8 +944,8 @@ object FormRelProduto: TFormRelProduto
           TabOrder = 2
         end
         object QuickRep2: TQuickRep
-          Left = 716
-          Top = 243
+          Left = 643
+          Top = 164
           Width = 794
           Height = 1123
           ShowingPreview = False
@@ -1436,14 +1434,14 @@ object FormRelProduto: TFormRelProduto
             KeepOnOnePage = False
             BandType = rbPageHeader
             object QRLabel14: TQRLabel
-              Left = 225
-              Top = 38
+              Left = 209
+              Top = 15
               Width = 239
               Height = 26
               Size.Values = (
                 68.791666666666670000
-                595.312500000000000000
-                100.541666666666700000
+                552.979166666666700000
+                39.687500000000000000
                 632.354166666666700000)
               XLColumn = 0
               XLNumFormat = nfGeneral
@@ -1465,15 +1463,15 @@ object FormRelProduto: TFormRelProduto
               FontSize = 14
             end
             object QRSysData2: TQRSysData
-              Left = 513
+              Left = 564
               Top = 92
-              Width = 205
+              Width = 154
               Height = 17
               Size.Values = (
                 44.979166666666670000
-                1357.312500000000000000
+                1492.250000000000000000
                 243.416666666666700000
-                542.395833333333300000)
+                407.458333333333300000)
               XLColumn = 0
               XLNumFormat = nfGeneral
               ActiveInPreview = True
@@ -1489,10 +1487,53 @@ object FormRelProduto: TFormRelProduto
             end
           end
         end
+        object plnProduto: TPanel
+          Left = 124
+          Top = 170
+          Width = 282
+          Height = 23
+          TabOrder = 5
+        end
+        object EditCodProduto: TEdit
+          Left = 61
+          Top = 170
+          Width = 57
+          Height = 23
+          TabOrder = 6
+          OnExit = EditCodProdutoExit
+          OnKeyDown = EditCodProdutoKeyDown
+        end
+        object RadioGroup2: TRadioGroup
+          Left = 61
+          Top = 227
+          Width = 305
+          Height = 70
+          Caption = 'Metodo de Pagamento'
+          Columns = 3
+          Items.Strings = (
+            'Dinheiro'
+            'Cart.Credo'
+            'Cart.Debido')
+          TabOrder = 7
+        end
+        object RadioGroup1: TRadioGroup
+          Left = 140
+          Top = 29
+          Width = 253
+          Height = 50
+          Caption = 'Permite Mov.Estoque'
+          Columns = 3
+          ItemIndex = 2
+          Items.Strings = (
+            'SIM'
+            'N'#194'O'
+            'AMBOS')
+          TabOrder = 8
+        end
         object QuickRep3: TQuickRep
-          Left = 636
-          Top = 0
-          Width = 1163
+          Left = 842
+          Top = 94
+          Width = 1150
           Height = 1587
           ShowingPreview = False
           DataSet = QueryVendas
@@ -1552,517 +1593,10 @@ object FormRelProduto: TFormRelProduto
           PreviewDefaultSaveType = stPDF
           PreviewLeft = 0
           PreviewTop = 0
-          object QRBand5: TQRBand
-            Left = 38
-            Top = 181
-            Width = 1087
-            Height = 65
-            AlignToBottom = False
-            TransparentBand = False
-            ForceNewColumn = False
-            ForceNewPage = False
-            Size.Values = (
-              171.979166666666700000
-              2876.020833333333000000)
-            PreCaluculateBandHeight = False
-            KeepOnOnePage = False
-            BandType = rbDetail
-            object QRDBText13: TQRDBText
-              Left = 0
-              Top = 1
-              Width = 97
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                0.000000000000000000
-                2.645833333333333000
-                256.645833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'CodVenda'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI Semibold'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText14: TQRDBText
-              Left = 96
-              Top = 1
-              Width = 232
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                254.000000000000000000
-                2.645833333333333000
-                613.833333333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'Nome'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText15: TQRDBText
-              Left = 330
-              Top = 1
-              Width = 277
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                873.125000000000000000
-                2.645833333333333000
-                732.895833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'DescProduto'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText16: TQRDBText
-              Left = 606
-              Top = 1
-              Width = 118
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                1603.375000000000000000
-                2.645833333333333000
-                312.208333333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'Quant'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText17: TQRDBText
-              Left = 720
-              Top = 1
-              Width = 115
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                1905.000000000000000000
-                2.645833333333333000
-                304.270833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'ValUnitario'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText18: TQRDBText
-              Left = 835
-              Top = 1
-              Width = 89
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                2209.270833333333000000
-                2.645833333333333000
-                235.479166666666700000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'ValUnitario'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText19: TQRDBText
-              Left = 924
-              Top = 1
-              Width = 161
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                2444.750000000000000000
-                2.645833333333333000
-                425.979166666666700000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'Nome_1'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRDBText20: TQRDBText
-              Left = 1129
-              Top = 0
-              Width = 160
-              Height = 57
-              Size.Values = (
-                150.812500000000000000
-                2987.145833333333000000
-                0.000000000000000000
-                423.333333333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Color = clWhite
-              DataSet = QueryVendas
-              DataField = 'Nome_1'
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = []
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              FullJustify = False
-              MaxBreakChars = 0
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-          end
-          object QRBand6: TQRBand
-            Left = 38
-            Top = 153
-            Width = 1087
-            Height = 28
-            Frame.DrawBottom = True
-            AlignToBottom = False
-            TransparentBand = False
-            ForceNewColumn = False
-            ForceNewPage = False
-            Size.Values = (
-              74.083333333333330000
-              2876.020833333333000000)
-            PreCaluculateBandHeight = False
-            KeepOnOnePage = False
-            BandType = rbTitle
-            object QRLabel15: TQRLabel
-              Left = 0
-              Top = 0
-              Width = 97
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                0.000000000000000000
-                0.000000000000000000
-                256.645833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Venda'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel16: TQRLabel
-              Left = 97
-              Top = 0
-              Width = 232
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                256.645833333333300000
-                0.000000000000000000
-                613.833333333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Nome De  Cliente'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel19: TQRLabel
-              Left = 330
-              Top = 0
-              Width = 277
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                873.125000000000000000
-                0.000000000000000000
-                732.895833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Descri'#231#227'o De Produto'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel17: TQRLabel
-              Left = 606
-              Top = 0
-              Width = 114
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                1603.375000000000000000
-                0.000000000000000000
-                301.625000000000000000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Quantidade'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel18: TQRLabel
-              Left = 721
-              Top = 0
-              Width = 115
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                1907.645833333333000000
-                0.000000000000000000
-                304.270833333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Val.Unitario'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel20: TQRLabel
-              Left = 836
-              Top = 0
-              Width = 89
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                2211.916666666667000000
-                0.000000000000000000
-                235.479166666666700000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Total Item'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-            object QRLabel23: TQRLabel
-              Left = 925
-              Top = 0
-              Width = 160
-              Height = 22
-              Size.Values = (
-                58.208333333333330000
-                2447.395833333333000000
-                0.000000000000000000
-                423.333333333333300000)
-              XLColumn = 0
-              XLNumFormat = nfGeneral
-              ActiveInPreview = False
-              Alignment = taLeftJustify
-              AlignToBand = False
-              AutoSize = False
-              Caption = 'Nome do Vendedor'
-              Color = clWhite
-              Font.Charset = ANSI_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -16
-              Font.Name = 'Segoe UI'
-              Font.Style = [fsBold]
-              ParentFont = False
-              Transparent = False
-              ExportAs = exptText
-              WrapStyle = BreakOnSpaces
-              VerticalAlignment = tlTop
-              FontSize = 12
-            end
-          end
           object QRBand7: TQRBand
             Left = 38
             Top = 38
-            Width = 1087
+            Width = 1074
             Height = 115
             Frame.DrawBottom = True
             AlignToBottom = False
@@ -2071,7 +1605,7 @@ object FormRelProduto: TFormRelProduto
             ForceNewPage = False
             Size.Values = (
               304.270833333333300000
-              2876.020833333333000000)
+              2841.625000000000000000)
             PreCaluculateBandHeight = False
             KeepOnOnePage = False
             BandType = rbPageHeader
@@ -2106,13 +1640,13 @@ object FormRelProduto: TFormRelProduto
               FontSize = 14
             end
             object QRSysData3: TQRSysData
-              Left = 878
+              Left = 861
               Top = 64
               Width = 208
               Height = 19
               Size.Values = (
                 50.270833333333330000
-                2323.041666666667000000
+                2278.062500000000000000
                 169.333333333333300000
                 550.333333333333300000)
               XLColumn = 0
@@ -2135,49 +1669,640 @@ object FormRelProduto: TFormRelProduto
               FontSize = 10
             end
           end
-        end
-        object plnProduto: TPanel
-          Left = 124
-          Top = 170
-          Width = 282
-          Height = 23
-          TabOrder = 6
-        end
-        object EditCodProduto: TEdit
-          Left = 61
-          Top = 170
-          Width = 57
-          Height = 23
-          TabOrder = 7
-          OnExit = EditCodProdutoExit
-          OnKeyDown = EditCodProdutoKeyDown
-        end
-        object RadioGroup2: TRadioGroup
-          Left = 61
-          Top = 227
-          Width = 305
-          Height = 70
-          Caption = 'Metodo de Pagamento'
-          Columns = 3
-          Items.Strings = (
-            'Dinheiro'
-            'Cart.Credo'
-            'Cart.Debido')
-          TabOrder = 8
-        end
-        object RadioGroup1: TRadioGroup
-          Left = 140
-          Top = 29
-          Width = 253
-          Height = 50
-          Caption = 'Permite Mov.Estoque'
-          Columns = 3
-          ItemIndex = 2
-          Items.Strings = (
-            'SIM'
-            'N'#194'O'
-            'AMBOS')
-          TabOrder = 9
+          object QRGroup1: TQRGroup
+            Left = 38
+            Top = 153
+            Width = 1074
+            Height = 50
+            Frame.DrawTop = True
+            Frame.DrawBottom = True
+            Frame.DrawLeft = True
+            Frame.DrawRight = True
+            AlignToBottom = False
+            TransparentBand = False
+            ForceNewColumn = False
+            ForceNewPage = False
+            Size.Values = (
+              132.291666666666700000
+              2841.625000000000000000)
+            PreCaluculateBandHeight = False
+            KeepOnOnePage = False
+            Expression = 'QueryVendas.CodVenda'
+            Master = QuickRep3
+            ReprintOnNewPage = False
+            object QRDBText13: TQRDBText
+              Left = 6
+              Top = 15
+              Width = 67
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                15.875000000000000000
+                39.687500000000000000
+                177.270833333333300000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'CodVenda'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Top'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText17: TQRDBText
+              Left = 98
+              Top = 15
+              Width = 38
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                259.291666666666700000
+                39.687500000000000000
+                100.541666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'Nome'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Top'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRLabel17: TQRLabel
+              Left = 83
+              Top = 15
+              Width = 5
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                219.604166666666700000
+                39.687500000000000000
+                13.229166666666670000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Caption = '-'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Top'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRLabel18: TQRLabel
+              Left = 857
+              Top = 15
+              Width = 140
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                2267.479166666667000000
+                39.687500000000000000
+                370.416666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Caption = 'Valor Toal da Venda -'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Top'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText21: TQRDBText
+              Left = 1008
+              Top = 15
+              Width = 62
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                2667.000000000000000000
+                39.687500000000000000
+                164.041666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'TotVenda'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Top'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+          end
+          object QRBand6: TQRBand
+            Left = 38
+            Top = 203
+            Width = 1074
+            Height = 67
+            Frame.DrawBottom = True
+            Frame.DrawLeft = True
+            Frame.DrawRight = True
+            AlignToBottom = False
+            TransparentBand = False
+            ForceNewColumn = False
+            ForceNewPage = False
+            Size.Values = (
+              177.270833333333300000
+              2841.625000000000000000)
+            PreCaluculateBandHeight = False
+            KeepOnOnePage = False
+            BandType = rbDetail
+            object QRLabel19: TQRLabel
+              Left = 10
+              Top = 1
+              Width = 121
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                26.458333333333330000
+                2.645833333333333000
+                320.145833333333300000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Caption = 'Nome do Vendedor'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRLabel20: TQRLabel
+              Left = 156
+              Top = 1
+              Width = 237
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                412.750000000000000000
+                2.645833333333333000
+                627.062500000000000000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Nome do Produto'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object TQRLabel
+              Left = 391
+              Top = 1
+              Width = 306
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                1034.520833333333000000
+                2.645833333333333000
+                809.625000000000000000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Nome do Grupo de Produto: '
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText23: TQRDBText
+              Left = 10
+              Top = 25
+              Width = 45
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                26.458333333333330000
+                66.145833333333330000
+                119.062500000000000000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'Nome_1'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Calibri'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText24: TQRDBText
+              Left = 156
+              Top = 25
+              Width = 237
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                412.750000000000000000
+                66.145833333333330000
+                627.062500000000000000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'DescProduto'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText25: TQRDBText
+              Left = 399
+              Top = 25
+              Width = 306
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                1055.687500000000000000
+                66.145833333333330000
+                809.625000000000000000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'DescGrupo'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object TQRLabel
+              Left = 695
+              Top = 1
+              Width = 50
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                1838.854166666667000000
+                2.645833333333333000
+                132.291666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Quant.'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText26: TQRDBText
+              Left = 695
+              Top = 25
+              Width = 50
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                1838.854166666667000000
+                66.145833333333330000
+                132.291666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taCenter
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'Quant'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object TQRLabel
+              Left = 743
+              Top = 0
+              Width = 74
+              Height = 19
+              Size.Values = (
+                50.270833333333330000
+                1965.854166666667000000
+                0.000000000000000000
+                195.791666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Val.Unitario'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText27: TQRDBText
+              Left = 743
+              Top = 25
+              Width = 74
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                1965.854166666667000000
+                66.145833333333330000
+                195.791666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'ValUnitario'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText28: TQRDBText
+              Left = 822
+              Top = 25
+              Width = 74
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                2174.875000000000000000
+                66.145833333333330000
+                195.791666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'ValTot'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object TQRLabel
+              Left = 822
+              Top = 0
+              Width = 74
+              Height = 19
+              Size.Values = (
+                50.270833333333330000
+                2174.875000000000000000
+                0.000000000000000000
+                195.791666666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Val.Total'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object TQRLabel
+              Left = 902
+              Top = 0
+              Width = 167
+              Height = 19
+              Size.Values = (
+                50.270833333333330000
+                2386.541666666667000000
+                0.000000000000000000
+                441.854166666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Caption = 'Moto de Pagamento'
+              Color = clWhite
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI Semibold'
+              Font.Style = [fsBold]
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+            object QRDBText29: TQRDBText
+              Left = 902
+              Top = 25
+              Width = 167
+              Height = 18
+              Size.Values = (
+                47.625000000000000000
+                2386.541666666667000000
+                66.145833333333330000
+                441.854166666666700000)
+              XLColumn = 0
+              XLNumFormat = nfGeneral
+              ActiveInPreview = False
+              Alignment = taLeftJustify
+              AlignToBand = False
+              AutoSize = False
+              Color = clWhite
+              DataSet = QueryVendas
+              DataField = 'MetodoPagamento'
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ParentFont = False
+              Transparent = False
+              ExportAs = exptText
+              WrapStyle = BreakOnSpaces
+              FullJustify = False
+              MaxBreakChars = 0
+              VerticalAlignment = tlTop
+              FontSize = 10
+            end
+          end
         end
       end
     end

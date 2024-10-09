@@ -418,8 +418,8 @@ for i := 0 to PagListagem.PageCount - 1 do
   end;
 
   //Bloqueado os btns
-  FrameBtns.BtnInserir.Enabled := false;
-  FrameBtns.BtnExcluir.Enabled := false;
+  {FrameBtns.BtnInserir.Enabled := false;
+  FrameBtns.BtnExcluir.Enabled := false;  }
 
   //Liberar os Enabled dos Campos
   DBNomeCliente.Enabled := true;
@@ -442,8 +442,8 @@ begin
   end;
 
   //Bloqueado os btns
-  FrameBtns.BtnEditar.Enabled := false;
-  FrameBtns.BtnExcluir.Enabled := false;
+  {FrameBtns.BtnEditar.Enabled := false;
+  FrameBtns.BtnExcluir.Enabled := false;}
 
   //Liberar os Enabled dos Campos
   DBNomeCliente.Enabled := true;

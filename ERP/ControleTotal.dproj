@@ -170,6 +170,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Comuns\base\ClassConexao.pas"/>
+        <DCCReference Include="..\Comuns\provider\NotaFiscal.pas">
+            <Form>FormNotaFiscal</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
